@@ -867,7 +867,8 @@
     p2pReceiveUrl = "";
 
     const settings = getSettings();
-    let outputDir = selectedOutputDir || settings?.download.default_output_dir || "";
+    // P2P receive has no omnibox location picker; never inherit selectedOutputDir.
+    let outputDir = settings?.download.default_output_dir || "";
 
     if ((settings?.download.always_ask_path && !settings?.download.auto_download_on_paste) || !outputDir) {
       const selected = await open({
