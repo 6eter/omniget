@@ -12,6 +12,9 @@
   let defaultDir = $derived(settings?.download.default_output_dir ?? "");
 
   let isDropdownOpen = $state(false);
+  let mutating = $state(false);
+  let pendingWrites = 0;
+  let writeChain: Promise<void> = Promise.resolve();
 
   // If no output dir is selected yet, default to the default_output_dir
   $effect(() => {
@@ -20,6 +23,26 @@
     }
   });
 
+  function enqueueSavedDirsUpdate(mutator: (dirs: string[]) => string[]) {
+    pendingWrites += 1;
+    mutating = true;
+    const run = writeChain
+      .then(async () => {
+        const current = getSettings()?.download.saved_output_dirs ?? [];
+        const next = mutator(current);
+        if (next.length === current.length && next.every((dir, i) => dir === current[i])) {
+          return;
+        }
+        await updateSettings({ download: { saved_output_dirs: next } });
+      })
+      .finally(() => {
+        pendingWrites -= 1;
+        if (pendingWrites === 0) mutating = false;
+      });
+    writeChain = run.catch(() => {});
+    return run;
+  }
+
   async function handleBrowse() {
     isDropdownOpen = false;
     const picked = await open({
@@ -27,15 +50,14 @@
       title: $t("settings.download.choose_folder"),
     });
     if (!picked) return;
-    
+
     const newPath = picked as string;
     selectedOutputDir = newPath;
 
-    // Save to saved_output_dirs if not already there and not the default
-    if (newPath !== defaultDir && !savedDirs.includes(newPath)) {
-      const nextDirs = [...savedDirs, newPath];
-      await updateSettings({ download: { saved_output_dirs: nextDirs } });
-    }
+    if (newPath === defaultDir) return;
+    await enqueueSavedDirsUpdate((dirs) =>
+      dirs.includes(newPath) ? dirs : [...dirs, newPath],
+    );
   }
 
   function pickDir(path: string) {
@@ -45,11 +67,10 @@
 
   async function removeDir(e: MouseEvent, path: string) {
     e.stopPropagation();
-    const nextDirs = savedDirs.filter((d) => d !== path);
     if (selectedOutputDir === path) {
       selectedOutputDir = defaultDir;
     }
-    await updateSettings({ download: { saved_output_dirs: nextDirs } });
+    await enqueueSavedDirsUpdate((dirs) => dirs.filter((d) => d !== path));
   }
 </script>
 
@@ -104,7 +125,8 @@
           <button 
             type="button" 
             class="location-picker-remove" 
-            onclick={(e) => removeDir(e, dir)} 
+            onclick={(e) => removeDir(e, dir)}
+            disabled={mutating}
             aria-label="Remove"
             title="Remove"
           >
@@ -123,6 +145,7 @@
           class="location-picker-option browse-btn"
           role="option"
           aria-selected="false"
+          disabled={mutating}
           onclick={handleBrowse}
         >
           <span class="location-picker-option-alias">{$t('settings.download.choose_folder')}...</span>
@@ -235,6 +258,11 @@
     display: flex;
     align-items: center;
     justify-content: center;
+  }
+
+  .location-picker-remove:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
   }
 
   .location-picker-remove:hover {
