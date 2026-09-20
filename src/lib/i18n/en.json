@@ -3851,6 +3851,7 @@
       "default_output_dir": "Default folder",
       "path_too_long": "This folder path is long ({{current}}/{{limit}} characters). Downloads with long filenames may fail — pick a shorter folder.",
       "choose_folder": "Choose",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "Always ask where to save",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "Video quality",

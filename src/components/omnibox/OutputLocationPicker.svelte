@@ -16,12 +16,7 @@
   let pendingWrites = 0;
   let writeChain: Promise<void> = Promise.resolve();
 
-  // If no output dir is selected yet, default to the default_output_dir
-  $effect(() => {
-    if (!selectedOutputDir && defaultDir) {
-      selectedOutputDir = defaultDir;
-    }
-  });
+
 
   function enqueueSavedDirsUpdate(mutator: (dirs: string[]) => string[]) {
     pendingWrites += 1;
@@ -99,7 +94,7 @@
         <button
           type="button"
           class="location-picker-option"
-          class:active={selectedOutputDir === defaultDir}
+          class:active={selectedOutputDir === defaultDir || !selectedOutputDir}
           role="option"
           aria-selected={selectedOutputDir === defaultDir}
           onclick={() => pickDir(defaultDir)}
@@ -127,9 +122,9 @@
             class="location-picker-remove" 
             onclick={(e) => removeDir(e, dir)}
             disabled={mutating}
-            aria-label="Remove"
-            title="Remove"
-          >
+            aria-label={$t("settings.download.remove_saved_dir")}
+            title={$t("settings.download.remove_saved_dir")}
+            >
             <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
