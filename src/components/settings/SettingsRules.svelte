@@ -5,9 +5,9 @@
   import { showToast } from "$lib/stores/toast-store.svelte";
 
   type Condition =
-    | { HostIs: { value: string } }
-    | { UrlContains: { value: string } }
-    | { PlatformIs: { value: string } };
+    | { kind: "host_is"; value: string }
+    | { kind: "url_contains"; value: string }
+    | { kind: "platform_is"; value: string };
 
   type Rule = {
     enabled: boolean;
@@ -29,23 +29,21 @@
   let testUrl = $state("");
   let testResult = $state<string | null>(null);
 
-  function kindOf(c: Condition): CondKind {
-    if ("HostIs" in c) return "HostIs";
-    if ("UrlContains" in c) return "UrlContains";
-    return "PlatformIs";
-  }
+function kindOf(c: Condition): CondKind {
+  if (c.kind === "host_is") return "HostIs";
+  if (c.kind === "url_contains") return "UrlContains";
+  return "PlatformIs";
+}
 
-  function valueOf(c: Condition): string {
-    if ("HostIs" in c) return c.HostIs.value;
-    if ("UrlContains" in c) return c.UrlContains.value;
-    return c.PlatformIs.value;
-  }
+function valueOf(c: Condition): string {
+  return c.value;
+}
 
-  function buildCondition(kind: CondKind, value: string): Condition {
-    if (kind === "HostIs") return { HostIs: { value } };
-    if (kind === "UrlContains") return { UrlContains: { value } };
-    return { PlatformIs: { value } };
-  }
+function buildCondition(kind: CondKind, value: string): Condition {
+  if (kind === "HostIs") return { kind: "host_is", value };
+  if (kind === "UrlContains") return { kind: "url_contains", value };
+  return { kind: "platform_is", value };
+}
 
   async function load() {
     loading = true;
@@ -68,17 +66,17 @@
     }
   }
 
-  function addRule() {
-    rules = [
-      ...rules,
-      {
-        enabled: true,
-        name: "",
-        when: { HostIs: { value: "" } },
-        then: {},
-      },
-    ];
-  }
+function addRule() {
+  rules = [
+    ...rules,
+    {
+      enabled: true,
+      name: "",
+      when: { kind: "host_is", value: "" },
+      then: {},
+    },
+  ];
+}
 
   function removeRule(i: number) {
     rules = rules.filter((_, idx) => idx !== i);
