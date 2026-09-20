@@ -3851,6 +3851,7 @@
       "default_output_dir": "Pasta padrão",
       "path_too_long": "O caminho desta pasta está longo ({{current}}/{{limit}} caracteres). Downloads com nomes longos podem falhar — escolha uma pasta mais curta.",
       "choose_folder": "Escolher",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "Sempre perguntar onde salvar",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "Qualidade de vídeo",

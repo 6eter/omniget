@@ -3851,6 +3851,7 @@
       "default_output_dir": "預設資料夾",
       "path_too_long": "此資料夾路徑過長（{{current}}/{{limit}} 個字元）。檔名較長時下載可能失敗 — 請選擇更短的資料夾。",
       "choose_folder": "選擇",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "每次都詢問儲存位置",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "影片品質",

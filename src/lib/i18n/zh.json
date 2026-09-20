@@ -3851,6 +3851,7 @@
       "default_output_dir": "默认文件夹",
       "path_too_long": "此文件夹路径过长（{{current}}/{{limit}} 个字符）。文件名较长时下载可能失败 — 请选择更短的文件夹。",
       "choose_folder": "选择",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "每次都询问保存位置",
       "always_ask_path_desc": "每次下载前询问保存位置。",
       "video_quality": "视频质量",

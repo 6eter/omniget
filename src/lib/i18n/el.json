@@ -3851,6 +3851,7 @@
       "default_output_dir": "Εξ'ορισμού φάκελος",
       "path_too_long": "Η διαδρομή αυτού του φακέλου είναι μεγάλη ({{current}}/{{limit}} χαρακτήρες). Οι λήψεις με μεγάλα ονόματα μπορεί να αποτύχουν — διάλεξε έναν πιο σύντομο φάκελο.",
       "choose_folder": "Διάλεξε",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "Πάντα ερώτηση πριν αποθήκευση",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "Ποιότητα βίντεο",

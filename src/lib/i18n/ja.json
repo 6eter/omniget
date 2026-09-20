@@ -3851,6 +3851,7 @@
       "default_output_dir": "既定のフォルダ",
       "path_too_long": "このフォルダのパスが長すぎます（{{current}}/{{limit}} 文字）。ファイル名が長いとダウンロードが失敗することがあります — もっと短いフォルダを選んでください。",
       "choose_folder": "選択",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "保存先を毎回確認する",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "動画の画質",

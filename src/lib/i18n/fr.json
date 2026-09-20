@@ -3851,6 +3851,7 @@
       "default_output_dir": "Dossier par défaut",
       "path_too_long": "Le chemin de ce dossier est long ({{current}}/{{limit}} caractères). Les téléchargements avec des noms longs peuvent échouer — choisissez un dossier plus court.",
       "choose_folder": "Choisir",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "Toujours demander où enregistrer",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "Qualité vidéo",

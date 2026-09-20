@@ -3851,6 +3851,7 @@
       "default_output_dir": "Carpeta por defecto",
       "path_too_long": "La ruta de esta carpeta es larga ({{current}}/{{limit}} caracteres). Las descargas con nombres largos pueden fallar — elige una carpeta más corta.",
       "choose_folder": "Elegir",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "Preguntar siempre dónde guardar",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "Calidad de vídeo",

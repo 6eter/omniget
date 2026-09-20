@@ -3851,6 +3851,7 @@
       "default_output_dir": "Cartella predefinita",
       "path_too_long": "Il percorso di questa cartella è lungo ({{current}}/{{limit}} caratteri). I download con nomi lunghi possono fallire — scegli una cartella più breve.",
       "choose_folder": "Scegli",
+      "remove_saved_dir": "Remove",
       "always_ask_path": "Chiedi sempre dove salvare",
       "always_ask_path_desc": "Show a save dialog for every download.",
       "video_quality": "Qualità video",

@@ -2381,6 +2381,7 @@ export type TranslationKeys =
   | 'settings.download.preset_quality_desc'
   | 'settings.download.presets'
   | 'settings.download.presets_desc'
+  | 'settings.download.remove_saved_dir'
   | 'settings.download.sb_cat_filler'
   | 'settings.download.sb_cat_interaction'
   | 'settings.download.sb_cat_intro'
