@@ -11,7 +11,7 @@ OmniGet
 
   Paste a link from almost any site and get the file. Or ask Claude to do it for you.
 
-  A free desktop downloader for Windows, macOS and Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, torrents and the sites yt-dlp supports.
+  A free, open source video downloader for Windows, macOS and Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, torrents and the sites yt-dlp supports.
   Its MCP server lets Claude Code, Cursor, VS Code and Codex queue downloads for you, and it runs Claude Code, Codex, Gemini CLI and local models as agents in a window.
 
   Free and open source under GPL-3.0. No account, no ads, no telemetry on what you download. Your files stay on your computer.
@@ -22,7 +22,7 @@ OmniGet
 
 1. [Let Claude download it: OmniGet as an MCP server](https://github.com/tonhowtf/omniget#let-claude-download-it)
 2. [The downloader](https://github.com/tonhowtf/omniget#the-downloader)
-3. [AI agents in a window: the LLM section and its command line](https://github.com/tonhowtf/omniget#ai-agents-in-a-window)
+3. [AI agents in a window: a desktop app for Claude Code, Codex and Gemini CLI](https://github.com/tonhowtf/omniget#ai-agents-in-a-window)
 4. [The World: watch your agents work](https://github.com/tonhowtf/omniget#the-world)
 5. [Tools: coming back](https://github.com/tonhowtf/omniget#tools-coming-back)
 
@@ -32,7 +32,7 @@ Also: [Download and install](https://github.com/tonhowtf/omniget#download-and-in
 
 ## 1. Let Claude download it: OmniGet as an MCP server
 
-Turn on OmniGet's MCP server and your coding agent gets a downloader. Claude Code, Cursor, VS Code, Codex, Goose and Claude Desktop can look at a link, queue it, wait for it to finish and tell you what failed and why. The download runs in OmniGet, with its queue, retries and the cookies you already gave it, so the agent never has to install yt-dlp or guess its flags.
+Turn on OmniGet's MCP server and let Claude Code download videos for you. Claude Code, Cursor, VS Code, Codex, Goose and Claude Desktop can look at a link, queue it, wait for it to finish and tell you what failed and why. The download runs in OmniGet, with its queue, retries and the cookies you already gave it, so the agent never has to install yt-dlp or guess its flags.
 
 Things you can ask, in plain English:
 
@@ -94,7 +94,7 @@ If the desktop app is installed, the plugin reuses the yt-dlp and FFmpeg it alre
 
 ## 2. The downloader
 
-You keep one site for Instagram, another for X videos, a yt-dlp cheat sheet because the flags never stick, and none of them remember your login. OmniGet puts that behind one box: paste a link, see the title and the qualities, press Enter. yt-dlp and FFmpeg install themselves and stay updated, so there is nothing to configure and no terminal to open.
+You keep one site for Instagram, another for X videos, a yt-dlp cheat sheet because the flags never stick, and none of them remember your login. OmniGet puts that behind one box: paste a link, see the title and the qualities, press Enter. yt-dlp and FFmpeg install themselves and stay updated, so there is nothing to configure and no terminal to open. It's a yt-dlp GUI and a download manager in one: a queue that resumes, retries and uses the logins you already have.
 
 ### What it downloads
 
@@ -161,7 +161,7 @@ Your cookies then show up in **Settings → Cookies**, one entry per site, with 
 
 ---
 
-## 3. AI agents in a window: the LLM section and its command line
+## 3. AI agents in a window: a desktop app for Claude Code, Codex and Gemini CLI
 
 Claude Code, Codex, Gemini CLI and local models become agents in a desktop window. You attach a folder, ask for a change, read the diff before anything is written, and undo the whole turn with one click. The agent keeps the login and the plan you already pay for.
 

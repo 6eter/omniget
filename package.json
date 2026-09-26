@@ -23,7 +23,7 @@
     "desktop-app",
     "tauri"
   ],
-  "homepage": "https://github.com/tonhowtf/omniget",
+  "homepage": "https://getomniget.com/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/tonhowtf/omniget.git"

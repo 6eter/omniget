@@ -28,11 +28,12 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 </p>
 
 <p align="center">
-  一个免费的桌面下载器，支持 Windows、macOS 和 Linux：YouTube、Instagram、TikTok、X、Reddit、Twitch、种子，以及 yt-dlp 支持的网站。<br/>
+  一个免费、开源的视频下载器，支持 Windows、macOS 和 Linux：YouTube、Instagram、TikTok、X、Reddit、Twitch、种子，以及 yt-dlp 支持的网站。<br/>
   它的 MCP 服务器让 Claude Code、Cursor、VS Code 和 Codex 替你把下载加入队列；它还能在一个窗口里把 Claude Code、Codex、Gemini CLI 和本地模型当作智能体运行。
 </p>
 
 <p align="center">
+  <a href="https://getomniget.com"><img src="https://img.shields.io/badge/website-getomniget.com-F28500?style=for-the-badge" alt="getomniget.com" /></a>
   <a href="https://github.com/tonhowtf/omniget/releases/latest"><img src="https://img.shields.io/github/v/release/tonhowtf/omniget?style=for-the-badge&label=release&color=F28500" alt="最新版本" /></a>
   <a href="https://github.com/tonhowtf/omniget/stargazers"><img src="https://img.shields.io/github/stars/tonhowtf/omniget?style=for-the-badge&color=FFD426" alt="GitHub Star 数" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-2AA845?style=for-the-badge" alt="GPL-3.0 许可证" /></a>
@@ -56,7 +57,7 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 
 1. [让 Claude 去下载：把 OmniGet 当作 MCP 服务器](#let-claude-download-it)
 2. [下载器](#the-downloader)
-3. [窗口里的 AI 智能体：LLM 区和它的命令行](#ai-agents-in-a-window)
+3. [窗口里的 AI 智能体：Claude Code、Codex 和 Gemini CLI 的桌面应用](#ai-agents-in-a-window)
 4. [World：看你的智能体干活](#the-world)
 5. [工具区：即将回归](#tools-coming-back)
 
@@ -78,7 +79,11 @@ Ends with a short motion piece: the new logo and "Claude + OmniGet".
 Length: 25 to 40 s. 1600 px wide. Real app, real terminal, no speed-ups that hide the wait.
 -->
 
-打开 OmniGet 的 MCP 服务器，你的编程智能体就有了一个下载器。Claude Code、Cursor、VS Code、Codex、Goose 和 Claude Desktop 可以查看一个链接、把它加入队列、等它下完，再告诉你哪些失败了、为什么失败。下载在 OmniGet 里进行，用的是它的队列、重试机制和你已经给过它的 Cookie，所以智能体既不用安装 yt-dlp，也不用去猜它的参数。
+<p align="center">
+  <img src="assets/readme/illustration-mcp-downloads.webp" alt="Loop 竖起大拇指，一个小机器人在终端里打字，视频、音乐和照片落进橙色文件夹" width="820" />
+</p>
+
+打开 OmniGet 的 MCP 服务器，就能让 Claude Code 替你下载视频。Claude Code、Cursor、VS Code、Codex、Goose 和 Claude Desktop 可以查看一个链接、把它加入队列、等它下完，再告诉你哪些失败了、为什么失败。下载在 OmniGet 里进行，用的是它的队列、重试机制和你已经给过它的 Cookie，所以智能体既不用安装 yt-dlp，也不用去猜它的参数。
 
 像平常说话一样提要求就行，用什么语言都可以（下面的例子是英文）：
 
@@ -149,7 +154,11 @@ the Downloads page with speed, phase and ETA; the files in Finder/Explorer.
 Length: 15 to 25 s. 1600 px wide.
 -->
 
-你用一个网站下 Instagram，另一个下 X 的视频，还留着一份 yt-dlp 参数小抄，因为那些参数怎么都记不住，而它们没有一个记得你的登录状态。OmniGet 把这些都收进一个输入框：粘贴链接，看到标题和可选清晰度，按回车。yt-dlp 和 FFmpeg 自己安装、自己更新，没什么要配置的，也不用打开终端。
+<p align="center">
+  <img src="assets/readme/illustration-downloader.webp" alt="Loop 欢呼，视频、音乐、照片和磁铁顺着链条从浏览器窗口飞进橙色下载托盘" width="820" />
+</p>
+
+你用一个网站下 Instagram，另一个下 X 的视频，还留着一份 yt-dlp 参数小抄，因为那些参数怎么都记不住，而它们没有一个记得你的登录状态。OmniGet 把这些都收进一个输入框：粘贴链接，看到标题和可选清晰度，按回车。yt-dlp 和 FFmpeg 自己安装、自己更新，没什么要配置的，也不用打开终端。它既是 yt-dlp 图形界面，也是下载管理器：队列能续传、会重试，还能用你已有的登录状态。
 
 ### 能下载什么
 
@@ -229,7 +238,7 @@ yt-dlp 是 OmniGet 运行的引擎，没有它就没有 OmniGet。
 
 <a id="ai-agents-in-a-window"></a>
 
-## 3. 窗口里的 AI 智能体：LLM 区和它的命令行
+## 3. 窗口里的 AI 智能体：Claude Code、Codex 和 Gemini CLI 的桌面应用
 
 <!--
 VIDEO PLACEHOLDER: llm-agents
@@ -237,6 +246,10 @@ Shows: an agent asked to fix a failing test; the permission card with the diff; 
 then Undo taking the whole turn back.
 Length: 20 to 30 s. 1600 px wide.
 -->
+
+<p align="center">
+  <img src="assets/readme/illustration-agents.webp" alt="Loop 像队长一样站在两个用笔记本工作的机器人智能体旁边，上方的权限卡片有一红一绿两行，还有表示测试通过的绿色对勾" width="820" />
+</p>
 
 Claude Code、Codex、Gemini CLI 和本地模型在桌面窗口里变成智能体。你挂载一个文件夹，提出修改，在任何内容写入之前先看 diff，一键就能撤销整个回合。智能体沿用你已经付费的登录和套餐。
 
@@ -272,10 +285,6 @@ omniget-cli agent jobs               # 最近的 Job；传入 id 可以跟踪某
 `omniget-cli claude` 默认跳过 Claude Code 的权限提示；加上 `--safe` 可以保留它们。
 
 ### 带权限、沙盒和撤销的编程智能体
-
-<p align="center">
-  <img src="assets/readme/illustration-llm.png" alt="Loop 把一个文件夹从桌上推给一个机器人智能体。两者之间是一张权限卡片，红色是删除的一行，绿色是新增的一行，下面有三个按钮：允许、总是和拒绝。智能体举手提问" width="820" />
-</p>
 
 - **十一个工具，一个文件夹。** `fs_read`、`fs_list`、`fs_glob`、`fs_grep`、`fs_edit`、`fs_write`、`fs_apply_patch`、`shell_exec`、`todo_write`、`kb_search` 和 `kb_write`。每个路径都在你挂载的文件夹内解析；文件夹之外的路径会单独询问你。
 - **沙盒里的 shell。** 在 macOS 上，`shell_exec` 在 seatbelt 下运行：不能联网，只能在文件夹内写入。
@@ -316,7 +325,7 @@ Length: 15 to 25 s. 1600 px wide.
 -->
 
 <p align="center">
-  <img src="assets/readme/illustration-world.gif" alt="一座铺着赤陶地砖的等距视角房子里，三个机器人智能体各自在自己的工作台前忙活，头顶飘着工具气泡，其中一个带着感叹号气泡向观众招手，侧边面板的进度条在增长，Loop 在沙发上摇来摇去" width="820" />
+  <img src="assets/readme/illustration-world-house.webp" alt="一座剖开的等距小屋，三个机器人智能体各自在工作台前干活，头顶飘着工具气泡，Loop 在沙发上休息" width="820" />
 </p>
 
 你的智能体住在一座等距视角的房子里。每个智能体有自己的书桌和工作台，一个回合开始时走过去，用气泡显示正在运行的工具（`fs_edit cart.js`、`shell_exec`），需要权限时向你招手。额度用完了它就去睡觉。房子旁边的 Activity 面板列出谁在做什么。`/world?demo=1` 会播放一段预设的演示，不花一个 token。
@@ -435,6 +444,10 @@ OmniGet 只下载你自己的会话本来就能打开的内容。它不绕过 DR
 <a id="support-omniget"></a>
 
 ## 支持 OmniGet
+
+<p align="center">
+  <img src="assets/readme/illustration-support.webp" alt="Loop 举着一颗金色星星，旁边是装着爱心和硬币的罐子和一株发芽的小盆栽" width="560" />
+</p>
 
 OmniGet 免费，并且会一直免费。没有付费版本，没有任何功能被锁住。它由一个人开发和维护，而它读取的那些网站每周都在变。
 

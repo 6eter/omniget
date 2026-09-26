@@ -8,6 +8,7 @@ This file is for anyone writing a post, thread, video script or article about Om
 
 - Name: **OmniGet** (capital O, capital G; never "Omniget" or "Omni Get")
 - Mascot: **Loop**
+- Website: https://getomniget.com
 - Repository: https://github.com/tonhowtf/omniget
 - Download: https://github.com/tonhowtf/omniget/releases/latest
 - Author: Tonho, an independent developer in Recife, Brazil ([tonho.wtf](https://tonho.wtf))
@@ -133,13 +134,17 @@ Adapt these; don't paste them unchanged every time.
 
 Use images from [`assets/readme/`](assets/readme/), linked from the repository. Check that the one you pick still matches the current app.
 
+- `illustration-mcp-downloads.webp`: an agent in a terminal sending downloads to a folder (MCP)
+- `illustration-downloader.webp`: links from many sites landing in one download tray
+- `illustration-agents.webp`: AI agents with a permission card and passing tests
+- `illustration-world-house.webp`: the World, agents working in a house
+- `illustration-support.webp`: supporting the project
 - `downloads.png`: the download queue
 - `extension.png`: the browser extension
-- `illustration-llm.png`, `agents-loop.gif`: AI agents at work
-- `illustration-world.gif`: the World
+- `agents-loop.gif`: a Loop running until the tests pass
 - `illustration-privacy.png`: privacy
 
-The visual identity is being redone. Until the new videos are published, use only the images the README itself shows.
+The illustrations use the new Loop sticker style; screenshots and videos of the app are being redone. Use only the images the README itself shows.
 
 ## Legal framing
 

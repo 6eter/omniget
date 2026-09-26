@@ -32,11 +32,12 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 </p>
 
 <p align="center">
-  Бесплатный загрузчик для Windows, macOS и Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, торренты и сайты, которые поддерживает yt-dlp.<br/>
+  Бесплатный загрузчик видео с открытым исходным кодом для Windows, macOS и Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, торренты и сайты, которые поддерживает yt-dlp.<br/>
   Через его MCP-сервер Claude Code, Cursor, VS Code и Codex ставят загрузки в очередь за вас, а ещё он запускает Claude Code, Codex, Gemini CLI и локальные модели как агентов в окне.
 </p>
 
 <p align="center">
+  <a href="https://getomniget.com"><img src="https://img.shields.io/badge/website-getomniget.com-F28500?style=for-the-badge" alt="getomniget.com" /></a>
   <a href="https://github.com/tonhowtf/omniget/releases/latest"><img src="https://img.shields.io/github/v/release/tonhowtf/omniget?style=for-the-badge&label=release&color=F28500" alt="Последний релиз" /></a>
   <a href="https://github.com/tonhowtf/omniget/stargazers"><img src="https://img.shields.io/github/stars/tonhowtf/omniget?style=for-the-badge&color=FFD426" alt="Звёзды на GitHub" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-2AA845?style=for-the-badge" alt="Лицензия GPL-3.0" /></a>
@@ -60,7 +61,7 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 
 1. [Пусть Claude скачает: OmniGet как MCP-сервер](#let-claude-download-it)
 2. [Загрузчик](#the-downloader)
-3. [ИИ-агенты в окне: раздел LLM и его командная строка](#ai-agents-in-a-window)
+3. [ИИ-агенты в окне: десктопное приложение для Claude Code, Codex и Gemini CLI](#ai-agents-in-a-window)
 4. [Мир: смотрите, как работают ваши агенты](#the-world)
 5. [Инструменты вернутся](#tools-coming-back)
 
@@ -82,7 +83,11 @@ Ends with a short motion piece: the new logo and "Claude + OmniGet".
 Length: 25 to 40 s. 1600 px wide. Real app, real terminal, no speed-ups that hide the wait.
 -->
 
-Включите MCP-сервер OmniGet, и у вашего агента для кода появится загрузчик. Claude Code, Cursor, VS Code, Codex, Goose и Claude Desktop могут посмотреть ссылку, поставить её в очередь, дождаться окончания и сказать, что не скачалось и почему. Сама загрузка идёт в OmniGet, с его очередью, повторами и куки, которые вы ему уже дали, так что агенту не нужно ставить yt-dlp или угадывать его флаги.
+<p align="center">
+  <img src="assets/readme/illustration-mcp-downloads.webp" alt="Луп показывает большой палец, пока маленький робот печатает в терминале, а видео, песня и фото падают в оранжевую папку" width="820" />
+</p>
+
+Включите MCP-сервер OmniGet, и Claude Code сможет скачивать видео за вас. Claude Code, Cursor, VS Code, Codex, Goose и Claude Desktop могут посмотреть ссылку, поставить её в очередь, дождаться окончания и сказать, что не скачалось и почему. Сама загрузка идёт в OmniGet, с его очередью, повторами и куки, которые вы ему уже дали, так что агенту не нужно ставить yt-dlp или угадывать его флаги.
 
 Что можно попросить. Агент понимает обычную просьбу на любом языке, примеры ниже на английском:
 
@@ -153,7 +158,11 @@ the Downloads page with speed, phase and ETA; the files in Finder/Explorer.
 Length: 15 to 25 s. 1600 px wide.
 -->
 
-У вас один сайт для Instagram, другой для видео из X, шпаргалка по yt-dlp, потому что флаги не запоминаются, и ни один из них не помнит ваш логин. OmniGet прячет всё это за одним полем: вставьте ссылку, посмотрите название и варианты качества, нажмите Enter. yt-dlp и FFmpeg ставятся и обновляются сами, так что настраивать нечего и терминал открывать не нужно.
+<p align="center">
+  <img src="assets/readme/illustration-downloader.webp" alt="Луп радуется, пока видео, музыка, фото и магнит летят по цепочкам из окон браузера в оранжевый лоток загрузок" width="820" />
+</p>
+
+У вас один сайт для Instagram, другой для видео из X, шпаргалка по yt-dlp, потому что флаги не запоминаются, и ни один из них не помнит ваш логин. OmniGet прячет всё это за одним полем: вставьте ссылку, посмотрите название и варианты качества, нажмите Enter. yt-dlp и FFmpeg ставятся и обновляются сами, так что настраивать нечего и терминал открывать не нужно. Это и графический интерфейс для yt-dlp, и менеджер загрузок: очередь, которая докачивает, повторяет попытки и использует уже имеющиеся у вас входы в аккаунты.
 
 ### Что он скачивает
 
@@ -233,7 +242,7 @@ yt-dlp — это движок, на котором работает OmniGet, и
 
 <a id="ai-agents-in-a-window"></a>
 
-## 3. ИИ-агенты в окне: раздел LLM и его командная строка
+## 3. ИИ-агенты в окне: десктопное приложение для Claude Code, Codex и Gemini CLI
 
 <!--
 VIDEO PLACEHOLDER: llm-agents
@@ -241,6 +250,10 @@ Shows: an agent asked to fix a failing test; the permission card with the diff; 
 then Undo taking the whole turn back.
 Length: 20 to 30 s. 1600 px wide.
 -->
+
+<p align="center">
+  <img src="assets/readme/illustration-agents.webp" alt="Луп в роли капитана рядом с двумя роботами-агентами за ноутбуком; над ними карточка разрешения с красной и зелёной строкой и зелёная галочка пройденных тестов" width="820" />
+</p>
 
 Claude Code, Codex, Gemini CLI и локальные модели становятся агентами в окне приложения. Вы подключаете папку, просите изменение, читаете diff до того, как что-то будет записано, и отменяете весь ход одним кликом. Агент сохраняет вход и тариф, за который вы уже платите.
 
@@ -276,10 +289,6 @@ omniget-cli agent jobs               # недавние задачи; перед
 `omniget-cli claude` по умолчанию пропускает запросы разрешений Claude Code; добавьте `--safe`, чтобы их оставить.
 
 ### Агент для кода с разрешениями, песочницей и отменой
-
-<p align="center">
-  <img src="assets/readme/illustration-llm.png" alt="Loop двигает папку по столу к роботу-агенту. Между ними карточка разрешения показывает удалённую строку красным и добавленную зелёным, с тремя кнопками: разрешить, всегда и запретить. Агент поднимает руку, чтобы спросить" width="820" />
-</p>
 
 - **Одиннадцать инструментов, одна папка.** `fs_read`, `fs_list`, `fs_glob`, `fs_grep`, `fs_edit`, `fs_write`, `fs_apply_patch`, `shell_exec`, `todo_write`, `kb_search` и `kb_write`. Любой путь разрешается внутри подключённой папки; путь за её пределами становится отдельным вопросом.
 - **Оболочка в песочнице.** В macOS `shell_exec` работает под seatbelt: без сети, запись только внутри папки.
@@ -320,7 +329,7 @@ Length: 15 to 25 s. 1600 px wide.
 -->
 
 <p align="center">
-  <img src="assets/readme/illustration-world.gif" alt="Внутри изометрического дома с терракотовыми полами три робота-агента возятся каждый за своим верстаком, над ними покачиваются облачка с инструментами, один машет зрителю облачком с восклицательным знаком, боковая панель заполняет свои полосы прогресса, а Loop покачивается на диване" width="820" />
+  <img src="assets/readme/illustration-world-house.webp" alt="Изометрический домик в разрезе: три робота-агента работают каждый за своим верстаком с облачками инструментов, а Луп отдыхает на диване" width="820" />
 </p>
 
 Ваши агенты живут в изометрическом доме. У каждого свой стол и верстак: когда начинается ход, агент идёт к нему, показывает в облачке инструмент, который запускает (`fs_edit cart.js`, `shell_exec`), и машет вам, когда ему нужно разрешение. Когда квота кончается, он идёт спать. Панель «Активность» рядом с домом показывает, кто чем занят. `/world?demo=1` проигрывает заранее заданный сценарий, не тратя ни одного токена.
@@ -439,6 +448,10 @@ OmniGet скачивает то, что ваша собственная сесс
 <a id="support-omniget"></a>
 
 ## Поддержать OmniGet
+
+<p align="center">
+  <img src="assets/readme/illustration-support.webp" alt="Луп держит золотую звезду рядом с банкой с сердцем и монетами и ростком в горшке" width="560" />
+</p>
 
 OmniGet бесплатный и таким останется. Платного тарифа нет, ничего не заблокировано. Его делает и поддерживает один человек, а сайты, с которых он скачивает, меняются каждую неделю.
 

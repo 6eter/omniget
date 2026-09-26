@@ -7,6 +7,7 @@ Writing about OmniGet, or generating a post about it? Read [MEDIA-KIT.md](https:
 ## Key facts
 
 - Name: OmniGet. Mascot: Loop.
+- Website: https://getomniget.com
 - Repository: https://github.com/tonhowtf/omniget
 - Download: https://github.com/tonhowtf/omniget/releases/latest
 - Author: Tonho, an independent developer in Recife, Brazil (https://tonho.wtf)

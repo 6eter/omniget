@@ -28,11 +28,12 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 </p>
 
 <p align="center">
-  A free desktop downloader for Windows, macOS and Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, torrents and the sites yt-dlp supports.<br/>
+  A free, open source video downloader for Windows, macOS and Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, torrents and the sites yt-dlp supports.<br/>
   Its MCP server lets Claude Code, Cursor, VS Code and Codex queue downloads for you, and it runs Claude Code, Codex, Gemini CLI and local models as agents in a window.
 </p>
 
 <p align="center">
+  <a href="https://getomniget.com"><img src="https://img.shields.io/badge/website-getomniget.com-F28500?style=for-the-badge" alt="getomniget.com" /></a>
   <a href="https://github.com/tonhowtf/omniget/releases/latest"><img src="https://img.shields.io/github/v/release/tonhowtf/omniget?style=for-the-badge&label=release&color=F28500" alt="Latest release" /></a>
   <a href="https://github.com/tonhowtf/omniget/stargazers"><img src="https://img.shields.io/github/stars/tonhowtf/omniget?style=for-the-badge&color=FFD426" alt="GitHub stars" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-2AA845?style=for-the-badge" alt="License GPL-3.0" /></a>
@@ -56,7 +57,7 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 
 1. [Let Claude download it: OmniGet as an MCP server](#let-claude-download-it)
 2. [The downloader](#the-downloader)
-3. [AI agents in a window: the LLM section and its command line](#ai-agents-in-a-window)
+3. [AI agents in a window: a desktop app for Claude Code, Codex and Gemini CLI](#ai-agents-in-a-window)
 4. [The World: watch your agents work](#the-world)
 5. [Tools: coming back](#tools-coming-back)
 
@@ -78,7 +79,11 @@ Ends with a short motion piece: the new logo and "Claude + OmniGet".
 Length: 25 to 40 s. 1600 px wide. Real app, real terminal, no speed-ups that hide the wait.
 -->
 
-Turn on OmniGet's MCP server and your coding agent gets a downloader. Claude Code, Cursor, VS Code, Codex, Goose and Claude Desktop can look at a link, queue it, wait for it to finish and tell you what failed and why. The download runs in OmniGet, with its queue, retries and the cookies you already gave it, so the agent never has to install yt-dlp or guess its flags.
+<p align="center">
+  <img src="assets/readme/illustration-mcp-downloads.webp" alt="Loop gives a thumbs up while a small robot types in a terminal and a video, a song and a photo drop into an orange folder" width="820" />
+</p>
+
+Turn on OmniGet's MCP server and let Claude Code download videos for you. Claude Code, Cursor, VS Code, Codex, Goose and Claude Desktop can look at a link, queue it, wait for it to finish and tell you what failed and why. The download runs in OmniGet, with its queue, retries and the cookies you already gave it, so the agent never has to install yt-dlp or guess its flags.
 
 Things you can ask, in plain English:
 
@@ -149,7 +154,11 @@ the Downloads page with speed, phase and ETA; the files in Finder/Explorer.
 Length: 15 to 25 s. 1600 px wide.
 -->
 
-You keep one site for Instagram, another for X videos, a yt-dlp cheat sheet because the flags never stick, and none of them remember your login. OmniGet puts that behind one box: paste a link, see the title and the qualities, press Enter. yt-dlp and FFmpeg install themselves and stay updated, so there is nothing to configure and no terminal to open.
+<p align="center">
+  <img src="assets/readme/illustration-downloader.webp" alt="Loop cheers as videos, music, photos and a magnet fly along chain links from browser windows into an orange download tray" width="820" />
+</p>
+
+You keep one site for Instagram, another for X videos, a yt-dlp cheat sheet because the flags never stick, and none of them remember your login. OmniGet puts that behind one box: paste a link, see the title and the qualities, press Enter. yt-dlp and FFmpeg install themselves and stay updated, so there is nothing to configure and no terminal to open. It's a yt-dlp GUI and a download manager in one: a queue that resumes, retries and uses the logins you already have.
 
 ### What it downloads
 
@@ -229,7 +238,7 @@ Your cookies then show up in **Settings → Cookies**, one entry per site, with 
 
 <a id="ai-agents-in-a-window"></a>
 
-## 3. AI agents in a window: the LLM section and its command line
+## 3. AI agents in a window: a desktop app for Claude Code, Codex and Gemini CLI
 
 <!--
 VIDEO PLACEHOLDER: llm-agents
@@ -237,6 +246,10 @@ Shows: an agent asked to fix a failing test; the permission card with the diff; 
 then Undo taking the whole turn back.
 Length: 20 to 30 s. 1600 px wide.
 -->
+
+<p align="center">
+  <img src="assets/readme/illustration-agents.webp" alt="Loop as team captain next to two robot agents at a laptop, with a permission card showing a red and a green line and a green check for passing tests" width="820" />
+</p>
 
 Claude Code, Codex, Gemini CLI and local models become agents in a desktop window. You attach a folder, ask for a change, read the diff before anything is written, and undo the whole turn with one click. The agent keeps the login and the plan you already pay for.
 
@@ -272,10 +285,6 @@ omniget-cli agent jobs               # recent jobs; pass an id to follow one, --
 `omniget-cli claude` skips Claude Code's permission prompts by default; add `--safe` to keep them.
 
 ### A coding agent with permissions, a sandbox and undo
-
-<p align="center">
-  <img src="assets/readme/illustration-llm.png" alt="Loop slides a folder across a desk to a robot agent. Between them a permission card shows a removed line in red and an added line in green, with three buttons: allow, always and deny. The agent raises a hand to ask" width="820" />
-</p>
 
 - **Eleven tools, one folder.** `fs_read`, `fs_list`, `fs_glob`, `fs_grep`, `fs_edit`, `fs_write`, `fs_apply_patch`, `shell_exec`, `todo_write`, `kb_search` and `kb_write`. Every path is resolved inside the folder you attached; a path outside it becomes its own question.
 - **A sandboxed shell.** On macOS `shell_exec` runs under seatbelt: no network, writes only inside the folder.
@@ -316,7 +325,7 @@ Length: 15 to 25 s. 1600 px wide.
 -->
 
 <p align="center">
-  <img src="assets/readme/illustration-world.gif" alt="Inside an isometric house with terracotta floors, three robot agents tinker at their own workbenches with tool balloons bobbing above them, one waves at the viewer with an exclamation balloon, a side panel fills its progress bars and Loop sways on the sofa" width="820" />
+  <img src="assets/readme/illustration-world-house.webp" alt="A cutaway isometric house where three robot agents work at their own benches with tool balloons while Loop relaxes on the sofa" width="820" />
 </p>
 
 Your agents live in an isometric house. Each one has its own desk and workbench, walks to it when a turn starts, shows the tool it is running in a balloon (`fs_edit cart.js`, `shell_exec`) and waves at you when it needs permission. When its quota runs out it goes to bed. The Activity panel beside the house lists who is doing what. `/world?demo=1` plays a scripted run without spending a token.
@@ -423,6 +432,10 @@ OmniGet downloads what your own session can already open. It does not bypass DRM
 ---
 
 ## Support OmniGet
+
+<p align="center">
+  <img src="assets/readme/illustration-support.webp" alt="Loop holds up a golden star beside a jar with a heart and coins and a sprouting plant" width="560" />
+</p>
 
 OmniGet is free and stays free. There is no paid tier and nothing is locked. One person builds and maintains it, and the sites it reads change under it every week.
 

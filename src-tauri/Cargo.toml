@@ -9,7 +9,7 @@ description = "Desktop downloader for YouTube, Instagram, TikTok, X, torrents an
 authors = ["tonhowtf"]
 license = "GPL-3.0"
 repository = "https://github.com/tonhowtf/omniget"
-homepage = "https://tonho.wtf"
+homepage = "https://getomniget.com"
 keywords = ["downloader", "yt-dlp", "ai-agents", "mcp", "tauri"]
 categories = ["multimedia", "development-tools", "gui"]
 edition = "2021"
@@ -101,6 +101,12 @@ tauri-plugin-clipboard-manager = "2"
 tauri-plugin-single-instance = "2"
 tauri-plugin-deep-link = "2"
 tauri-plugin-autostart = "2"
+
+[dev-dependencies]
+# Paused clock for the notification timing tests (`llm_attention`): the
+# delay, the cooldown and the "answered in under 5 s" rule are measured in
+# virtual time instead of sleeping. Test builds only.
+tokio = { version = "1", features = ["full", "test-util"] }
 
 [profile.dev]
 debug = 0

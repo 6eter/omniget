@@ -42,13 +42,11 @@
     <keyword>downloader</keyword>
     <keyword>yt-dlp</keyword>
     <keyword>youtube</keyword>
-    <keyword>udemy</keyword>
-    <keyword>hotmart</keyword>
-    <keyword>course</keyword>
     <keyword>video</keyword>
     <keyword>instagram</keyword>
     <keyword>tiktok</keyword>
     <keyword>torrent</keyword>
+    <keyword>video downloader</keyword>
     <keyword>ai agents</keyword>
     <keyword>claude code</keyword>
     <keyword>codex</keyword>
@@ -56,7 +54,7 @@
     <keyword>mcp</keyword>
     <keyword>llm</keyword>
   </keywords>
-  <url type="homepage">https://github.com/tonhowtf/omniget</url>
+  <url type="homepage">https://getomniget.com</url>
   <url type="bugtracker">https://github.com/tonhowtf/omniget/issues</url>
   <url type="vcs-browser">https://github.com/tonhowtf/omniget</url>
   <launchable type="desktop-id">wtf.tonho.omniget.desktop</launchable>
