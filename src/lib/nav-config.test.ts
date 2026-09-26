@@ -2,15 +2,8 @@ import { describe, it, expect } from "vitest";
 import { CORE_NAV_ITEMS } from "./nav-config";
 
 describe("CORE_NAV_ITEMS", () => {
-  it("has the expected 7 core entries", () => {
-    expect(CORE_NAV_ITEMS).toHaveLength(7);
-  });
-
-  it("OmniDisc sits between Downloads and the app group", () => {
-    const chat = CORE_NAV_ITEMS.find((i) => i.href === "/omnidisc");
-    expect(chat?.group).toBe("primary");
-    expect(chat?.icon).toBe("chat");
-    expect(chat?.order).toBe(25);
+  it("has the expected 8 core entries", () => {
+    expect(CORE_NAV_ITEMS).toHaveLength(8);
   });
 
   it("Home is first in primary group", () => {

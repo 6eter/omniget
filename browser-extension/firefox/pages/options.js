@@ -235,6 +235,13 @@ if (typeof document !== "undefined") {
   const endpointHint = document.getElementById("endpoint-hint");
   const advancedDetails = document.getElementById("advanced");
 
+  // The extension backup page ships only in the Chrome build: it reads
+  // chrome.management, an optional permission the Firefox manifest does not
+  // offer. This page is shared, so it drops the link where it cannot work.
+  const extensionBackup = document.getElementById("extension-backup");
+  const optionalPermissions = globalThis.chrome?.runtime?.getManifest?.().optional_permissions ?? [];
+  if (extensionBackup && !optionalPermissions.includes("management")) extensionBackup.remove();
+
   const FALLBACK_ENDPOINT = "http://127.0.0.1:47720";
 
   function resolvedEndpoint() {

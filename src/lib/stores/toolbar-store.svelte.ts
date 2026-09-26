@@ -1,8 +1,8 @@
 /**
  * Toolbar actions published by the current page.
  *
- * macOS toolbars act on the content beneath them, so a page (Downloads,
- * Marketplace, …) registers its segmented control and trailing buttons here
+ * macOS toolbars act on the content beneath them, so a page (Downloads, …)
+ * registers its segmented control and trailing buttons here
  * and the shell renders them in the titlebar. Pages call `setToolbar` inside
  * an `$effect` and return the cleanup so the toolbar empties on navigation.
  */
@@ -36,6 +36,8 @@ export type ToolbarState = {
 };
 
 let state = $state<ToolbarState>({});
+// Registration identity must not depend on the proxy created by $state.
+let owner: symbol | null = null;
 
 export function getToolbar(): ToolbarState {
   return state;
@@ -43,12 +45,15 @@ export function getToolbar(): ToolbarState {
 
 /** Replace the toolbar contents. Returns a cleanup that clears them. */
 export function setToolbar(next: ToolbarState): () => void {
+  const registration = Symbol("toolbar");
+  owner = registration;
   state = next;
   return () => {
-    if (state === next) state = {};
+    if (owner === registration) clearToolbar();
   };
 }
 
 export function clearToolbar(): void {
+  owner = null;
   state = {};
 }

@@ -2,7 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { getVersion } from "@tauri-apps/api/app";
 
 export type LogLevel = "info" | "warn" | "error";
-export type LogCategory = "download" | "network" | "auth" | "system" | "convert";
+export type LogCategory = "download" | "network" | "auth" | "system";
 
 export type DebugLogEntry = {
   id: number;

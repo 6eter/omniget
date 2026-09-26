@@ -40,13 +40,6 @@ impl StreamInfo {
             .filter(|v| *v != "none")
             .map(|v| v.split('.').next().unwrap_or(v).to_string())
     }
-
-    pub fn short_acodec(&self) -> Option<String> {
-        self.acodec
-            .as_deref()
-            .filter(|a| *a != "none")
-            .map(|a| a.split('.').next().unwrap_or(a).to_string())
-    }
 }
 
 #[derive(Debug, Clone, Default)]
@@ -63,6 +56,10 @@ pub struct ProgressUpdate {
     pub fragment_count: Option<u32>,
     /// Formatos que o yt-dlp anunciou que vai baixar (`Downloading 2 format(s): 299+140`).
     pub planned_formats: Option<Vec<String>>,
+    /// O worker nao sabe o total: `percent` nao significa nada e quem
+    /// consome deve mostrar progresso indeterminado (bytes, sem %), nunca
+    /// inventar um numero. Ver [`ProgressUpdate::percent_value`].
+    pub indeterminate: bool,
 }
 
 impl ProgressUpdate {
@@ -96,6 +93,17 @@ impl ProgressUpdate {
             eta_seconds,
             ..Default::default()
         }
+    }
+
+    /// Marca o update como sem percentual conhecido.
+    pub fn indeterminate(mut self) -> Self {
+        self.indeterminate = true;
+        self
+    }
+
+    /// `None` quando o total e desconhecido; o `percent` cru e so filler.
+    pub fn percent_value(&self) -> Option<f64> {
+        (!self.indeterminate).then_some(self.percent)
     }
 
     pub fn has_real_metrics(&self) -> bool {

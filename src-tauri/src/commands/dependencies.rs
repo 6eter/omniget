@@ -2,7 +2,7 @@ use std::path::PathBuf;
 
 use serde::Serialize;
 
-use crate::core::{dependencies, pdfium};
+use crate::core::dependencies;
 
 #[derive(Debug, Clone, Serialize)]
 pub struct DependencyStatus {
@@ -16,13 +16,6 @@ pub struct DependencyStatus {
     pub path: Option<String>,
     /// `true` when version was read and is below supported floor.
     pub outdated: bool,
-}
-
-#[derive(Debug, Clone, Serialize)]
-pub struct DependencyVariantInfo {
-    pub id: String,
-    pub label: String,
-    pub recommended: bool,
 }
 
 #[tauri::command]
@@ -47,14 +40,6 @@ pub async fn check_dependencies() -> Result<Vec<DependencyStatus>, String> {
             }
         },
     );
-
-    let pdfium_resolved = pdfium::resolve_with_source();
-    let pdfium_installed = pdfium_resolved.is_some();
-    let pdfium_version = if pdfium_installed {
-        Some(pdfium::read_version_marker().unwrap_or_else(|| "installed".to_string()))
-    } else {
-        None
-    };
 
     let ytdlp_source = ytdlp_result
         .as_ref()
@@ -91,22 +76,6 @@ pub async fn check_dependencies() -> Result<Vec<DependencyStatus>, String> {
             path: ffmpeg_path,
             outdated: false,
         },
-        DependencyStatus {
-            name: "PDFium".into(),
-            installed: pdfium_installed,
-            version: pdfium_version,
-            source: pdfium_resolved
-                .as_ref()
-                .map(|(_, s)| (*s).to_string())
-                .unwrap_or_else(|| "missing".to_string()),
-            // The resolved library, not the managed folder: with a custom
-            // path those are different places, and naming the folder there
-            // would point at something the app is not using.
-            path: pdfium_resolved
-                .as_ref()
-                .map(|(p, _)| p.to_string_lossy().to_string()),
-            outdated: false,
-        },
     ])
 }
 
@@ -116,11 +85,7 @@ pub async fn check_ytdlp_available() -> Result<bool, String> {
 }
 
 #[tauri::command]
-pub async fn install_dependency(
-    name: String,
-    variant: Option<String>,
-    force: Option<bool>,
-) -> Result<String, String> {
+pub async fn install_dependency(name: String, force: Option<bool>) -> Result<String, String> {
     let force = force.unwrap_or(false);
     match name.as_str() {
         "yt-dlp" => {
@@ -152,12 +117,6 @@ pub async fn install_dependency(
             crate::core::ytdlp::reset_ffmpeg_location_cache();
             crate::core::ffmpeg::reset_ffmpeg_available_cache();
         }
-        "PDFium" => {
-            let _path: PathBuf = pdfium::ensure_pdfium_with_variant(variant)
-                .await
-                .map_err(|e| e.to_string())?;
-            return Ok(pdfium::read_version_marker().unwrap_or_else(|| "installed".to_string()));
-        }
         _ => return Err(format!("Unknown dependency: {}", name)),
     }
 
@@ -173,7 +132,7 @@ pub async fn install_dependency(
 /// Locates the managed binary without touching it. Previously this called
 /// `ensure_ytdlp`, which downloads a missing binary and spawns a freshness
 /// check plus a JS-runtime check (yt-dlp and deno processes) on every call.
-/// Listing archived versions is a read, and the Plugins tab does it on
+/// Listing archived versions is a read, and the Dependencies tab does it on
 /// render, so that turned a UI refresh into a process storm (#281).
 async fn managed_binary_path(name: &str) -> Option<PathBuf> {
     match name {
@@ -265,26 +224,8 @@ pub async fn rollback_dependency(name: String, stamp_ms: String) -> Result<Strin
 }
 
 #[tauri::command]
-pub fn dependency_variants(name: String) -> Result<Vec<DependencyVariantInfo>, String> {
-    match name.as_str() {
-        "PDFium" => Ok(pdfium::list_variants()
-            .into_iter()
-            .map(|v| DependencyVariantInfo {
-                id: v.id,
-                label: v.label,
-                recommended: v.recommended,
-            })
-            .collect()),
-        "yt-dlp" | "FFmpeg" => Ok(Vec::new()),
-        _ => Err(format!("Unknown dependency: {}", name)),
-    }
-}
-
-#[tauri::command]
 pub fn dependency_install_dir(name: String) -> Result<String, String> {
     let dir = match name.as_str() {
-        "PDFium" => pdfium::pdfium_target_dir()
-            .ok_or_else(|| "could not determine plugin data dir".to_string())?,
         "yt-dlp" | "FFmpeg" => crate::core::paths::app_data_dir()
             .ok_or_else(|| "could not determine app data dir".to_string())?
             .join("bin"),

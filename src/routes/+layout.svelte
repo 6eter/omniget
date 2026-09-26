@@ -1,5 +1,27 @@
 <script lang="ts">
   import "../app.css";
+  import "$lib/style/workspace-design.css";
+  import { getWorkspaceDesign, initWorkspaceDesign } from "$lib/stores/workspace-design.svelte";
+  let workspaceDesign = $derived(getWorkspaceDesign());
+  let designScope = $derived(page.url.pathname === "/" || page.url.pathname === "/downloads" || page.url.pathname === "/llm" || page.url.pathname.startsWith("/llm/") || page.url.pathname === "/help" || page.url.pathname.startsWith("/help/"));
+  onMount(initWorkspaceDesign);
+  // Document-level scope includes native chrome and portals; cleanup restores
+  // the legacy module contract when leaving the workspace.
+  $effect(() => {
+    if (!designScope) return;
+    const root = document.documentElement;
+    const previous = { preset: root.getAttribute("data-ds-preset"), mode: root.getAttribute("data-ds-mode"), scoped: root.classList.contains("ds-scope") };
+    root.classList.add("ds-scope");
+    root.setAttribute("data-ds-preset", workspaceDesign.preset);
+    root.setAttribute("data-ds-mode", workspaceDesign.resolvedMode);
+    return () => {
+      if (!previous.scoped) root.classList.remove("ds-scope");
+      for (const [key, value] of [["data-ds-preset", previous.preset], ["data-ds-mode", previous.mode]]) {
+        if (value === null) root.removeAttribute(key!); else root.setAttribute(key!, value!);
+      }
+    };
+  });
+
   import "$lib/style/queue-kinds.css";
   import { page } from "$app/state";
   import { isMac } from "$lib/platform";
@@ -9,19 +31,17 @@
   import { listen } from "@tauri-apps/api/event";
   import { initDownloadListener } from "$lib/stores/download-listener";
   import { getCounts } from "$lib/stores/download-store.svelte";
-  import {
-    getUnreadCount as getChatUnreadCount,
-    getMentionTotal as getChatMentionCount,
-    isImmersive,
-    initOmnidisc,
-  } from "$lib/stores/omnidisc-store.svelte";
-  import { getSettings, loadSettings } from "$lib/stores/settings-store.svelte";
+  import { getSettings, loadSettings, updateSettings } from "$lib/stores/settings-store.svelte";
   import { queueExternalPrefill, type ExternalUrlEvent } from "$lib/stores/external-url-store.svelte";
   import Toast from "$components/toast/Toast.svelte";
+  import McpAuthPrompt from "$components/llm/mcp/McpAuthPrompt.svelte";
   import AppSidebar from "$components/shell/AppSidebar.svelte";
   import AppToolbar from "$components/shell/AppToolbar.svelte";
   import CommandPalette from "$components/shell/CommandPalette.svelte";
+  import DownloadStatusBar from "$components/download/DownloadStatusBar.svelte";
+  import { shellLayout } from "$lib/stores/shell-layout.svelte";
   import { setCommandPaletteItems } from "$lib/stores/command-palette-store.svelte";
+  import { accountPaletteItems, activateAccount, getAccounts } from "$lib/stores/llm-accounts-store.svelte";
   import { refreshUpdateInfo } from "$lib/stores/update-store.svelte";
   import { startClipboardMonitor, stopClipboardMonitor, onClipboardUrl } from "$lib/stores/clipboard-monitor";
   import { readText } from "@tauri-apps/plugin-clipboard-manager";
@@ -29,35 +49,27 @@
   import { needsOnboarding } from "$lib/stores/onboarding-store.svelte";
   import { isYtdlpAvailable, isDepsChecked, refreshYtdlpStatus } from "$lib/stores/dependency-store.svelte";
   import { showToast } from "$lib/stores/toast-store.svelte";
-  import { t, locale, isRtlLocale } from "$lib/i18n";
+  import { rawTranslations, t, locale, isRtlLocale } from "$lib/i18n";
+  import { trayStrings } from "$lib/tray-strings";
+  import { usageTrayStrings } from "$lib/usage-tray-strings";
+  import { agentPrompts } from "$lib/agent-prompts";
   import { get } from "svelte/store";
-  import { CORE_NAV_ITEMS, pluginIconForRoute, type NavItem } from "$lib/nav-config";
-  import { TOOLS, toolHref } from "$lib/tools/catalog";
-  import {
-    STUDY_FOCUS_ENABLED,
-    STUDY_PROGRESS_ENABLED,
-    STUDY_ACHIEVEMENTS_ENABLED,
-    STUDY_NOTES_ENABLED,
-  } from "$lib/study-feature-flags";
+  import { CORE_NAV_ITEMS, type NavItem } from "$lib/nav-config";
+  import { isBareWindow } from "$lib/bare-window";
   import type { Snippet } from "svelte";
   import type { Component } from "svelte";
 
-  let pluginNavItems = $state<NavItem[]>([]);
-
-  let leagueNavItems = $derived<NavItem[]>(
-    (getSettings()?.league?.enabled ?? true)
-      ? [{ href: "/league", labelKey: "league.nav", icon: "league", group: "app", order: 45 }]
-      : []
-  );
 
   let coreNavItems = $derived(
-    CORE_NAV_ITEMS.filter((item) => item.href !== "/omnidisc" || (getSettings()?.omnidisc?.enabled ?? true))
+    CORE_NAV_ITEMS.filter(
+      (item) =>
+        item.href !== "/world" || (getSettings()?.world?.enabled ?? true),
+    )
   );
 
-  let allNav = $derived([...coreNavItems, ...leagueNavItems, ...pluginNavItems].sort((a, b) => (a.order ?? 50) - (b.order ?? 50)));
+  let allNav = $derived([...coreNavItems].sort((a, b) => (a.order ?? 50) - (b.order ?? 50)));
   let primaryNav = $derived(allNav.filter((item) => item.group === "primary"));
   let appNav = $derived(allNav.filter((item) => item.group === "app"));
-  let pluginNav = $derived(allNav.filter((item) => item.group === "plugins"));
 
   let ytdlpDismissed = $state(false);
   let ytdlpMissing = $derived(isDepsChecked() && !isYtdlpAvailable());
@@ -65,17 +77,47 @@
 
   let counts = $derived(getCounts());
   let badgeLabel = $derived(counts.badge > 99 ? "99+" : String(counts.badge));
-  let chatBadgeCount = $derived(getChatMentionCount() || getChatUnreadCount());
   let settings = $derived(getSettings());
 
-  let isStudyRoute = $derived(page.url.pathname.startsWith("/study"));
-  let isStreamPopout = $derived(page.url.pathname === "/omnidisc/stream");
-  let hideAppSidebar = $derived(page.url.pathname.startsWith("/omnidisc") && isImmersive());
+  // The tray menu is native, so the frontend owns the translations and pushes
+  // them whenever the locale changes (see sync_tray_strings in channels.rs).
+  // The values come from `rawTranslations`, not `$t`: the default parser
+  // substitutes `{{placeholders}}` and would strip the `{{count}}` / `{{speed}}`
+  // tokens the Rust side fills in, leaving the tray without the number and the
+  // speed in every language (see $lib/tray-strings).
+  $effect(() => {
+    const payload = trayStrings($rawTranslations, $locale);
+    invoke("sync_tray_strings", payload).catch(() => {
+      // tray sync is best-effort (no backend in browser/dev)
+    });
+  });
+
+  // Same for the menu bar usage icon's native menu and tooltip (usage_tray).
+  $effect(() => {
+    const strings = usageTrayStrings($rawTranslations, $locale);
+    invoke("usage_tray_sync_strings", { strings }).catch(() => {});
+  });
+
+  // Same push-based pattern for the prompts of the agents the backend seeds:
+  // they are shown to the user, so they follow the interface language, while
+  // the compiled-in English set in roster_store.rs stays the fallback
+  // (see $lib/agent-prompts).
+  $effect(() => {
+    const payload = agentPrompts($rawTranslations, $locale);
+    invoke("sync_llm_prompts", { prompts: payload }).catch(() => {
+      // prompt sync is best-effort (no backend in browser/dev)
+    });
+  });
+
+  // The pet, the limits strip and the usage panel are windows exactly as big
+  // as what they draw: no shell, no boot work, no global dialogs. They never
+  // navigate away from their route, so this is read once.
+  const bareWindow = isBareWindow(page.url.pathname);
   let isCoreRoute = $derived(
     page.url.pathname === "/" ||
     page.url.pathname.startsWith("/downloads") ||
     page.url.pathname.startsWith("/settings") ||
-    page.url.pathname.startsWith("/marketplace") ||
+    page.url.pathname.startsWith("/superpowers") ||
     page.url.pathname.startsWith("/league") ||
     page.url.pathname.startsWith("/about"),
   );
@@ -109,43 +151,8 @@
     }
   }
 
-  function reloadPluginNav() {
-    invoke<{ id: string; enabled: boolean; nav: { route: string; label: Record<string, string>; icon_svg: string | null; group: string; order: number }[] }[]>("list_plugins")
-      .then((plugins) => {
-        const items: NavItem[] = [];
-        for (const p of plugins) {
-          if (!p.enabled) continue;
-          for (const n of p.nav) {
-            if (n.route === "/study/focus" && !STUDY_FOCUS_ENABLED) continue;
-            if (n.route === "/study/progress" && !STUDY_PROGRESS_ENABLED) continue;
-            if (n.route === "/study/achievements" && !STUDY_ACHIEVEMENTS_ENABLED) continue;
-            if (n.route === "/study/notes" && !STUDY_NOTES_ENABLED) continue;
-            const icon = pluginIconForRoute(n.route);
-            items.push({
-              href: n.route,
-              label: n.label[get(locale)] || n.label["en"] || p.id,
-              icon,
-              iconSvg: icon === "plugin" ? n.icon_svg || undefined : undefined,
-              group: "plugins",
-              pluginId: p.id,
-              order: n.order,
-            });
-          }
-        }
-        pluginNavItems = items;
-        buildCommandPaletteItems();
-      })
-      .catch(() => {});
-  }
-
-  let omnidiscStarted = false;
-  $effect(() => {
-    if (omnidiscStarted || !(getSettings()?.omnidisc?.enabled ?? true)) return;
-    omnidiscStarted = true;
-    void initOmnidisc();
-  });
-
   onMount(() => {
+    if (bareWindow) return;
     initDownloadListener();
     // If `get_settings` failed while the shell was booting, the sidebar has no
     // League entry and Settings spins forever. Retry a few times instead of
@@ -155,9 +162,7 @@
       const retry = () => {
         if (getSettings() || attempts >= 5) return;
         attempts += 1;
-        loadSettings()
-          .then(() => reloadPluginNav())
-          .catch(() => setTimeout(retry, 1000 * attempts));
+        loadSettings().catch(() => setTimeout(retry, 1000 * attempts));
       };
       setTimeout(retry, 500);
     }
@@ -190,26 +195,24 @@
     refreshYtdlpStatus();
     refreshUpdateInfo();
     initChangelog();
-    reloadPluginNav();
 
     let unlistenExternalUrl: (() => void) | null = null;
-    let unlistenPlugins: (() => void) | null = null;
 
-    listen<Omit<ExternalUrlEvent, "id">>("external-url-event", (event) => {
+    listen<Omit<ExternalUrlEvent, "id">>("external-url", (event) => {
       handleExternalUrlEvent(event.payload);
     }).then((un) => {
       unlistenExternalUrl = un;
-    });
-
-    listen("plugins-changed", () => {
-      reloadPluginNav();
-    }).then((un) => {
-      unlistenPlugins = un;
+      // Only now is it safe to flip Rust into emit mode: links that arrived
+      // while the webview was booting were parked in a queue and come back here.
+      invoke<Omit<ExternalUrlEvent, "id">[]>("register_external_frontend")
+        .then((events) => {
+          for (const event of events) handleExternalUrlEvent(event);
+        })
+        .catch(() => {});
     });
 
     return () => {
       if (unlistenExternalUrl) unlistenExternalUrl();
-      if (unlistenPlugins) unlistenPlugins();
     };
   });
 
@@ -236,29 +239,25 @@
         keywords: "preferences options config",
         action: () => goto("/settings"),
       },
+      // Contas & cota: ⌘K troca a assinatura do CLI sem abrir a aba. Lê só o
+      // estado já carregado, então não há IPC no boot.
+      ...accountPaletteItems(
+        getAccounts().accounts,
+        {
+          group: get(t)("command_palette.group_nav"),
+          switchTo: (label) => `${get(t)("llm.accounts.palette_switch")} ${label}`,
+          openTab: get(t)("llm.accounts.title"),
+        },
+        { activate: (id) => void activateAccount(id), open: () => goto("/llm/accounts") },
+      ),
       {
-        id: "nav-tools",
-        label: get(t)("nav.tools"),
+        id: "nav-superpowers",
+        label: get(t)("nav.superpowers"),
         group: get(t)("command_palette.group_nav"),
-        keywords: "ferramentas tools utilities apps",
-        action: () => goto("/tools"),
+        keywords: "superpowers superpoderes league of legends lol extras",
+        action: () => goto("/superpowers"),
       },
-      // Cada ferramenta do catálogo entra na paleta com as mesmas
-      // palavras-chave da busca do hub, então ⌘K acha "instagram" também.
-      ...TOOLS.map((tool) => ({
-        id: `tool-${tool.id}`,
-        label: get(t)(`tools.catalog.${tool.id}.name`),
-        group: get(t)("tools.hub.title"),
-        keywords: [...tool.keywords, get(t)(`tools.categories.${tool.category}.name`)].join(" "),
-        action: () => goto(toolHref(tool)),
-      })),
-      {
-        id: "nav-marketplace",
-        label: get(t)("nav.marketplace"),
-        group: get(t)("command_palette.group_nav"),
-        keywords: "plugins extensions store",
-        action: () => goto("/marketplace"),
-      },
+      { id: "nav-help", label: get(t)("nav.help"), group: get(t)("command_palette.group_nav"), keywords: "help ajuda guias docs assinatura agente monitor", action: () => goto("/help") },
       {
         id: "nav-about",
         label: get(t)("nav.about"),
@@ -290,6 +289,7 @@
   }
 
   $effect(() => {
+    if (bareWindow) return;
     if (settings?.download.clipboard_detection) {
       onClipboardUrl((clipboardUrl) => {
         queueExternalPrefill({ action: "prefill", url: clipboardUrl, source: "clipboard" });
@@ -321,39 +321,41 @@
     buildCommandPaletteItems();
   });
 
-  let { children }: { children: Snippet } = $props();
+  // Icon-only sidebar. The state is a setting so it survives restarts and
+  // follows the user across windows; ⌃⌘S (Ctrl+Shift+S off macOS) toggles it.
+  let sidebarCollapsed = $derived(getSettings()?.appearance?.sidebar_collapsed ?? false);
 
-  const VACUUM_LAST_RUN_KEY = "study.library.auto_vacuum.last_run";
+  $effect(() => {
+    document.documentElement.setAttribute("data-sidebar", sidebarCollapsed ? "collapsed" : "expanded");
+  });
 
-  async function checkAutoVacuum() {
-    try {
-      const now = Date.now();
-      const lastRunStr = localStorage.getItem(VACUUM_LAST_RUN_KEY);
-      const lastRun = lastRunStr ? parseInt(lastRunStr, 10) : 0;
-
-      if (now - lastRun > 7 * 24 * 60 * 60 * 1000) {
-        await invoke("db_vacuum");
-        localStorage.setItem(VACUUM_LAST_RUN_KEY, String(now));
-      }
-    } catch {}
+  function toggleSidebar() {
+    updateSettings({ appearance: { sidebar_collapsed: !sidebarCollapsed } }).catch(() => {
+      // settings IPC is unavailable in the browser preview; nothing to persist
+    });
   }
 
-  onMount(() => {
-    void checkAutoVacuum();
-  });
+  function onSidebarShortcut(e: KeyboardEvent) {
+    if (bareWindow || e.key.toLowerCase() !== "s" || e.altKey) return;
+    const combo = isMac() ? e.ctrlKey && e.metaKey && !e.shiftKey : e.ctrlKey && e.shiftKey && !e.metaKey;
+    if (!combo) return;
+    e.preventDefault();
+    toggleSidebar();
+  }
+
+  let { children }: { children: Snippet } = $props();
+
 </script>
 
-{#if isStreamPopout}
-  <div class="stream-popout">
-    {@render children()}
-  </div>
+<svelte:window onkeydown={onSidebarShortcut} />
+
+{#if bareWindow}
+  {@render children()}
 {:else}
 <div class="shell" data-reduce-motion={settings?.accessibility?.reduce_motion} data-reduce-transparency={settings?.accessibility?.reduce_transparency}>
-  {#if !hideAppSidebar}
-    <AppSidebar {primaryNav} {appNav} {pluginNav} {badgeLabel} {chatBadgeCount} />
-  {/if}
+  <AppSidebar {primaryNav} {appNav} {badgeLabel} badgeCount={counts.badge} collapsed={sidebarCollapsed} onToggleCollapsed={toggleSidebar} />
 
-  <div class="shell-body">
+  <div class="shell-body" style:--shell-bottom-inset={`${shellLayout.bottomInset}px`}>
     <AppToolbar />
 
     {#if ytdlpMissing && !ytdlpDismissed}
@@ -377,13 +379,9 @@
       </div>
     {/if}
 
-    <main id="main-content" class="content">
+    <main id="main-content" class="content" class:ds-scope={designScope} data-ds-preset={designScope ? workspaceDesign.preset : undefined} data-ds-mode={designScope ? workspaceDesign.resolvedMode : undefined}>
       <div class="mac-pane" class:mac-pane--flush={isFlushRoute}>
-        {#if isStudyRoute}
-          <div class="study-shell">
-            {@render children()}
-          </div>
-        {:else if isCoreRoute}
+        {#if isCoreRoute}
           <div class="core-shell" class:core-shell--flush={isFlushRoute}>
             {@render children()}
           </div>
@@ -394,11 +392,15 @@
         {/if}
       </div>
     </main>
+
+    <DownloadStatusBar />
   </div>
 </div>
 {/if}
 
+{#if !bareWindow}
 <Toast />
+<McpAuthPrompt />
 <CommandPalette />
 
 {#if showOnboarding && OnboardingWizard}
@@ -428,6 +430,7 @@
 {#if RecoveryDialog}
   <RecoveryDialog />
 {/if}
+{/if}
 
 <style>
   .shell {
@@ -440,6 +443,7 @@
   }
 
   .shell-body {
+    padding-block-end: var(--shell-bottom-inset, 0px);
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -470,20 +474,6 @@
     overflow: hidden;
   }
 
-  .study-shell {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    min-height: 0;
-    overflow: hidden;
-  }
-
-  .stream-popout {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: var(--bg);
-  }
 
   .ytdlp-banner {
     display: flex;

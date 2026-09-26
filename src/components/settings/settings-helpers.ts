@@ -2,7 +2,6 @@ import { invoke } from "@tauri-apps/api/core";
 import { open } from "@tauri-apps/plugin-dialog";
 import { updateSettings, getSettings } from "$lib/stores/settings-store.svelte";
 import { loadTranslations, locale, t } from "$lib/i18n";
-import { showToast } from "$lib/stores/toast-store.svelte";
 import { get } from "svelte/store";
 
 export async function chooseCookieFile() {
@@ -74,16 +73,6 @@ export async function loadDeps(): Promise<DependencyStatus[]> {
     return await invoke<DependencyStatus[]>("check_dependencies");
   } catch {
     return [];
-  }
-}
-
-export async function installDep(name: string): Promise<void> {
-  const tt = get(t);
-  try {
-    await invoke("install_dependency", { name });
-  } catch (e: any) {
-    showToast("error", typeof e === "string" ? e : e.message ?? (tt("common.error") as string));
-    throw e;
   }
 }
 

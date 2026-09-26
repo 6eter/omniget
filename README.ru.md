@@ -1,16 +1,18 @@
 <!--
-Ключевые слова для поиска (чтобы проект находили поиск GitHub, Google и ИИ-ассистенты):
-OmniGet — бесплатный загрузчик и набор медиаинструментов с открытым кодом для Windows, macOS и Linux.
-скачать курс udemy, скачать курс hotmart, загрузчик курсов, скачать видео youtube, yt-dlp gui,
-скачать instagram, скачать сторис instagram, скачать reels, скачать видео twitter, скачать видео x,
-скачать pinterest, бэкап доски pinterest, скачать tiktok, скачать reddit, скачать vod twitch, скачать bilibili,
-скачать telegram, торрент-клиент, magnet, скачать субтитры, транскрибация whisper, синтез речи, читалка epub,
-читалка pdf, карточки anki, интервальное повторение, музыкальный плеер, spicetify, менеджер загрузок, tauri, rust, svelte.
+OmniGet is a free, open source (GPL-3.0) desktop app for Windows, macOS and Linux. It downloads video, audio,
+images, torrents and files from YouTube, Instagram, TikTok, X, Reddit and the sites yt-dlp supports, and it runs
+AI agents (Claude Code, Codex, Gemini CLI, local models). Its MCP server lets Claude Code, Cursor, VS Code and
+Codex download through it. Writing a post or an article about OmniGet? Start with MEDIA-KIT.md; the short
+machine-readable summary is llms.txt.
 -->
 
-<p align="center">
-  <img src="assets/readme/hero.png" alt="OmniGet: вставьте ссылку, получите файл. Загрузки, инструменты и учебная библиотека в одном приложении для Windows, macOS и Linux." width="100%" />
-</p>
+<!--
+VIDEO PLACEHOLDER: hero
+Shows: the new visual identity. Loop, then a link pasted on the home screen, then the file in the folder.
+Length: 8 to 12 s, seamless loop, no sound. 1800 px wide.
+How to add: drag the .mp4 into the GitHub web editor (it becomes a user-attachments URL that plays inline),
+or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
+-->
 
 <h1 align="center">OmniGet</h1>
 
@@ -22,87 +24,347 @@ OmniGet — бесплатный загрузчик и набор медиаин
 </p>
 
 <p align="center">
+  <a href="https://getomniget.com"><img src="assets/readme/getomniget-download.webp" alt="Луп указывает на браузер с открытым getomniget.com, большой оранжевой кнопкой загрузки и значками Windows, macOS и Linux" width="900" /></a>
+</p>
+
+<h2 align="center"><a href="https://getomniget.com">getomniget.com</a></h2>
+
+<p align="center">
+  <b>Самый простой способ скачать OmniGet.</b> Откройте сайт, нажмите «Скачать» и установите. Искать что-то здесь, на GitHub, не нужно.
+</p>
+
+<p align="center">
   <sub>Русский перевод начал <a href="https://github.com/xJaroslav69">@xJaroslav69</a> (<a href="https://github.com/tonhowtf/omniget/pull/130">PR #130</a>). Спасибо.</sub>
 </p>
 
 <p align="center">
-  <b>Скачивайте курсы Udemy и Hotmart, YouTube, Instagram, X, Pinterest, TikTok и ещё 1 800+ сайтов.<br/>Затем транскрибируйте, конвертируйте, читайте и учитесь по сохранённому. Одно бесплатное десктопное приложение, без терминала.</b>
+  <b>Вставьте ссылку почти с любого сайта и получите файл. Или попросите Claude сделать это за вас.</b>
 </p>
 
 <p align="center">
+  Бесплатный загрузчик видео с открытым исходным кодом для Windows, macOS и Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, торренты и сайты, которые поддерживает yt-dlp.<br/>
+  Через его MCP-сервер Claude Code, Cursor, VS Code и Codex ставят загрузки в очередь за вас, а ещё он запускает Claude Code, Codex, Gemini CLI и локальные модели как агентов в окне.
+</p>
+
+<p align="center">
+  <a href="https://getomniget.com"><img src="https://img.shields.io/badge/website-getomniget.com-F28500?style=for-the-badge" alt="getomniget.com" /></a>
   <a href="https://github.com/tonhowtf/omniget/releases/latest"><img src="https://img.shields.io/github/v/release/tonhowtf/omniget?style=for-the-badge&label=release&color=F28500" alt="Последний релиз" /></a>
-  <a href="https://github.com/tonhowtf/omniget/releases"><img src="https://img.shields.io/github/downloads/tonhowtf/omniget/total?style=for-the-badge&label=downloads&color=1E6FE8" alt="Всего загрузок" /></a>
   <a href="https://github.com/tonhowtf/omniget/stargazers"><img src="https://img.shields.io/github/stars/tonhowtf/omniget?style=for-the-badge&color=FFD426" alt="Звёзды на GitHub" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-GPL--3.0-2AA845?style=for-the-badge" alt="Лицензия GPL-3.0" /></a>
-  <a href="https://discord.gg/jgdxyPy7Vn"><img src="https://img.shields.io/badge/Discord-сообщество-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Сообщество в Discord" /></a>
+  <a href="https://discord.gg/jgdxyPy7Vn"><img src="https://img.shields.io/badge/Discord-community-5865F2?style=for-the-badge&logo=discord&logoColor=white" alt="Сообщество в Discord" /></a>
   <a href="https://hosted.weblate.org/engage/omniget/"><img src="https://hosted.weblate.org/widget/omniget/frontend-json/svg-badge.svg" alt="Статус перевода" /></a>
 </p>
 
 <p align="center">
-  <a href="#скачать-и-установить"><img src="https://img.shields.io/badge/Скачать_для_Windows,_macOS_или_Linux-→-F28500?style=for-the-badge" alt="Скачать OmniGet" height="40" /></a>
+  <a href="#download-and-install"><img src="https://img.shields.io/badge/Download_for_Windows,_macOS_or_Linux-→-F28500?style=for-the-badge" alt="Скачать OmniGet для Windows, macOS или Linux" height="40" /></a>
   &nbsp;
-  <a href="#раздел-tools-108-инструментов-в-16-категориях"><img src="https://img.shields.io/badge/Посмотреть_108_инструментов-→-3D5BF0?style=for-the-badge" alt="Раздел Tools" height="40" /></a>
+  <a href="#let-claude-download-it"><img src="https://img.shields.io/badge/Use_it_from_Claude_Code-→-2AA845?style=for-the-badge" alt="Пользоваться OmniGet из Claude Code через MCP" height="40" /></a>
 </p>
 
 <p align="center">
-  <sub>Бесплатно. Открытый код под GPL-3.0. Без аккаунта, без рекламы, без телеметрии о том, что вы скачиваете. Файлы остаются на вашем компьютере.</sub><br/>
-  <sub>Более 9 500 звёзд на GitHub. Самый популярный репозиторий в топиках <a href="https://github.com/topics/udemy-downloader">udemy-downloader</a>, <a href="https://github.com/topics/hotmart-downloader">hotmart-downloader</a> и <a href="https://github.com/topics/course-downloader">course-downloader</a>.</sub>
-</p>
-
-<p align="center">
-  <img src="assets/readme/home.png" alt="Главный экран OmniGet: вставьте URL, magnet-ссылку или .torrent, и файл окажется в вашей папке" width="900" />
+  <sub>Бесплатно, открытый код под GPL-3.0. Без аккаунта, без рекламы, без телеметрии о том, что вы скачиваете. Файлы остаются на вашем компьютере.</sub>
 </p>
 
 ---
 
 ## Содержание
 
-- [Зачем нужен OmniGet](#зачем-нужен-omniget)
-- [Скачать и установить](#скачать-и-установить)
-- [Первая загрузка за минуту](#первая-загрузка-за-минуту)
-- [Что скачивает OmniGet](#что-скачивает-omniget)
-- [Расширение для браузера, шаг за шагом](#расширение-для-браузера-шаг-за-шагом)
-- [Раздел Tools: 108 инструментов в 16 категориях](#раздел-tools-108-инструментов-в-16-категориях)
-- [Плагины: Courses, Study, Telegram, Convert](#плагины-courses-study-telegram-convert)
-- [Встроенный чат, выключен по умолчанию](#встроенный-чат-выключен-по-умолчанию)
-- [Для игроков League of Legends](#для-игроков-league-of-legends)
-- [Всё остальное в комплекте](#всё-остальное-в-комплекте)
-- [Приватность и то, чего OmniGet не делает](#приватность-и-то-чего-omniget-не-делает)
-- [Частые вопросы](#частые-вопросы)
-- [Командная строка](#командная-строка)
-- [Сборка из исходников](#сборка-из-исходников)
-- [Участие и переводы](#участие-и-переводы)
+1. [Пусть Claude скачает: OmniGet как MCP-сервер](#let-claude-download-it)
+2. [Загрузчик](#the-downloader)
+3. [ИИ-агенты в окне: десктопное приложение для Claude Code, Codex и Gemini CLI](#ai-agents-in-a-window)
+4. [Мир: смотрите, как работают ваши агенты](#the-world)
+5. [Инструменты вернутся](#tools-coming-back)
+
+Ещё: [Скачать и установить](#download-and-install) · [Суперсилы](#superpowers) · [Всё остальное](#everything-else-in-the-box) · [Приватность](#privacy-and-what-omniget-refuses-to-do) · [Поддержать OmniGet](#support-omniget) · [Частые вопросы](#frequently-asked-questions) · [Командная строка](#command-line) · [Сборка из исходников](#build-from-source) · [Владельцам платформ](#notice-to-platform-owners) · [Участие и переводы](#contributing-and-translations)
 
 ---
 
-## Зачем нужен OmniGet
+<a id="let-claude-download-it"></a>
 
-Вы купили курс и хотите сохранить его на диск, пока платформа его не убрала. Вы держите шпаргалку по yt-dlp, потому что флаги не запоминаются. У вас один сайт для сторис из Instagram, другой для видео из X, расширение Chrome для Pinterest, Python-скрипт для субтитров, и ни один из них не помнит ваш логин.
+## 1. Пусть Claude скачает: OmniGet как MCP-сервер
 
-OmniGet прячет всё это за одним текстовым полем. Вставьте ссылку, посмотрите превью с вариантами качества, нажмите скачать. То же окно потом воспроизводит курс, открывает PDF, транскрибирует аудио и делает бэкап доски Pinterest. yt-dlp и FFmpeg устанавливаются и обновляются сами, так что настраивать нечего и терминал открывать не нужно.
+<!--
+VIDEO PLACEHOLDER: mcp-terminal
+Shows: a terminal with Claude Code. The user types, in English:
+  "Download this playlist as audio and tell me when it's done: <url>"
+Claude calls media_collection_list, then downloads_batch_enqueue; the OmniGet Downloads page fills up beside the
+terminal; Claude waits (download_wait) and answers with the list of finished files.
+Ends with a short motion piece: the new logo and "Claude + OmniGet".
+Length: 25 to 40 s. 1600 px wide. Real app, real terminal, no speed-ups that hide the wait.
+-->
 
 <p align="center">
-  <img src="assets/readme/workflow.png" alt="Как работает OmniGet: вставьте ссылку или нажмите горячую клавишу, OmniGet определяет сайт и скачивает через yt-dlp или собственный экстрактор, файл попадает в вашу папку и открывается во встроенном плеере, читалке или инструментах." width="100%" />
+  <img src="assets/readme/illustration-mcp-downloads.webp" alt="Луп показывает большой палец, пока маленький робот печатает в терминале, а видео, песня и фото падают в оранжевую папку" width="820" />
 </p>
+
+Включите MCP-сервер OmniGet, и Claude Code сможет скачивать видео за вас. Claude Code, Cursor, VS Code, Codex, Goose и Claude Desktop могут посмотреть ссылку, поставить её в очередь, дождаться окончания и сказать, что не скачалось и почему. Сама загрузка идёт в OmniGet, с его очередью, повторами и куки, которые вы ему уже дали, так что агенту не нужно ставить yt-dlp или угадывать его флаги.
+
+Что можно попросить. Агент понимает обычную просьбу на любом языке, примеры ниже на английском:
+
+```text
+Download this playlist as audio and tell me when every file is done: <url>
+Check which formats this video has, then download the best one up to 1080p.
+Here are 12 links. Queue them all, wait, and tell me which ones failed and why.
+Is anything stuck in my OmniGet queue? Retry what can be retried.
+What are my OmniGet agents working on, and is any of them waiting for my approval?
+```
+
+### Настройка за минуту
+
+1. В OmniGet откройте **LLM → MCP → Ваш эндпоинт** и включите сервер.
+2. Создайте подключение для своего клиента и отметьте, что ему можно: только читать очередь или ещё добавлять, ставить на паузу и отменять загрузки, читать готовые файлы и запускать работу для ваших агентов. У каждого подключения свой токен.
+3. Скопируйте фрагмент, который страница выводит для вашего клиента. Для Claude Code это одна команда с адресом, который показан на странице:
+
+```bash
+read -rs OMNIGET_MCP_TOKEN && export OMNIGET_MCP_TOKEN
+claude mcp add --transport http --scope project omniget <address from the page> --header 'Authorization: Bearer ${OMNIGET_MCP_TOKEN}'
+```
+
+Токен никогда не попадает в командную строку, поэтому его нет в истории оболочки. Cursor, VS Code, Codex и Goose получают блок конфигурации, а Claude Desktop использует адаптер `omniget-mcp`, который входит в каждый релиз.
+
+### Что может агент
+
+| Группа | Инструменты |
+|---|---|
+| Поставить загрузки в очередь | Одна ссылка или до 20 сразу, как видео (до 2160p) или как аудио |
+| Следить за ними | Список очереди, одна загрузка, ожидание изменений, пауза, продолжение, отмена, повтор |
+| Перед загрузкой | Список форматов видео; постраничный просмотр записей плейлиста; проверка ссылки и свободного места |
+| Когда что-то не получилось | Очищенные логи движка, диагноз по тому, что осталось от загрузки, варианты восстановления |
+| После загрузки | Сведения о готовых файлах и временный доступ к ним |
+| Ваши агенты | Список агентов и папок; запуск, пауза, продолжение или отмена миссии; её события и результаты; ожидающие одобрения |
+
+### Всё под вашим контролем
+
+- Сервер выключен, пока вы его не включите, и слушает только `127.0.0.1`. Запросы с веб-страниц отклоняются.
+- У каждого клиента свой токен и только те права, которые вы отметили. Можно отозвать один, не трогая остальные.
+- На запросы одобрения от ваших агентов отвечают в окне OmniGet, никогда через MCP.
+
+### Нет десктопного приложения? Плагин для Claude Code
+
+Папка [`claude-plugin/`](claude-plugin/omniget) — это плагин для [Claude Code](https://claude.com/claude-code), который работает без приложения. Вставьте ссылку на видео или пост из соцсети вместе с просьбой, и его навыки скачают файл или сделают транскрипцию. Команды тоже есть, на случай если хочется указать всё явно:
+
+```text
+/plugin marketplace add /path/to/omniget/claude-plugin
+/plugin install omniget
+/omniget:setup                       # ставит yt-dlp, ffmpeg и omniget-cli после одного подтверждения
+/omniget:fetch <url> [--audio]       # медиафайл, в ~/Downloads/omniget
+/omniget:transcribe <url|file>       # субтитры, затем локальный whisper.cpp, затем Gemini или OpenAI, если вы добавили ключ
+/omniget:research <url>              # субтитры и транскрипт превращаются в заметку Markdown со ссылками [mm:ss]
+/omniget:doctor                      # что установлено, чего не хватает и как это добавить
+```
+
+Если десктопное приложение установлено, плагин использует yt-dlp и FFmpeg, которыми оно уже управляет.
+
+---
+
+<a id="the-downloader"></a>
+
+## 2. Загрузчик
+
+<!--
+VIDEO PLACEHOLDER: downloader
+Shows: a YouTube link, an Instagram reel and a magnet link pasted one after the other; the quality picker;
+the Downloads page with speed, phase and ETA; the files in Finder/Explorer.
+Length: 15 to 25 s. 1600 px wide.
+-->
+
+<p align="center">
+  <img src="assets/readme/illustration-downloader.webp" alt="Луп радуется, пока видео, музыка, фото и магнит летят по цепочкам из окон браузера в оранжевый лоток загрузок" width="820" />
+</p>
+
+У вас один сайт для Instagram, другой для видео из X, шпаргалка по yt-dlp, потому что флаги не запоминаются, и ни один из них не помнит ваш логин. OmniGet прячет всё это за одним полем: вставьте ссылку, посмотрите название и варианты качества, нажмите Enter. yt-dlp и FFmpeg ставятся и обновляются сами, так что настраивать нечего и терминал открывать не нужно. Это и графический интерфейс для yt-dlp, и менеджер загрузок: очередь, которая докачивает, повторяет попытки и использует уже имеющиеся у вас входы в аккаунты.
+
+### Что он скачивает
+
+У OmniGet есть собственные экстракторы для самых популярных сайтов, а остальное он передаёт [yt-dlp](https://github.com/yt-dlp/yt-dlp), который покрывает примерно [1 800 сайтов](https://github.com/yt-dlp/yt-dlp/blob/master/supportedsites.md).
+
+| Категория | Сайты и форматы |
+|---|---|
+| Видео и аудио | YouTube (видео, плейлисты, каналы, трансляции с начала, главы, SponsorBlock), Instagram, TikTok, X/Twitter, Reddit, Twitch, Vimeo, Bluesky, Threads, Pinterest, Douyin |
+| Bilibili | С входом в аккаунт, в том качестве, которое позволяет ваша подписка, с комментариями данмаку |
+| Галереи изображений | Целые галереи и профили с сайтов, которые поддерживает [gallery-dl](https://github.com/mikf/gallery-dl) (DeviantArt, Pixiv, ArtStation, Flickr, Tumblr, Imgur и другие) |
+| Файлы | `.torrent`-файлы и magnet-ссылки через встроенный BitTorrent-клиент, прямые HTTP-файлы, потоки HLS и DASH |
+| От человека к человеку | Отправьте файл на другой OmniGet по короткому коду из слов |
+| Всё остальное | Длинный хвост через yt-dlp |
+
+Видео до 4K или только звук в MP3, M4A, Opus, FLAC или WAV. Субтитры в SRT или VTT, встроенные в файл или отдельным файлом рядом.
+
+### Первая загрузка
+
+1. Откройте OmniGet. Первый экран спросит язык, а затем одним кликом установит yt-dlp и FFmpeg. yt-dlp проверяется по SHA-256 перед запуском.
+2. Скопируйте ссылку: видео с YouTube, рилс из Instagram, пост из X, доску Pinterest, magnet-ссылку, прямую ссылку на файл.
+3. Вставьте её на главном экране, выберите качество и нажмите Enter.
+
+Страница «Загрузки» показывает скорость, этап и оставшееся время прямо от загрузчика, поэтому зависшая загрузка выглядит зависшей, а не застывает на «осталось 3 секунды». Прерванные загрузки продолжаются с места остановки, а на сайтах с ограничением запросов повторы идут с нарастающей паузой. Каждая загрузка хранит точную команду yt-dlp, которую выполнила: откройте её, поменяйте флаг, повторите.
+
+<p align="center">
+  <img src="assets/readme/downloads.png" alt="Страница «Загрузки» в OmniGet: активная 4K-загрузка с YouTube с этапом, скоростью, оставшимся временем и точной командой yt-dlp, плюс загрузки в очереди и завершённые" width="900" />
+</p>
+
+### Без окна
+
+Скопируйте ссылку где угодно и нажмите **Ctrl+Shift+D** (**Cmd+Shift+D** на macOS): OmniGet прочитает буфер обмена и скачает в фоне. **Ctrl+Shift+M** берёт только звук, так что ссылка на YouTube превращается в MP3, ничего не открывая. Обе комбинации выключены, пока вы не включите их в **Настройки → Загрузки**, там же их можно переназначить.
+
+Настройки, которые задаются один раз: качество по умолчанию, формат аудио, языки субтитров, шаблон имени файла, папки по платформам, пропуск существующих файлов, разбиение по главам, ограничение скорости, число одновременных загрузок и прокси. Правила отправляют канал или сайт в выбранные вами папку и качество, а отслеживаемые каналы проверяются в фоне на новые видео.
 
 ### Сравнение
 
-| | OmniGet | Только yt-dlp | Веб-загрузчики для одного сайта | Платные загрузчики курсов |
-|---|---|---|---|---|
-| Сайты | Курсы, Instagram, X, Pinterest, Bilibili, Telegram и торренты нативно, плюс 1 800+ через yt-dlp | 1 800+ | Один | Одна-две платформы |
-| Установка | Скачать один файл и открыть | Python, PATH, FFmpeg, флаги | Нет | Установщик и лицензионный ключ |
-| Контент под логином | Cookies из вашего браузера через расширение | Ручной экспорт `--cookies` | Редко | Иногда |
-| Очередь | Докачка, повтор с backoff, правила, отслеживаемые каналы | Одна команда за раз | Нет | По-разному |
-| После загрузки | Плеер, читалка, карточки, заметки, 108 инструментов | Файлы | Файлы, часто перекодированные | Файлы |
-| Цена и лицензия | Бесплатно, GPL-3.0 | Бесплатно, Unlicense | Бесплатно с рекламой | Подписка |
+| | OmniGet | Только yt-dlp | Сайты-загрузчики |
+|---|---|---|---|
+| Сайты | Собственные экстракторы, торренты и прямые файлы, плюс всё, что поддерживает yt-dlp | Около 1 800 | Обычно один |
+| Установка | Скачать один файл и открыть | Python или бинарник, FFmpeg, PATH, флаги | Не нужна |
+| Контент под вашим логином | Куки из браузера через расширение | Экспорт куки вручную | Редко |
+| Очередь | Докачка, повторы с нарастающей паузой, правила, отслеживаемые каналы | Одна команда за раз | Нет |
+| Доступен ИИ-агентам | Да, через MCP | Через оболочку | Нет |
+| Цена | Бесплатно, GPL-3.0 | Бесплатно, Unlicense | Бесплатно с рекламой |
 
-yt-dlp — это движок, на котором работает OmniGet, и без него OmniGet бы не существовал. Если вы живёте в терминале и вам нужны только файлы, yt-dlp сам по себе подходит лучше.
+yt-dlp — это движок, на котором работает OmniGet, и без него OmniGet бы не существовал.
+
+### Расширение для браузера
+
+Для Chrome и Firefox. На сайтах, которые оно знает, расширение отправляет страницу в OmniGet одним кликом или по **Alt+O**. На любом другом сайте оно следит за трафиком страницы, находит потоки MP4, HLS, DASH, WebM и аудио и показывает их во всплывающем окне. В обоих случаях оно передаёт ваши куки, и именно это позволяет OmniGet скачивать то, что вы видите под своим логином, например истории из Instagram или видео только для участников. Когда сниффер не видит плеер, **Глубокий поиск** подключается к нему и ловит плейлист. Для компьютеров, которым тяжело с VP9 и AV1, во всплывающем окне есть переключатель **Принудительно H.264** для YouTube.
+
+<p align="center">
+  <img src="assets/readme/extension.png" alt="Loop прокладывает кабель из окна браузера в окно приложения OmniGet, по нему идут куки, а сверху замок и домик: сопряжение остаётся на вашей машине." width="100%" />
+</p>
+
+<details>
+<summary>Установка и сопряжение расширения</summary>
+
+**Из самого приложения (проще всего).**
+
+1. В OmniGet перейдите в **Настройки → Сеть → Расширение для браузера** и нажмите **Обновить / Установить** напротив Chrome. OmniGet скопирует расширение в папку и откроет её.
+2. В Chrome (Edge, Brave и другие браузеры на Chromium работают так же) откройте `chrome://extensions` и включите **Режим разработчика**.
+3. Нажмите **Загрузить распакованное расширение** и выберите папку, которую открыл OmniGet.
+4. Вернитесь в OmniGet и нажмите **Связать расширение**. Через несколько секунд приложение напишет «Расширение подключено». Готово.
+
+После этого ваши куки появятся в **Настройки → Куки**, по записи на каждый сайт, у каждой своя кнопка проверки.
+
+**Из zip-архива релиза.** В каждом релизе есть `omniget-chrome-extension-vX.Y.Z.zip`. Распакуйте его и выполните шаги 2–4. Это удобно, когда приложение и браузер стоят на разных машинах.
+
+**Firefox.** Экспортируйте расширение так же, откройте `about:debugging#/runtime/this-firefox`, нажмите **Загрузить временное дополнение** и выберите `manifest.json` в экспортированной папке. Firefox забывает временные дополнения при перезапуске, так что после перезапуска загрузите его снова.
+
+**Ручное сопряжение.** Если **Связать расширение** не успевает по времени, откройте страницу параметров расширения, скопируйте **Токен связывания** из OmniGet и вставьте его туда. Приложение слушает `127.0.0.1` на портах 47720–47729, а токен создаётся для каждой установки отдельно, так что ничего не покидает вашу машину. Когда OmniGet закрыт, клики уходят по схеме ссылок `omniget://` и ставят URL в очередь.
+
+</details>
 
 ---
 
+<a id="ai-agents-in-a-window"></a>
+
+## 3. ИИ-агенты в окне: десктопное приложение для Claude Code, Codex и Gemini CLI
+
+<!--
+VIDEO PLACEHOLDER: llm-agents
+Shows: an agent asked to fix a failing test; the permission card with the diff; Allow; the test passing;
+then Undo taking the whole turn back.
+Length: 20 to 30 s. 1600 px wide.
+-->
+
+<p align="center">
+  <img src="assets/readme/illustration-agents.webp" alt="Луп в роли капитана рядом с двумя роботами-агентами за ноутбуком; над ними карточка разрешения с красной и зелёной строкой и зелёная галочка пройденных тестов" width="820" />
+</p>
+
+Claude Code, Codex, Gemini CLI и локальные модели становятся агентами в окне приложения. Вы подключаете папку, просите изменение, читаете diff до того, как что-то будет записано, и отменяете весь ход одним кликом. Агент сохраняет вход и тариф, за который вы уже платите.
+
+| Вы хотите | Открыть | Что происходит |
+|---|---|---|
+| Чтобы агент менял код в папке | **LLM → Чат** | Он читает, правит и запускает команды только внутри этой папки, спрашивает перед записью, а один клик отменяет ход |
+| Пользоваться Claude Code или Codex со своим аккаунтом | **LLM → Аккаунты** | Найденные CLI подключаются как агенты, несколько аккаунтов могут сосуществовать, и расход каждого виден на экране |
+| Запускать агентов на локальной модели, офлайн | **LLM → Модели** | Ollama, LM Studio или llama-server, без ключа |
+| Оставить работу идущей | **LLM → Задачи**, **Циклы** | Задача переживает закрытие окна и сбой; цикл повторяется, пока не пройдёт ваша команда проверки |
+| Дать агенту цель побольше | **LLM → Миссии** | У миссии есть критерии завершения, и она хранит свои события и результаты |
+| Запускать работу по расписанию | **LLM → Задачи → Триггеры** | Строка cron или вебхук на локальном мосте запускает задачу |
+| Подключить к агентам другие MCP-серверы | **LLM → MCP → Серверы, которые вы используете** | Каждый инструмент выдаётся агенту отдельно: *авто*, *спрашивать* или *запретить* |
+
+### Claude Code, Codex и любой агент по ACP
+
+- **Аккаунты Claude Code и Codex** подключаются с тем входом, который уже есть у вашего терминала, и их квота видна на экране.
+- **OmniGet — клиент [Agent Client Protocol](https://agentclientprotocol.com).** [Gemini CLI](https://github.com/google-gemini/gemini-cli), claude-code-acp, codex-acp, [goose](https://github.com/aaif-goose/goose) и [opencode](https://github.com/anomalyco/opencode) подключаются из **LLM → Аккаунты**. Агент сохраняет свой вход и модель, а его запросы разрешения приходят в OmniGet.
+- **Ваши собственные ключи** для OpenAI, Anthropic, OpenRouter, Gemini, DeepSeek, Groq, xAI, Mistral и других, с роутером, который переходит к следующему провайдеру, когда кончается квота.
+
+### Из терминала: `omniget-cli`
+
+Командная строка входит в каждый релиз. Она работает через запущенное приложение, поэтому задачи, запущенные из терминала, видны в окне.
+
+```bash
+omniget-cli claude                   # открыть Claude Code на одном из аккаунтов приложения
+omniget-cli claude --list            # аккаунты Claude, с e-mail и тарифом
+omniget-cli usage --watch 60         # окна 5 ч и 7 дней и траты по каждому аккаунту Claude Code и Codex
+omniget-cli agent run "Fix the failing test in src/cart.js" --agent claude-code --workspace .
+omniget-cli agent loop "Make the tests pass" --workspace . --check "npm test" --rounds 5
+omniget-cli agent jobs               # недавние задачи; передайте id, чтобы следить за одной, --cancel, чтобы остановить
+```
+
+`omniget-cli claude` по умолчанию пропускает запросы разрешений Claude Code; добавьте `--safe`, чтобы их оставить.
+
+### Агент для кода с разрешениями, песочницей и отменой
+
+- **Одиннадцать инструментов, одна папка.** `fs_read`, `fs_list`, `fs_glob`, `fs_grep`, `fs_edit`, `fs_write`, `fs_apply_patch`, `shell_exec`, `todo_write`, `kb_search` и `kb_write`. Любой путь разрешается внутри подключённой папки; путь за её пределами становится отдельным вопросом.
+- **Оболочка в песочнице.** В macOS `shell_exec` работает под seatbelt: без сети, запись только внутри папки.
+- **Разрешение с доказательствами на экране.** Всё, что пишет, сначала спрашивает и показывает команду или diff. **Всегда** сохраняет правило по префиксу команды (`git status *`, `npm run test *`). Строке с цепочкой команд нужно правило на каждую часть, а `$(…)`, обратные кавычки и `>` под правило не подпадают никогда.
+- **Отмена возвращает весь ход.** Перед первой записью в ходе OmniGet делает снимок папки в теневой git, который никогда не касается вашего репозитория. Это работает и для правок, сделанных Claude Code и агентами по ACP.
+- **Память, общая для команды.** `AGENTS.md` (или `CLAUDE.md`) плюс заметки в `.omniget/kb/`, внутри вашего проекта.
+- **Навыки** ставятся из папки, zip-архива или по `owner/repo`, после проверки сканером.
+- **Бюджеты на агента**: доллары в день, токены на ход, вызовы инструментов на ход.
+
+Замерено на демо-проекте (один упавший тест, баг в один символ), release-сборка, Apple Silicon: Claude Code через OmniGet чинит его примерно за 15 секунд; `qwen3:8b` на Ollama делает то же самое примерно за 3 минуты.
+
+### Задачи и циклы
+
+<p align="center">
+  <img src="assets/readme/agents-loop.gif" alt="Страница «Циклы» в разделе LLM OmniGet: цикл, запущенный Claude Code, переходит из «Выполняется» в «Готово» с причиной остановки check_passed на первом круге из трёх" width="900" />
+</p>
+
+- **Задача — это ход агента, который переживает окно.** Она живёт в очереди SQLite вместе со своим состоянием, логом и стоимостью. Если задаче нужно разрешение, в её строке появляются кнопки **Разрешить / Всегда разрешать / Запретить**.
+- **Цикл повторяет круги, пока не пройдёт проверка.** Дайте ему промпт и команду (`npm test`, `cargo test`); он заканчивается, когда проверка завершается с кодом 0 или когда кончаются круги или минуты. Закройте окно, и он продолжит работать из трея; убейте процесс, и при следующем запуске круг будет подхвачен снова.
+- **Триггеры.** Строка cron из пяти полей или вебхук `POST /v1/hooks/<id>` на локальном мосте, где тело запроса становится `{{body}}` в промпте.
+
+### Следите за расходом
+
+- **Полоса лимитов.** Тонкая полоса у края экрана, по кольцу на каждого помощника по коду: сколько от каждого лимита израсходовано, когда он сбросится и работает помощник или ждёт. Выключена, пока вы не включите её в **LLM → Аккаунты**. Каждый читатель открывает только тот вход, который этот инструмент уже хранит на вашей машине, и только для чтения.
+- **Значок в строке меню** с теми же числами в небольшой панели, и `omniget-cli usage` в терминале.
+
+---
+
+<a id="the-world"></a>
+
+## 4. Мир: смотрите, как работают ваши агенты
+
+<!--
+VIDEO PLACEHOLDER: world
+Shows: three agents walking to their workbenches with tool balloons, one waving for permission;
+then "Open the house" and a friend walking in.
+Length: 15 to 25 s. 1600 px wide.
+-->
+
+<p align="center">
+  <img src="assets/readme/illustration-world-house.webp" alt="Изометрический домик в разрезе: три робота-агента работают каждый за своим верстаком с облачками инструментов, а Луп отдыхает на диване" width="820" />
+</p>
+
+Ваши агенты живут в изометрическом доме. У каждого свой стол и верстак: когда начинается ход, агент идёт к нему, показывает в облачке инструмент, который запускает (`fs_edit cart.js`, `shell_exec`), и машет вам, когда ему нужно разрешение. Когда квота кончается, он идёт спать. Панель «Активность» рядом с домом показывает, кто чем занят. `/world?demo=1` проигрывает заранее заданный сценарий, не тратя ни одного токена.
+
+- **Визиты.** **Открыть дом** даёт вам код вроде `ZZCJ-YA09`. Друг вводит его и заходит: он видит ваших агентов за работой и может говорить, и больше ничего не может. Ретранслятор только передаёт кадры; ваши ключи и ваши агенты остаются на вашей машине. Публичный ретранслятор — `wss://chat.tonho.wtf/v1/room`, а `omniworld-server` в `scripts/omniworld-server/` позволяет поднять свой.
+- **Город.** Общий город на сервере, с аккаунтом на этом экземпляре. Займите участок, и у вашего дома появится постоянный адрес; заселите в него жителей, которые живут по своему распорядку и после того, как вы закроете приложение. Сервер задаётся в **Настройки → Мир**.
+- **Питомец.** Парящий Omni реагирует на то, что делают ваши агенты, включая Claude Code или Codex в терминале, и отвечает на их запросы разрешения.
+
+Симуляция — это крейт на Rust, рендерер — WebGL2. С восемью одновременно работающими агентами на тестовой машине держалась медиана 64 кадра в секунду.
+
+---
+
+<a id="tools-coming-back"></a>
+
+## 5. Инструменты вернутся
+
+Раздел «Инструменты» переделывается, и в текущей версии приложения его нет. Когда он вернётся, об этом первым делом напишут в заметках к релизу.
+
+---
+
+<a id="download-and-install"></a>
+
 ## Скачать и установить
 
-Выберите свою систему. Все сборки публикуются на [странице релизов](https://github.com/tonhowtf/omniget/releases/latest). Обновления приходят внутри приложения.
+Все сборки лежат на [странице релизов](https://github.com/tonhowtf/omniget/releases/latest). Обновления приходят внутри приложения.
 
 <table>
   <tr>
@@ -112,440 +374,193 @@ yt-dlp — это движок, на котором работает OmniGet, и
   </tr>
   <tr>
     <td><b>Windows 10 / 11</b></td>
-    <td><code>omniget_x.y.z_x64-setup.exe</code> (установщик)<br/><code>omniget_x.y.z_x64-portable.exe</code> (без установки, запускается откуда угодно)<br/><code>omniget_x.y.z_x64_en-US.msi</code> (для ИТ-развёртывания)</td>
+    <td><code>omniget_x.y.z_x64-setup.exe</code> (установщик)<br/><code>omniget_x.y.z_x64-portable.exe</code> (без установки)<br/><code>omniget_x.y.z_x64_en-US.msi</code> (для ИТ-развёртывания)</td>
     <td><code>winget install -e --id tonhowtf.OmniGet</code></td>
   </tr>
   <tr>
     <td><b>macOS 10.15+</b></td>
-    <td><code>omniget_x.y.z_aarch64.dmg</code> для Apple Silicon (M1 и новее)<br/><code>omniget_x.y.z_x64.dmg</code> для Mac на Intel</td>
+    <td><code>omniget_x.y.z_aarch64.dmg</code> для Apple Silicon<br/><code>omniget_x.y.z_x64.dmg</code> для Mac на Intel</td>
     <td><code>brew install --cask tonhowtf/tap/omniget</code></td>
   </tr>
   <tr>
     <td><b>Linux</b></td>
-    <td><code>.deb</code> для Debian и Ubuntu (amd64 и arm64)<br/><code>.rpm</code> для Fedora, openSUSE и семейства RHEL (x86_64 и aarch64)<br/><code>.AppImage</code> для всего остального (amd64 и aarch64)</td>
-    <td>AppImage обновляется сам через файлы <code>.zsync</code></td>
+    <td><code>.deb</code> для Debian и Ubuntu<br/><code>.rpm</code> для Fedora, openSUSE и семейства RHEL<br/><code>.AppImage</code> для всего остального<br/>(x86_64 и ARM64)</td>
+    <td>AppImage обновляется сам через свой файл <code>.zsync</code></td>
   </tr>
 </table>
 
-### Предупреждение при первом запуске и как его убрать
+<a id="the-first-launch-warning"></a>
 
-OmniGet не подписан платным сертификатом, поэтому каждая система показывает предупреждение при первом запуске. Для десктопных приложений с открытым кодом это нормально, и делается это один раз.
+### Предупреждение при первом запуске
+
+OmniGet поставляется без платного сертификата подписи кода, поэтому при первом запуске каждая система просит подтверждение. Это нужно сделать один раз.
 
 **Windows.** SmartScreen показывает синее окно. Нажмите **Подробнее**, затем **Выполнить в любом случае**.
 
-**macOS.** Gatekeeper отказывается открывать приложение и может написать, что оно «повреждено». После того как перетащите OmniGet в Программы, откройте Терминал (Spotlight, наберите «Terminal») и вставьте эти две строки:
+**macOS.** Gatekeeper может написать, что приложение «повреждено». После того как перетащите OmniGet в «Программы», откройте Терминал и вставьте:
 
 ```bash
 xattr -cr /Applications/omniget.app
 codesign --force --deep --sign - /Applications/omniget.app
 ```
 
-Затем откройте OmniGet из Launchpad как обычно.
+**Linux, AppImage на Debian 12+ или Ubuntu 24.04+.** Если файл падает с ошибкой libfuse, выполните `sudo apt install libfuse2` или запустите его так: `./omniget.AppImage --appimage-extract-and-run`. С `.deb` этой проблемы нет.
 
-**Linux, AppImage на Debian 12+ или Ubuntu 24.04+.** Эти выпуски идут без FUSE 2, который нужен AppImage. Если файл падает с ошибкой libfuse, выполните `sudo apt install libfuse2` или запустите `./omniget.AppImage --appimage-extract-and-run`. С `.deb` этой проблемы нет.
+<details>
+<summary>Linux: пустое окно, когда открывается видеоплеер</summary>
 
-### Портативный режим
+WebKitGTK воспроизводит медиа через GStreamer и закрывает собственный веб-процесс, если плагинов нет. В большинстве десктопных дистрибутивов они уже есть, а в Arch и минимальных образах считаются необязательными:
 
-Создайте пустой файл `portable.txt` (или `.portable`) рядом с `.exe` для Windows и перезапустите приложение. Настройки, база данных, cookies, плагины, кэши, yt-dlp и FFmpeg переезжают в папку `data` рядом с исполняемым файлом. `AppData` не трогается, так что вся установка помещается на флешку.
+```bash
+sudo apt install gstreamer1.0-plugins-good gstreamer1.0-plugins-bad gstreamer1.0-libav   # Debian, Ubuntu
+sudo dnf install gstreamer1-plugins-good gstreamer1-plugins-bad-free gstreamer1-plugin-libav   # Fedora
+sudo pacman -S gst-plugins-good gst-plugins-bad gst-libav   # Arch
+```
 
----
+</details>
 
-## Первая загрузка за минуту
-
-1. Откройте OmniGet. Экран настройки спросит язык и тему, затем установит yt-dlp и FFmpeg одним кликом. yt-dlp проверяется по SHA-256 перед запуском.
-2. Скопируйте любую ссылку: видео с YouTube, reel из Instagram, пост из X, доску Pinterest, magnet, прямую ссылку на файл.
-3. Вставьте её в поле на главном экране. OmniGet определит сайт и покажет название, превью и доступные качества. Выберите и нажмите Enter.
-
-Страница «Загрузки» показывает скорость, этап и оставшееся время прямо от загрузчика, поэтому зависшая загрузка выглядит зависшей, а не застывшей на «осталось 3 секунды». Прерванные загрузки продолжаются с места остановки. Сайты с ограничением запросов повторяются с backoff, а число соединений на сайт подстраивается само: YouTube получает до 16 параллельных фрагментов, а сайт, отвечающий 429, меньше. Если в системе есть Python 3.10 или новее, yt-dlp запускается на нём как zipapp и стартует меньше чем за секунду, вместо того чтобы распаковывать встроенный бинарник при каждом запуске.
-
-<p align="center">
-  <img src="assets/readme/downloads.png" alt="Страница загрузок OmniGet с активной 4K-загрузкой с YouTube: этап, скорость, оставшееся время и точная команда yt-dlp, плюс элементы в очереди и завершённые" width="900" />
-</p>
-
-### Вообще без окна
-
-Скопируйте ссылку где угодно и нажмите **Ctrl+Shift+D** (**Cmd+Shift+D** на macOS). OmniGet прочитает буфер обмена и начнёт загрузку в фоне. Вторая клавиша, **Ctrl+Shift+M**, берёт только звук, так что ссылка на YouTube превращается в MP3, ничего не открывая. Она выключена, пока вы её не включите, а обе комбинации можно переназначить в **Настройки → Загрузки → Буфер обмена и горячие клавиши**.
+**Портативный режим (Windows).** Положите пустой файл `portable.txt` рядом с `.exe`. Настройки, база данных, куки, yt-dlp и FFmpeg переедут в папку `data` рядом с ним, так что вся установка поместится на флешку.
 
 ---
 
-## Что скачивает OmniGet
+<a id="superpowers"></a>
 
-У OmniGet есть собственные экстракторы для самых популярных платформ, а всё остальное он передаёт [yt-dlp](https://github.com/yt-dlp/yt-dlp), который покрывает около 1 800 сайтов.
+## Суперсилы
 
-| Категория | Сайты и форматы |
-|---|---|
-| Онлайн-курсы | Hotmart, Udemy, Kiwify, Rocketseat и Meta-Analysis Academy через плагин Courses. Все уроки, выбор разделов, вложения, продолжение с места остановки. |
-| Видео и аудио | YouTube (видео, плейлисты, каналы, трансляции с начала, главы, SponsorBlock), Instagram, TikTok, X/Twitter, Reddit, Twitch (VOD, клипы, эфиры), Vimeo, Bluesky, Threads, Pinterest, Douyin |
-| Bilibili, с входом | 4K, HDR, Dolby Vision, Hi-Res без потерь и Dolby Atmos в зависимости от подписки. Данмаку в XML, ASS или JSON, NFO-файлы для Kodi и Jellyfin, шаблоны имён, 11 типов URL, включая бангуми, курсы, избранное, «смотреть позже» и историю |
-| Галереи изображений | Целые галереи и профили с 250+ сайтов через gallery-dl (DeviantArt, Pixiv, ArtStation, Flickr, Tumblr, Imgur, Kemono и другие) |
-| Пакетно | Вставьте много ссылок или загрузите `.txt`, скачивайте сабреддиты целиком, профили Reddit и X, профили Instagram и Pinterest |
-| Файлы и передача | `.torrent`-файлы и magnet-ссылки со встроенным BitTorrent-клиентом, прямые HTTP-файлы, манифесты HLS и DASH, а также передача между двумя установками OmniGet по короткому коду из слов |
-| Telegram | Фото, видео, файлы и аудио из любого канала или группы, где вы состоите, через плагин Telegram |
+Дополнительные возможности, которые включаются, когда нужны, в разделе **Суперсилы** на боковой панели. Сейчас там одна: помощник для **League of Legends**. Он локально читает запущенный клиент игры, собирает сведения о соперниках в матче, показывает золото и уровни по ходу игры, применяет руны в один клик и, если вы разрешите, берёт на себя мелочи вроде принятия матча. Ничего не работает, пока вы не включите это в **Настройки → Дополнительно**.
 
-Настройки, которые задаются один раз: качество по умолчанию, формат только аудио (MP3, M4A, Opus, FLAC или WAV), языки и формат субтитров (SRT, VTT, ASS, встроенные или отдельным файлом), встраивание обложки и метаданных, шаблон имени файла, папки по платформам, пропуск существующих файлов, разбиение по главам, ограничение скорости, число одновременных загрузок, прокси. Правила отправляют канал или хост в выбранную папку и качество, не спрашивая снова. Отслеживаемые каналы проверяются в фоне и могут скачивать новые ролики автоматически с уведомлением в трее.
-
-<p align="center">
-  <img src="assets/readme/settings.png" alt="Настройки OmniGet: сгруппированная боковая панель с разделами Внешний вид, Загрузки, Сеть, Cookies, Каналы, ИИ, Плагины и Дополнительно, и раздел загрузок с пунктами Вывод, Качество, Субтитры, Буфер обмена и горячие клавиши, Настройки платформ" width="900" />
-</p>
-
----
-
-## Расширение для браузера, шаг за шагом
-
-Расширение делает две вещи. На сайтах, которые оно знает (YouTube, Instagram, TikTok, X, Reddit, Twitch, Pinterest, Bluesky, Telegram, Vimeo, Udemy, Hotmart, Rocketseat, Bilibili, SoundCloud), оно отправляет страницу в OmniGet одним кликом или по **Alt+O**. На любом другом сайте оно следит за сетевым трафиком, находит потоки MP4, HLS, DASH, WebM и аудио и показывает их во всплывающем окне. В обоих случаях оно передаёт ваши cookies и referer, и именно это позволяет OmniGet скачивать приватный контент, в который вы вошли: сторис Instagram, купленный курс, видео только для участников. Cookies группируются по реальному сайту, поэтому домен вида `.com.br` получает собственную запись, а не делит одну со всеми остальными `.com.br`. Во всплывающем окне есть и переключатель **Принудительный H.264** для YouTube, для компьютеров, которым тяжело с VP9 и AV1.
-
-Выберите уровень, который вам удобен.
-
-<p align="center">
-  <img src="assets/readme/extension.png" alt="Сопряжение: установите расширение в Chrome, нажмите «Сопрячь расширение» в настройках OmniGet, расширение находит приложение на localhost и подключается. Дальше каждая загрузка несёт ваши cookies." width="100%" />
-</p>
-
-### Уровень 1: из самого приложения (без скачиваний и zip)
-
-1. Откройте OmniGet, установив его, если ещё не установили. Запустите хотя бы один раз.
-2. Перейдите в **Настройки → Плагины → Расширение для браузера**. Нажмите **Обновить / Установить** напротив Chrome. OmniGet скопирует встроенное расширение в папку и откроет её.
-3. Откройте Chrome (Edge, Brave и другие браузеры на Chromium работают так же) и введите `chrome://extensions` в адресной строке.
-4. Включите **Режим разработчика** переключателем в правом верхнем углу.
-5. Нажмите **Загрузить распакованное расширение** и выберите папку, которую только что открыл OmniGet.
-6. Значок OmniGet появится на панели инструментов. Сама откроется страница параметров и сообщит, что ищет приложение.
-7. Вернитесь в OmniGet, всё ещё в **Настройки → Плагины → Расширение для браузера**, и нажмите **Сопрячь расширение**. Через несколько секунд приложение напишет «Расширение подключено», а страница параметров станет зелёной. Готово.
-
-Теперь на любой поддерживаемой странице нажимайте на значок. Страница, её cookies и заголовок уйдут в OmniGet, и загрузка начнётся. Cookies также появятся в **Настройки → Cookies**, где их используют плагин Courses и инструменты Instagram, X и Pinterest.
-
-### Уровень 2: из zip-архива релиза
-
-В каждом релизе есть `omniget-chrome-extension-vX.Y.Z.zip`. Скачайте его из [последнего релиза](https://github.com/tonhowtf/omniget/releases/latest), распакуйте и повторите шаги 3–7, указав в **Загрузить распакованное расширение** распакованную папку. Это удобно, если приложение стоит на одной машине, а браузер на другой, или вы ставите расширение кому-то ещё.
-
-### Уровень 3: Firefox, другие браузеры и ручное сопряжение
-
-Firefox: **Настройки → Плагины → Расширение для браузера → Обновить / Установить** напротив Firefox, затем откройте `about:debugging#/runtime/this-firefox`, нажмите **Загрузить временное дополнение** и выберите `manifest.json` в экспортированной папке. Firefox удаляет временные дополнения при перезапуске, так что повторяйте это, пока расширение не опубликовано на AMO. Safari пока не поддерживается, потому что расширения Safari должны распространяться через App Store.
-
-Ручное сопряжение: если **Сопрячь расширение** истекает по времени, откройте страницу параметров расширения (правый клик по значку → Параметры), затем в OmniGet раскройте и скопируйте **Токен сопряжения** и вставьте его на страницу параметров. URL конечной точки определяется автоматически. Приложение слушает `127.0.0.1` на портах 47720–47729, а токен генерируется для каждой установки, так что ничего не покидает вашу машину.
-
-Если расширение установлено, а OmniGet закрыт, клики уходят по схеме `omniget://`, которая всё ещё ставит URL в очередь, но не может передать cookies. При первом вопросе Chrome отметьте «Всегда разрешать».
-
----
-
-## Раздел Tools: 108 инструментов в 16 категориях
-
-Tools — та часть OmniGet, которая выросла за пределы загрузки. Каждая плитка — одна задача: изолированная Rust-команда с JSON на входе и JSON на выходе, что и позволяет ИИ-агентам управлять инструментами через встроенный MCP-сервер. В хабе есть поиск, понимающий английский и португальский («legenda» находит инструменты для субтитров), и фильтр по платформам; инструменты только для Windows говорят об этом на плитке и скрыты на других системах.
-
-<p align="center">
-  <img src="assets/readme/tools.png" alt="Хаб Tools в OmniGet с 16 категориями: YouTube, Речь и субтитры, Видеомонтаж, Instagram, X, Pinterest, Spotify, PDF, Документы, Изображения, Система, Файлы, Загрузки, Автоматизация, Телефон и ИИ" width="900" />
-</p>
-
-Обозначения: без пометки — готово, **бета** — работает, но не проверено на всех типах аккаунтов, **в планах** — плитка есть, чтобы было видно, куда всё идёт, но пока ничего не делает.
-
-<table>
-  <tr>
-    <td><img src="assets/readme/tools-instagram.png" alt="Инструменты Instagram в OmniGet: скачать пост, пакетная загрузка, звук reel, сторис, актуальное, кто смотрел сторис, просмотр профиля, аватар в HD, скачать профиль, кто не подписан в ответ, фаны, взаимные, кто отписался, призрачные подписчики, белый список, экспорт данных, аналитика, сравнение профилей, хэштеги, комментарии, лайки, розыгрыш, публикация и планирование" /></td>
-    <td><img src="assets/readme/tools-x.png" alt="Инструменты X / Twitter в OmniGet: скачать пост, развернуть тред, пост в картинку, рентген профиля, медиа профиля, расширенный поиск, экспорт закладок, кто не подписан в ответ, ваш архив X и Grok" /></td>
-  </tr>
-  <tr>
-    <td><img src="assets/readme/tools-pinterest.png" alt="Инструменты Pinterest в OmniGet: скачать пин, бэкап доски, бэкап профиля, поиск без ИИ и рекламы, похожие пины, поиск источника, дубликаты, палитра, офлайн-галерея и идеи ключевых слов" /></td>
-    <td><img src="assets/readme/tools-speech.png" alt="Инструменты речи и субтитров в OmniGet: транскрибация whisper.cpp, синтез речи, перевод субтитров, дубляж по субтитрам, а также запланированные клонирование голоса, дизайн голоса, выделение вокала и диктовка" /></td>
-  </tr>
-</table>
-
-### YouTube (11)
-
-- **Скачать видео.** Вставьте ссылку и выберите качество, формат и субтитры. Тот же движок, что и на главном экране.
-- **Метаданные.** Сохраните информацию, описание и превью без самого видео.
-- **Превью.** Просмотрите все обложки и сохраните в любом разрешении.
-- **Субтитры.** Скачайте субтитры или объедините два языка в один двуязычный файл.
-- **Комментарии и главы.** Получите комментарии или маркеры глав, отфильтруйте, экспортируйте в JSON или CSV.
-- **Чат трансляции.** Сохраните повтор чата стрима в JSON или CSV.
-- **Мастерская субтитров.** Редактируйте, переводите и перетайминговывайте SRT, VTT и ASS: волновая форма, синхронизация по двум точкам, поиск и замена, автоисправление, грамматика и перевод через ИИ.
-- **SponsorBlock.** Посмотрите сегменты спонсоров, интро и аутро и получите флаги yt-dlp, чтобы их пропустить.
-- **Дизлайки.** Лайки, дизлайки и рейтинг от Return YouTube Dislike.
-- **Настоящее превью.** Кадры, которые уже есть у CDN на 25, 50 и 75 процентах, вместо кликбейтной обложки.
-- **Принудительный H.264.** Переключатель в браузерном расширении, который держит YouTube на H.264 вместо VP9 и AV1, для машин, которым тяжело с новыми кодеками.
-
-### Речь и субтитры (8)
-
-- **Транскрибация.** Аудио или видео в субтитры через whisper.cpp, офлайн. Модели скачиваются по запросу, ускорение Metal на macOS.
-- **Синтез речи.** Естественные голоса Microsoft Edge, бесплатно, с синхронизированным файлом субтитров.
-- **Перевод субтитров.** Переведите SRT своим ИИ-провайдером или сервером LibreTranslate с сохранением тайминга.
-- **Дубляж по субтитрам.** Превратите SRT в голосовую дорожку, попадающую в каждую строку, и при желании замените звук видео. *бета*
-- **Клонировать голос**, **Создать голос** и **Выделить вокал** через установленный на вашей машине VoiceStudio. *бета*
-- **Диктовка.** Нажмите глобальную комбинацию, говорите, и whisper напечатает текст там, где стоит курсор. *бета*
-
-### Видеомонтаж (6)
-
-- **Вырезать фрагмент.** Выберите видео на диске и вырежьте кусок. Результат попадает в очередь загрузок.
-- **Конвертировать.** Смените контейнер, кодек или разрешение, либо сожмите файл через плагин Convert.
-- **Автосубтитры** и **Синтез речи** открывают инструменты речи выше.
-- **Запись экрана.** Экран и системный звук через FFmpeg, плюс буфер повтора, сохраняющий то, что только что произошло. *бета*
-- **Редактор с таймлайном.** *в планах*
-
-### Instagram (24)
-
-Всё работает на вашей собственной сессии Instagram, захваченной расширением, поэтому доступны сторис, близкие друзья и ваши списки. Чтение идёт с паузами, а действия записи останавливаются при первом признаке ограничения.
-
-- **Скачать пост.** Фото, видео, reel, IGTV или карусель по ссылке, в лучшем качестве.
-- **Скачать много ссылок.** Вставьте список или `.txt` и получите всё сразу.
-- **Звук reel.** Только звук, в M4A или MP3.
-- **Сторис.** Скачивайте сторис, включая близких друзей, не отмечая их просмотренными.
-- **Актуальное.** Одна подборка или все подборки профиля.
-- **Кто смотрел мою сторис.** Список и экспорт зрителей каждой активной сторис.
-- **Просмотр профиля.** Био, счётчики, HD-фото и подписан ли аккаунт на вас.
-- **Аватар в HD.**
-- **Скачать профиль.** Все посты, reels, отметки или сохранённое, с лимитом на ваш выбор.
-- **Кто не подписан в ответ.** Сравните подписчиков и подписки, защитите аккаунты белым списком, отписывайтесь в безопасном темпе.
-- **Фаны.** Аккаунты, подписанные на вас без взаимности, с возможностью удалить.
-- **Взаимные.**
-- **Кто отписался.** Снимки ваших списков во времени показывают, кто ушёл и кто пришёл.
-- **Призрачные подписчики.** Подписчики, которые никогда не лайкают и не комментируют, и те, кто активнее всех.
-- **Белый список.** Аккаунты, которые никогда не предлагаются к отписке.
-- **Экспорт данных.** Читайте офлайн архив Meta «Скачать информацию»: ожидающие запросы, близкие друзья, заблокированные и другое.
-- **Аналитика профиля.** Вовлечённость, частота, лучшие дни и часы, хэштеги и топ-посты любого открытого профиля.
-- **Сравнить профили.** До шести профилей рядом.
-- **Хэштеги.** Число постов, свежие и топовые, связанные хэштеги, загрузка.
-- **Экспорт комментариев.** Все комментарии поста в CSV, с фильтром.
-- **Кто лайкнул.** Список и экспорт аккаунтов, лайкнувших пост.
-- **Розыгрыш.** Выбор победителей среди комментариев с правилами по упоминаниям, ключевому слову и одной заявке на человека.
-- **Публикация.** Фото, карусель, reel, видео или сторис через вашу сессию или официальный Graph API. *бета*
-- **Отложенные посты.** Поставьте посты в очередь на дату и время. OmniGet публикует их, пока открыт. *бета*
-
-### X / Twitter (10)
-
-Публичные данные приходят через API FxTwitter без входа. Всё приватное (закладки, ваши подписки, Grok в X) использует вашу сессию X из менеджера cookies.
-
-- **Скачать пост.** Видео, картинки и GIF из любого поста.
-- **Развернуть тред.** Весь тред на одной странице, экспорт в Markdown, HTML или текст.
-- **Пост в картинку.** Аккуратная PNG-карточка поста для любых площадок.
-- **Рентген профиля.** Вовлечённость, лучшее время для постов, топ-посты и хэштеги любого аккаунта.
-- **Медиа профиля.** Все фото и видео профиля в оригинальном качестве за один раз.
-- **Расширенный поиск.** Составляйте запросы с операторами X, смотрите тренды, экспортируйте результаты.
-- **Экспорт закладок.** Все закладки с папками в JSON, CSV, Markdown или HTML. *бета*
-- **Кто не подписан в ответ.** Сверьте подписки с подписчиками и безопасно отпишитесь с белым списком. *бета*
-- **Ваш архив X.** Откройте офлайн zip с данными: статистика, топ-посты, лайки и списки подписок.
-- **Grok.** Спросите Grok с живым поиском по X или суммируйте тред через API xAI или вашу сессию X. *бета*
-
-### Pinterest (10)
-
-Работает без входа для всего публичного. Cookies нужны только для секретных досок и удаления из сохранённого.
-
-- **Скачать пин.** Изображение в оригинальном качестве, видео в MP4, GIF, карусель или страницы сторис.
-- **Бэкап доски.** Все пины доски или раздела с оригиналами, видео, CSV/JSON и инкрементальной синхронизацией.
-- **Бэкап профиля.** Все открытые доски профиля, по папке на доску, плюс созданные пины.
-- **Поиск без ИИ и рекламы.** Фильтры, скрывающие ИИ-картинки, промо-пины и видео, затем загрузка.
-- **Похожие пины.** «Ещё похожее» любого пина, с фильтрами и загрузкой.
-- **Найти источник.** Ссылка назначения, автор, проверка битых ссылок, Wayback Machine и обратный поиск по картинке.
-- **Дубликаты в доске.** Одинаковые и почти одинаковые пины, с возможностью убрать из сохранённого.
-- **Цветовая палитра.** Палитра доски или пина в hex, CSS или JSON.
-- **Офлайн-галерея, PDF, CSV.** Доска как HTML-галерея с поиском, PDF-мудборд или таблица.
-- **Идеи ключевых слов.** Подсказки поиска, уточнения и слова, которые используют топ-пины.
-
-### Spotify (2)
-
-- **Темы и цвета.** Настройте клиент Spotify темами Spicetify. *бета*
-- **Расширения.** Установите расширения и приложения из Marketplace Spicetify. *бета*
-
-### PDF (6)
-
-- **Объединить.** Соедините несколько PDF в один в нужном порядке.
-- **Разделить.** Извлеките страницы или разбейте PDF на части.
-- **Сжать.** Уменьшите размер PDF, сохранив читаемость.
-- **Конвертировать.** PDF в изображения или Word и обратно.
-- **OCR.** Сделайте сканированные PDF доступными для поиска. *бета*
-- **Безопасный PDF.** Пересоберите PDF из пикселей, убрав скрипты и формы.
-
-### Документы (5)
-
-- **SlideShare в PDF.** Каждый слайд в максимальном размере, собранные в один PDF.
-- **Экспорт Google Docs.** Публичные Docs, Slides и Sheets в PDF, DOCX, PPTX или XLSX.
-- **Страницы Calameo.** Сохраните страницы публикации Calameo в SVG или JPG. *бета*
-- **Галереи изображений.** Целые галереи и профили с 250+ сайтов через gallery-dl.
-- **Scribd.** Сохраняйте доступные книги в PDF через свою сессию. *в планах*
-
-### Изображения (3)
-
-- **Апскейл.** Real-ESRGAN на любом Vulkan-GPU, 2x, 3x или 4x. *бета*
-- **Изменить размер.** Пакетно по ширине, высоте, вписыванию или процентам, при желании со сменой формата.
-- **OCR.** Скопируйте текст с картинок и слайдов. *бета*
-
-### Файлы (4)
-
-- **Дубликаты.** Найдите одинаковые файлы по хэшу и безопасно освободите место.
-- **Пакетное переименование.** Regex, счётчики и смена регистра с предпросмотром.
-- **Найти файлы.** Мгновенный поиск через Everything на Windows, Spotlight на macOS или fd на Linux.
-- **Не засыпать.** Не давайте компьютеру уснуть во время долгих задач.
-
-### Загрузки (2)
-
-- **Ускоренная загрузка.** Большие файлы в 16 соединений, докачка и контрольная сумма через aria2.
-- **Манифест HLS / DASH.** Вставьте `.m3u8` или `.mpd` с Referer и cookie. FFmpeg сохранит MP4.
-
-### Телефон (1)
-
-- **Отправить на телефон.** Файлы, ссылки и текст на сопряжённое устройство KDE Connect.
-
-### Система (9, пункты только для Windows отмечены)
-
-- **Очистка кэшей.** Временные файлы, логи и кэши приложений по правилам для каждой ОС. Список показывается до того, как что-то удаляется.
-- **Анализ диска.** Что занимает место: treemap и самые большие файлы, с кнопкой «в корзину».
-- **Автозагрузка.** Что запускается вместе с системой, с возможностью выключить. *бета*
-- **Деинсталлятор.** Удаление приложений и того, что они оставляют после себя. *бета*
-- **Щит приватности.** Управляйте телеметрией Windows, рекламным ID и настройками отслеживания. Windows. *бета*
-- **Усилить Windows.** Макросы, AutoRun, script host, UAC и Defender по образцу hardentools, с откатом. Windows. *бета*
-- **Debloat Windows.** Удаление предустановленных приложений из Store. Windows. *бета*
-- **Чистка реестра.** Осиротевшие записи, с резервной копией `.reg` перед удалением. Windows. *бета*
-- **Обновление программ.** Массовое обновление через winget, Chocolatey и Scoop. Windows. *бета*
-
-### Автоматизация (1)
-
-- **Автокликер.** Клики с заданной скоростью, глобальная горячая клавиша, лимиты и случайные интервалы. Windows, macOS и Linux. *бета*
-
-### ИИ (6)
-
-- **Сравнить цены.** Стоимость одной модели у разных провайдеров, цены из LiteLLM и models.dev.
-- **Расходы на ИИ.** Сколько OmniGet потратил на ИИ по дням, моделям и задачам, из локального журнала.
-- **Локальные модели (Ollama).** Смотрите, скачивайте и удаляйте локальные модели и используйте их как бесплатного провайдера.
-- **Очеловечить текст.** Переписать текст, звучащий как ИИ, чтобы он читался как написанный человеком, не меняя смысла. Работает на настроенном ИИ. *бета*
-- **API-ключи.** Локальное хранилище ключей и аккаунтов с проверкой соединения, балансом OpenRouter, DeepSeek, SiliconFlow и New API и экспортом в Claude Code, Codex, Cherry Studio, opencode или файл `.env`.
-- **MCP-сервер.** Инструменты OmniGet доступны по Model Context Protocol через локальный мост: 31 инструмент за тем же токеном, что у расширения, и готовые фрагменты конфигурации для Claude Code, Claude Desktop, Cursor, VS Code, Goose и Codex. *бета*
-
-Каждый инструмент, работающий с ИИ, использует провайдера из **Настройки → ИИ**: OpenAI, Anthropic или любую OpenAI-совместимую локальную точку, например Ollama или LM Studio. Ключ хранится локально и никогда не логируется. Автокликеру, диктовке и буферу повтора можно назначить собственные глобальные горячие клавиши.
-
----
-
-## Плагины: Courses, Study, Telegram, Convert
-
-Плагины — это отдельные Rust-библиотеки, загружаемые при старте. OmniGet устанавливает официальный набор при первом запуске и обновляет его сам. Страница Marketplace показывает, что установлено, что каждому плагину разрешено (события, уведомления, настройки, папки загрузок, прокси, управляемые инструменты, очередь загрузок), и позволяет скрыть, выключить или удалить любой из них.
-
-<p align="center">
-  <img src="assets/readme/marketplace.png" alt="Marketplace OmniGet со списком плагинов Courses, Study, Telegram и Convert: версия, автор, разрешения и переключатели" width="900" />
-</p>
-
-### Courses
-
-Войдите в **Hotmart**, **Udemy**, **Kiwify**, **Rocketseat** или **Meta-Analysis Academy** через окно браузера внутри приложения, с cookies, сохранёнными расширением, или по email и паролю там, где платформа это позволяет. OmniGet покажет ваши покупки, откроет оглавление курса, чтобы отметить нужные разделы (с подсказкой, сколько уроков защищено DRM и будет пропущено), и скачает все уроки и вложения, при желании со сквозной нумерацией. Hotmart использует актуальный вход через OIDC, так что всё работает после смены авторизации в 2026 году; бесплатные курсы и курсы, выдаваемые вне Hotmart Club, тоже показываются в списке. Скачанные курсы автоматически появляются в Study.
-
-### Study
-
-Study превращает папку скачанных файлов в то, что действительно можно закончить.
-
-- Библиотека и плеер. Укажите Study папки с курсами (ничего не копируется и не перемещается). Плеер продолжает с точной секунды, а нажатие **N** создаёт заметку на текущем времени, к которому можно вернуться кликом.
-- Читалка. PDF, EPUB, DJVU, MOBI, AZW3, FB2, CBZ, CBR, TXT, RTF и HTML с выделениями, закладками, коллекциями, режимом фокуса и «бумажной» темой. Обложки, названия и авторы берутся из файлов.
-- Заметки. Редактор Markdown и LaTeX со ссылками между страницами, дневником, шаблонами, тегами, графом знаний и экспортом в `.md` или PDF. Любая заметка может стать карточкой.
-- Anki. Колоды интервального повторения с импортом `.apkg`, `.txt` и CSV, фильтрованные колоды, пресеты, типы заметок, теги, медиа, статистика и журнал повторений.
-- Фокус. Таймеры Pomodoro и глубокой работы с дневными и недельными целями, которые ставят плеер на паузу по окончании сессии.
-- Прогресс и достижения. Серии, дневные цели, годовая тепловая карта и локальный XP без таблицы лидеров.
-- Музыка. Локальная библиотека с обложками, исполнителями и альбомами, синхронные тексты, избранное, история, плейлисты, жанры, транскодирование и браузеры Spotify, SoundCloud и YouTube Music, чтобы плейлисты и лайки лежали рядом с вашими файлами.
-
-### Telegram
-
-Войдите по QR-коду или номеру телефона. Просматривайте все каналы и группы, где вы состоите, фильтруйте по фото, видео, документам или аудио, ищите файлы и скачивайте один элемент или весь чат со списком прогресса. Видео из каналов можно импортировать прямо в библиотеку Study.
-
-### Convert
-
-Конвертация через FFmpeg с GPU-ускорением, если оно есть: контейнер, кодек, разрешение, битрейт и сжатие видео и аудио, без интернета.
-
----
-
-## Встроенный чат, выключен по умолчанию
-
-В OmniGet есть чат в стиле Discord под названием OmniDisc для серверов, которые вы поднимаете сами через [omnidisc-server](https://github.com/tonhowtf/omnidisc-server). Текстовые каналы, личные сообщения, друзья, роли и права, закреплённые сообщения, поиск, голос, видео и демонстрация экрана. Личные сообщения и файлы в них шифруются сквозным шифрованием по MLS, а ключ зашифрованного звонка выводится из той же группы, поэтому оператор сервера не может подслушать. Голос работает на Rust, а не в веб-вью, а демонстрация экрана использует аппаратный кодировщик машины. Файлы, отправленные через чат, шифруются на диске и удаляются с сервера через тридцать минут.
-
-Функция экспериментальная и ничего не делает, пока вы не включите её в **Настройки → Дополнительно → Чат (OmniDisc)** и не добавите сервер.
-
----
-
-## Для игроков League of Legends
-
-Меню League находится в боковой панели. Оно читает запущенный клиент League локально, без аккаунта и без сторонних сайтов с билдами, и ничего не делает, пока клиент не открыт. Если вы не играете, выключите его в **Настройки → Дополнительно → League of Legends**, и меню исчезнет.
-
-Разведка матча для обеих команд: ранг, недавняя форма, KDA и чемпионы, на которых каждый игрок действительно играет. Вероятность победы, которая сжимает винрейты к среднему в зависимости от размера выборки и всегда показывает диапазон. Живое золото, CS и уровень всех десяти игроков. Редактируемые цели по ролям. Руны и заклинания, рекомендованные самим клиентом, применяются одним кликом и заменяют только страницу, созданную OmniGet. Тиры чемпионов по ролям. Поиск игрока по Riot ID. Автоматизация по желанию: принимать матчи, пикать и банить по своему списку приоритетов, забирать чемпиона со скамейки ARAM. У каждой автоматизации свой переключатель.
-
-Новое, со статусом бета или экспериментально: вкладка **Профиль**, которая меняет то, как вас видят другие (ранг в чате, медали и титул челленджей, баннер и герб, значок в чате, массовое управление друзьями); **рулетка скинов, хром и вардов**, выбирающая один из ваших скинов в момент лока, с перебросом; **розыгрыш чемпиона и линии** для тех, кто хочет, чтобы решала очередь, плюс необязательный случайный пик в выборе чемпионов; **полная история матчей и ранговая статистика любого игрока** через собственный шлюз клиента к бэкенду, с загрузкой реплеев; и **ИИ-тренер**, который разбирает матч, находит тенденции в последних играх или отвечает на вопрос о текущем выборе чемпионов, используя настроенного ИИ-провайдера и открытые данные OP.GG.
-
----
+<a id="everything-else-in-the-box"></a>
 
 ## Всё остальное в комплекте
 
-- Палитра команд (**Ctrl+K** или **Cmd+K**) для перехода к любой странице, настройке или инструменту.
-- Отслеживание буфера обмена, предлагающее скачать скопированную ссылку одним кликом по уведомлению.
-- Менеджер cookies с сессиями по сайтам, захваченными расширением или импортированными из `cookies.txt`, с кнопкой проверки для каждого домена.
-- Пересказ видео: вставьте URL в **Настройки → ИИ**, OmniGet возьмёт субтитры и сделает пересказ нужной длины и на нужном языке.
-- Отправить файл человеку: выберите файл, поделитесь кодом из слов, получатель вставляет его в свой OmniGet.
-- Discord Rich Presence показывает, что вы слушаете, смотрите или читаете. Загрузки остаются приватными.
-- Значок в трее, автозапуск с системой, запуск свёрнутым, запрет сна во время загрузок.
-- Каждая загрузка хранит точную команду yt-dlp, которая выполнялась. Откройте, поправьте флаг, повторите.
-- 14 тем, включая Catppuccin (четыре варианта), Dracula, One Dark Pro, три e-ink и три Nyxvamp.
-- 11 языков: английский, португальский, испанский, французский, итальянский, греческий, русский, японский, персидский, упрощённый и традиционный китайский.
-- Работает на Windows, macOS (Apple Silicon и Intel) и Linux (x86_64 и ARM64).
+- Палитра команд (**Ctrl+K** или **Cmd+K**) для перехода к любой странице или настройке.
+- Менеджер куки по сайтам, который заполняется расширением или из `cookies.txt`, с кнопкой проверки для каждого домена.
+- Отслеживание буфера обмена: OmniGet предлагает скачать скопированную ссылку.
+- Краткое содержание видео: OmniGet берёт субтитры видео и пересказывает их через вашего ИИ-провайдера.
+- Значок в трее, автозапуск вместе с системой, запуск в свёрнутом виде, запрет сна компьютера во время загрузок, Discord Rich Presence.
+- Темы, включая Catppuccin, Dracula, One Dark Pro, E-ink и NyxVamp.
+- 12 языков: английский, португальский, испанский, французский, итальянский, греческий, русский, японский, персидский, лаосский, упрощённый и традиционный китайский.
+
+<a id="privacy-and-what-omniget-refuses-to-do"></a>
+
+## Приватность и то, чего OmniGet делать не станет
+
+<p align="center">
+  <img src="assets/readme/illustration-privacy.png" alt="Loop обнимает ноутбук со значком загрузки OmniGet и зелёным замком внутри светящегося щита" width="700" />
+</p>
+
+Всё работает на вашем компьютере. Нет аккаунта, нет нашего сервера посередине и нет телеметрии о том, что вы скачиваете. Куки и API-ключи хранятся в вашем локальном профиле. Сам по себе OmniGet выходит в сеть только к сайтам, с которых вы попросили скачать, к GitHub за обновлениями и к ИИ-провайдеру, которого вы настроили, когда вы им пользуетесь.
+
+OmniGet скачивает то, что ваша собственная сессия и так может открыть. Он не обходит DRM, не ломает пейволлы и не передаёт учётные данные другим. Он предназначен для личных копий, резервных копий и контента, который вы вправе хранить; соблюдать авторские права и условия каждой платформы — ваша ответственность. Полный текст есть в приложении, в **О программе → Условия**.
 
 ---
 
-## Приватность и то, чего OmniGet не делает
+<a id="support-omniget"></a>
 
-Всё работает на вашем компьютере. Нет аккаунта, нет нашего сервера посередине и нет телеметрии о том, что вы скачиваете. Cookies и API-ключи живут в вашем локальном профиле. Единственные сетевые запросы, которые OmniGet делает сам, идут к сайтам, откуда вы просили скачать, к GitHub за обновлениями и плагинами и к настроенному вами ИИ-провайдеру, когда вы пользуетесь ИИ-инструментом.
+## Поддержать OmniGet
 
-OmniGet скачивает то, что уже может открыть ваша собственная сессия. Он не обходит DRM, не ломает пейволлы и не передаёт учётные данные, а уроки с DRM пропускаются с уведомлением. Вы отвечаете за соблюдение авторских прав и условий каждой платформы. Полный текст в приложении: **О программе → Условия и этика**.
+<p align="center">
+  <img src="assets/readme/illustration-support.webp" alt="Луп держит золотую звезду рядом с банкой с сердцем и монетами и ростком в горшке" width="560" />
+</p>
+
+OmniGet бесплатный и таким останется. Платного тарифа нет, ничего не заблокировано. Его делает и поддерживает один человек, а сайты, с которых он скачивает, меняются каждую неделю.
+
+- **Станьте спонсором** на [GitHub Sponsors](https://github.com/sponsors/tonhowtf), разово или каждый месяц.
+- **Поставьте звезду репозиторию.** Именно так его находит большинство людей.
+- **Сообщайте о поломках** в [Issues](https://github.com/tonhowtf/omniget/issues), вместе со ссылкой, которая не скачалась.
+- **Переводите** на [Weblate](https://hosted.weblate.org/engage/omniget/).
+- **Расскажите о нём кому-нибудь.** Если пишете пост, в [MEDIA-KIT.md](MEDIA-KIT.md) есть факты и ссылки.
 
 ---
+
+<a id="frequently-asked-questions"></a>
 
 ## Частые вопросы
 
-**OmniGet бесплатный?**
-Да. GPL-3.0, без платного тарифа, без рекламы, без аккаунта.
+### OmniGet бесплатный?
 
-**OmniGet — это оболочка для yt-dlp?**
-Частично. yt-dlp закрывает длинный хвост сайтов, а OmniGet его встраивает, проверяет и обновляет. Поверх этого — собственные экстракторы для курсов, Instagram, X, Pinterest, Bilibili, Telegram и торрентов, очередь с докачкой и повторами, раздел Tools и библиотека Study.
+Да. Бесплатный, с открытым кодом под GPL-3.0, без платного тарифа, без рекламы и без аккаунта.
 
-**Можно скачать купленный курс с Udemy или Hotmart?**
-Да. Установите плагин Courses (он предустановлен), войдите через приложение, выберите курс и разделы и скачивайте. Уроки и вложения лягут в папку курса и появятся в Study. Kiwify, Rocketseat и Meta-Analysis Academy работают так же.
+### Может ли Claude Code скачивать видео за меня?
 
-**Можно скачать сторис, близких друзей или актуальное из Instagram?**
-Да, через вашу собственную сессию, захваченную расширением. Сторис скачиваются без отметки о просмотре.
+Да. Включите MCP-сервер в **LLM → MCP → Ваш эндпоинт**, подключите Claude Code командой, которую даёт страница, и попросите обычными словами. Claude поставит загрузку в очередь в OmniGet, дождётся её и расскажет, что получилось. См. [раздел 1](#let-claude-download-it).
 
-**Можно скачать видео из X, целый тред или все медиа профиля?**
-Да. Публичные посты не требуют входа. Закладки и ваши списки подписок требуют сессии X.
+### OmniGet — это GUI для yt-dlp?
 
-**Можно сделать бэкап доски Pinterest в оригинальном качестве?**
-Да, включая видео, разделы, секретные доски с cookies и инкрементальную синхронизацию, чтобы забирать только новое.
+Отчасти. Он устанавливает yt-dlp, проверяет его, обновляет и выносит его параметры в окно. Сверх этого у него есть собственные экстракторы, торренты, очередь с докачкой и повторами, расширение для браузера, MCP-сервер и ИИ-агенты.
 
-**Он продолжает прерванные загрузки?**
-Да. Частичные файлы сохраняются и докачиваются, а ограничения запросов вызывают повторы с backoff.
+### Как скачать видео или плейлист с YouTube без терминала?
 
-**В каких форматах он сохраняет?**
-Видео в MP4, MKV или WebM. Аудио в MP3, M4A, Opus, FLAC или WAV. Субтитры в SRT, VTT или ASS, встроенные или рядом с файлом.
+Вставьте ссылку на главном экране, выберите качество и нажмите Enter. Плейлисты, субтитры, главы и MP3 только со звуком выбираются в том же окне.
 
-**Нужны Python, Node или терминал?**
-Нет. Скачайте приложение, откройте, вставьте ссылку. Единственный шаг в терминале — разовое исправление Gatekeeper на macOS выше.
+### Можно скачивать истории из Instagram?
 
-**macOS пишет, что приложение повреждено.**
-Выполните две команды из [раздела о первом запуске](#предупреждение-при-первом-запуске-и-как-его-убрать). Так происходит, потому что приложение не нотаризовано, и только один раз.
+Да, через вашу собственную сессию, которую передаёт расширение для браузера.
 
-**Можно транскрибировать видео в субтитры офлайн?**
-Да. Tools → Речь и субтитры → Транскрибация использует whisper.cpp локально. Модели скачиваются по запросу.
+### Можно запускать Claude Code без терминала?
 
-**Можно запускать с флешки?**
-Да, на Windows, с файлом `portable.txt` рядом с исполняемым файлом.
+Да. Добавьте аккаунт в **LLM → Аккаунты** и общайтесь в окне с diff, разрешениями и отменой. Codex работает так же, а Gemini CLI, goose и opencode подключаются через Agent Client Protocol.
 
-**Какой пакет выбрать для Linux?**
-Debian и Ubuntu: `.deb`. Fedora, openSUSE, семейство RHEL: `.rpm`. Всё остальное: `.AppImage`. Публикуются и x86_64, и ARM64. OmniGet нет во Flathub.
+### Может ли ИИ-агент работать, пока не пройдут тесты?
+
+Да. Цикл повторяет круги, пока ваша команда проверки, например `npm test`, не завершится с кодом 0. Он продолжает работать с закрытым окном, а `omniget-cli agent loop` запускает цикл из терминала.
+
+### Работает ли он офлайн с Ollama?
+
+Да. Укажите Ollama, LM Studio или llama-server, и агенты будут работать на вашей машине без ключа.
+
+### Мой код куда-то отправляется?
+
+Только в выбранную вами модель. С локальной моделью он вообще не покидает компьютер.
+
+### Докачивает ли он прерванные загрузки?
+
+Да. Недокачанные файлы сохраняются и докачиваются, а при ограничениях запросов повторы идут с нарастающей паузой.
+
+### Нужны ли Python, Node или терминал?
+
+Нет. Скачайте приложение, откройте, вставьте ссылку.
+
+### macOS пишет, что приложение повреждено. Что делать?
+
+Выполните две команды из [раздела о первом запуске](#the-first-launch-warning). Это делается один раз.
+
+### Какой пакет выбрать для Linux?
+
+Debian и Ubuntu: `.deb`. Fedora, openSUSE и семейство RHEL: `.rpm`. Всё остальное: `.AppImage`.
 
 ---
+
+<a id="command-line"></a>
 
 ## Командная строка
 
-`omniget-cli` выходит с каждым релизом для Windows, macOS (Intel и Apple Silicon) и Linux. Возьмите `omniget-cli-<версия>-<платформа>` из [последнего релиза](https://github.com/tonhowtf/omniget/releases/latest).
+`omniget-cli` входит в каждый релиз для Windows, macOS и Linux, вместе с `omniget-mcp`, stdio-адаптером для MCP-клиентов, которым он нужен.
 
 ```bash
-omniget info <url>                     # название, форматы и размер, ничего не скачивает
-omniget download <url> -q 1080 -o ~/Videos
-omniget download <url> --audio-only --subs en,ru
-omniget batch links.txt -m 3           # по одному URL в строке, 3 одновременно
-omniget import-cookies cookies.txt     # формат Netscape
+omniget-cli info <url>                     # название, форматы и размер; ничего не скачивает
+omniget-cli download <url> -q 1080 -o ~/Videos
+omniget-cli download <url> --audio-only --subs en,pt
+omniget-cli batch links.txt -m 3           # по одному URL на строку, по 3 одновременно
+omniget-cli import-cookies cookies.txt     # формат Netscape
+
+# через запущенное десктопное приложение
+omniget-cli claude [account]               # Claude Code на одном из аккаунтов приложения
+omniget-cli usage                          # окна расхода и траты по каждому аккаунту
+omniget-cli agent run "<prompt>"           # текущая папка становится рабочей
+omniget-cli agent loop "<prompt>" --check "npm test" --minutes 30
+omniget-cli agent jobs                     # также: agent loops, agent agents
 ```
+
+Добавьте `--json` к любой команде, чтобы получить машиночитаемый вывод.
 
 ---
 
+<a id="build-from-source"></a>
+
 ## Сборка из исходников
 
-Если вы просто хотите пользоваться OmniGet, [возьмите релиз](#скачать-и-установить). Для сборки нужны [Rust](https://rustup.rs/) (точная версия тулчейна закреплена в `rust-toolchain.toml`, потому что от неё зависит ABI плагинов), [Node.js](https://nodejs.org/) 18+ и [pnpm](https://pnpm.io/).
+Если вы хотите просто пользоваться OmniGet, [скачайте релиз](#download-and-install). Для сборки нужны [Rust](https://rustup.rs/) (версия тулчейна зафиксирована в `rust-toolchain.toml`), [Node.js](https://nodejs.org/) 18+ и [pnpm](https://pnpm.io/).
 
 ```bash
 git clone https://github.com/tonhowtf/omniget.git
@@ -564,33 +579,41 @@ sudo apt-get install -y libwebkit2gtk-4.1-dev build-essential curl wget file lib
 
 </details>
 
-Продакшен-сборка:
+Релизная сборка:
 
 ```bash
 pnpm tauri build --config '{"bundle":{"createUpdaterArtifacts":false}}'
 ```
 
-Релизы подписывают артефакты обновления приватным ключом, который есть только у мейнтейнера, поэтому обычный `pnpm tauri build` останавливается с ошибкой "A public key has been found, but no private key". Флаг выше отключает эти артефакты для локальной сборки и ничего больше не меняет.
+Релизы подписывают файлы обновлений ключом, который есть только у мейнтейнера, поэтому обычный `pnpm tauri build` останавливается с ошибкой «A public key has been found, but no private key». Флаг выше отключает эти файлы для локальной сборки.
 
-Плагины живут в своих репозиториях: [omniget-plugin-courses](https://github.com/tonhowtf/omniget-plugin-courses), [omniget-plugin-telegram](https://github.com/tonhowtf/omniget-plugin-telegram), [omniget-plugin-convert](https://github.com/tonhowtf/omniget-plugin-convert) и [omniget-study-release](https://github.com/tonhowtf/omniget-study-release). Реестр — [omniget-plugins](https://github.com/tonhowtf/omniget-plugins). `pnpm plugins:deploy` собирает соседние чекауты плагинов и копирует их в вашу локальную папку данных.
-
-Стек: Tauri 2, Rust, SvelteKit на Svelte 5, SQLite, yt-dlp, FFmpeg, librqbit для торрентов, whisper.cpp, aria2, gallery-dl.
+Стек: Tauri 2, Rust, SvelteKit со Svelte 5, SQLite, yt-dlp, FFmpeg, gallery-dl, aria2 и librqbit для торрентов.
 
 ---
 
+<a id="notice-to-platform-owners"></a>
+
+## Владельцам платформ
+
+Если вам принадлежит платформа и вы хотите, чтобы OmniGet перестал её поддерживать, напишите на **tonhowtf@gmail.com** с корпоративного адреса. Сайт убирается из документации и кода, а его домены попадают в список исключений, который соблюдает приложение. Порядок действий и текущий список — в [PLATFORM-OWNERS.md](PLATFORM-OWNERS.md).
+
+<a id="contributing-and-translations"></a>
+
 ## Участие и переводы
 
-Сообщения об ошибках и pull request'ы — в [Issues](https://github.com/tonhowtf/omniget/issues) и [Pull requests](https://github.com/tonhowtf/omniget/pulls). Вопросы и быстрая помощь — в [Discord](https://discord.gg/jgdxyPy7Vn).
+Сообщения об ошибках и пул-реквесты принимаются в [Issues](https://github.com/tonhowtf/omniget/issues) и [Pull requests](https://github.com/tonhowtf/omniget/pulls). Вопросы и быстрая помощь — в [Discord](https://discord.gg/jgdxyPy7Vn). Переводы делаются на [Weblate](https://hosted.weblate.org/engage/omniget/); новые строки появляются там через несколько часов после того, как попадают в `main`.
 
-Переводы ведутся на [Weblate](https://hosted.weblate.org/engage/omniget/). Выберите свой язык и переводите в браузере. Новые строки появляются там через несколько часов после попадания в `main`.
+Пишете об OmniGet или просите об этом ИИ? В [MEDIA-KIT.md](MEDIA-KIT.md) есть описание, факты, то, чего утверждать не стоит, и шаблоны постов.
 
-OmniGet построен на [yt-dlp](https://github.com/yt-dlp/yt-dlp), [FFmpeg](https://ffmpeg.org/), [gallery-dl](https://github.com/mikf/gallery-dl), [whisper.cpp](https://github.com/ggerganov/whisper.cpp), [aria2](https://aria2.github.io/), [SponsorBlock](https://sponsor.ajay.app/), [Return YouTube Dislike](https://returnyoutubedislike.com/), [FxTwitter](https://github.com/FixTweet/FxTwitter), [Spicetify](https://spicetify.app/) и [Tauri](https://tauri.app/). Спасибо всем, кто их поддерживает.
-
-Loop, существо на главном экране, — маскот OmniGet. Фан-арт приветствуется. Оригинальную графику нельзя использовать в коммерческих целях и распространять в изменённом виде.
+Loop — маскот OmniGet. Фан-арт приветствуется; оригинальные рисунки нельзя использовать в коммерческих целях или распространять в изменённом виде. Иллюстрации в этом README сгенерированы в [Higgsfield](https://higgsfield.ai) на основе оригинальных рисунков Loop.
 
 <p align="center">
   <a href="https://star-history.com/#tonhowtf/omniget&Date"><img src="https://api.star-history.com/svg?repos=tonhowtf/omniget&type=Date" alt="История звёзд tonhowtf/omniget" width="600" /></a>
 </p>
+
+## Опираясь на открытый код
+
+OmniGet построен на [yt-dlp](https://github.com/yt-dlp/yt-dlp), [FFmpeg](https://ffmpeg.org/), [gallery-dl](https://github.com/mikf/gallery-dl), [aria2](https://aria2.github.io/), [librqbit](https://github.com/ikatson/rqbit), [SponsorBlock](https://sponsor.ajay.app/), [FxTwitter](https://github.com/FixTweet/FxTwitter), [cat-catch](https://github.com/xifangczy/cat-catch) (части медиасниффера в расширении), [whisper.cpp](https://github.com/ggml-org/whisper.cpp) (в плагине для Claude Code), [Tauri](https://tauri.app) и [Svelte](https://svelte.dev). Агенты, задачи и Мир позаимствовали идеи у [opencode](https://github.com/anomalyco/opencode), [Codex](https://github.com/openai/codex), [aider](https://github.com/Aider-AI/aider), [cline](https://github.com/cline/cline), [compozy](https://github.com/compozy/compozy), [Agent Client Protocol](https://agentclientprotocol.com), [mem0](https://github.com/mem0ai/mem0), [letta](https://github.com/letta-ai/letta), [ai-town](https://github.com/a16z-infra/ai-town) и статьи о [generative agents](https://github.com/joonspk-research/generative_agents). Спасибо всем, кто их поддерживает.
 
 <p align="center">
   <a href="https://github.com/tonhowtf/omniget/releases/latest"><b>Скачать OmniGet</b></a> · <a href="LICENSE">GPL-3.0</a>

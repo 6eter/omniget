@@ -33,7 +33,7 @@
     "message": "La page actuelle n'est pas une page multimédia prise en charge par l'extension OmniGet."
   },
   "error_invalid_url_detail": {
-    "message": "Réessayez depuis une page directe de vidéo, reel, publication, playlist ou cours."
+    "message": "Réessayez depuis une page directe de vidéo, reel, publication ou playlist."
   },
   "error_launch_failed_title": {
     "message": "OmniGet n'a pas pu être lancé depuis le navigateur"
@@ -155,9 +155,6 @@
   },
   "popup_get_app": {
     "message": "Obtenir OmniGet"
-  },
-  "popup_lbl_course": {
-    "message": "Envoyer le cours vers OmniGet"
   },
   "popup_lbl_playlist": {
     "message": "Envoyer la playlist vers OmniGet"

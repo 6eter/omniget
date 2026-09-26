@@ -18,15 +18,9 @@ jobs:
           - platform: 'macos-latest'
             args: '--target x86_64-apple-darwin'
           # Ubuntu 22.04 keeps the x86_64 build on glibc 2.35, which is what
-          # lets the AppImage run on older distros. Its PipeWire headers
-          # (0.3.48) are too old for the screen-capture backend to compile, so
-          # that one feature is left out and the client says so at runtime.
-          # The `--` is required: the Tauri CLI forwards what follows it to
-          # cargo, and rejects the flag otherwise. Only the app's default
-          # feature (`linux-capture`) is dropped; `rnnoise` stays because the
-          # dependency declaration asks for it by name.
+          # lets the AppImage run on older distros.
           - platform: 'ubuntu-22.04'
-            args: '-- --no-default-features'
+            args: ''
           - platform: 'ubuntu-24.04-arm'
             args: ''
           - platform: 'windows-latest'
@@ -53,8 +47,7 @@ jobs:
       - name: Install frontend dependencies
         run: pnpm install
 
-      # Pinned via rust-toolchain.toml: the plugin ABI depends on the exact
-      # rustc version, so this must match what the plugin repos build with.
+      # Pinned via rust-toolchain.toml.
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
@@ -209,7 +202,8 @@ jobs:
           test -x "$BIN"
           "$BIN" --version
           OUT="omniget-cli-${VERSION}-${{ matrix.target }}.tar.gz"
-          tar -czf "$OUT" -C "$(dirname "$BIN")" omniget-cli
+          test -x "$(dirname "$BIN")/omniget-mcp"
+          tar -czf "$OUT" -C "$(dirname "$BIN")" omniget-cli omniget-mcp omniget-gateway omniget-worker
           gh release upload "$TAG" "$OUT" --repo "${{ github.repository }}" --clobber
 
       - name: Package and upload (windows)
@@ -224,7 +218,13 @@ jobs:
           if (-not (Test-Path $BIN)) { throw "binario nao encontrado: $BIN" }
           & $BIN --version
           $OUT = "omniget-cli-${VERSION}-${{ matrix.target }}.zip"
-          Compress-Archive -Path $BIN -DestinationPath $OUT -Force
+          $MCP = "src-tauri/target/${{ matrix.target }}/release/omniget-mcp.exe"
+          if (-not (Test-Path $MCP)) { throw "MCP adapter not found" }
+          $GATEWAY = "src-tauri/target/${{ matrix.target }}/release/omniget-gateway.exe"
+          if (-not (Test-Path $GATEWAY)) { throw "OAuth gateway not found" }
+          $WORKER = "src-tauri/target/${{ matrix.target }}/release/omniget-worker.exe"
+          if (-not (Test-Path $WORKER)) { throw "MCP worker not found" }
+          Compress-Archive -Path $BIN, $MCP, $GATEWAY, $WORKER -DestinationPath $OUT -Force
           gh release upload $TAG $OUT --repo ${{ github.repository }} --clobber
         shell: pwsh
 

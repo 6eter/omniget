@@ -51,6 +51,49 @@ enum Commands {
         #[arg(short, long)]
         output: Option<String>,
     },
+    /// Agents of the desktop app: run a task, loop until a check passes, list jobs
+    Agent {
+        #[command(subcommand)]
+        command: commands::agent::AgentCommand,
+    },
+    /// Open Claude Code on one of the app's accounts (/llm → Accounts), skipping permission prompts
+    Claude {
+        /// Account id or label (a unique prefix works); without it, asks when there are several
+        account: Option<String>,
+
+        #[arg(long, help = "List the Claude accounts (e-mail and plan) and exit")]
+        list: bool,
+
+        #[arg(
+            long,
+            help = "Add a new account: log in with Claude Code and name it after the e-mail (or ACCOUNT)"
+        )]
+        add: bool,
+
+        #[arg(
+            long,
+            help = "Keep Claude Code's permission prompts (no --dangerously-skip-permissions)"
+        )]
+        safe: bool,
+
+        #[arg(
+            long,
+            help = "Do not print the OmniGet splash (also OMNIGET_NO_SPLASH=1)"
+        )]
+        no_splash: bool,
+
+        /// Extra arguments for claude, after `--` (e.g. -- -c)
+        #[arg(last = true)]
+        extra: Vec<String>,
+    },
+    /// Usage monitor: 5 h / 7 d windows and spend of each Claude Code / Codex account
+    Usage {
+        #[arg(long, default_value = "7", help = "Days of history to sum")]
+        days: u32,
+
+        #[arg(long, value_name = "SECONDS", help = "Keep refreshing every N seconds")]
+        watch: Option<u64>,
+    },
     /// Import a cookies.txt file (Netscape format)
     ImportCookies {
         file: String,
@@ -99,6 +142,22 @@ async fn main() -> anyhow::Result<()> {
             output,
         } => {
             commands::batch::execute(file, max_concurrent, output, cli.proxy).await?;
+        }
+        Commands::Agent { command } => {
+            commands::agent::execute(command, cli.json).await?;
+        }
+        Commands::Claude {
+            account,
+            list,
+            add,
+            safe,
+            no_splash,
+            extra,
+        } => {
+            commands::claude::execute(account, list, add, safe, no_splash, extra)?;
+        }
+        Commands::Usage { days, watch } => {
+            commands::usage::execute(days, watch, cli.json).await?;
         }
         Commands::ImportCookies {
             file,

@@ -9,9 +9,7 @@ const CHROME = path.join(__dirname, "chrome");
 const FIREFOX = path.join(__dirname, "firefox");
 
 const SHARED = [
-  "src/action-click.js",
   "src/action-feedback.js",
-  "src/action-title.js",
   "src/background.js",
   "src/blocked-hosts.js",
   "src/bridge-client.js",
@@ -34,7 +32,6 @@ const SHARED = [
   "src/hls-grouping.js",
   "src/hls-size.js",
   "src/media-list.js",
-  "src/media-signature.js",
   "src/media-sniffer.js",
   "src/open-app-toggle.js",
   "src/send-via-scheme.js",

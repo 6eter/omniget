@@ -54,11 +54,6 @@ pub fn manifest_file_name(url: &str) -> String {
     format!("{}.m3u8", hex::encode(hasher.finalize()))
 }
 
-/// Full path a given URL maps to inside [`manifest_dir`].
-pub fn manifest_path_for_url(url: &str) -> PathBuf {
-    manifest_dir().join(manifest_file_name(url))
-}
-
 /// Persist the playlist text captured for `url`, pruning expired files in the
 /// same pass. Returns an error when the text is over [`MAX_MANIFEST_BYTES`] or
 /// the write itself fails; callers treat that as non-fatal.

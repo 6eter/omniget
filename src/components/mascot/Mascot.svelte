@@ -1,5 +1,5 @@
 <script lang="ts">
-  type MascotEmotion = "idle" | "downloading" | "error" | "stalled" | "queue" | "complete" | "amazed";
+  type MascotEmotion = "idle" | "complete" | "amazed";
 
   function emotionToSrc(e: MascotEmotion): string {
     // amazed.png ships with a baked-in background, which reads as a grey

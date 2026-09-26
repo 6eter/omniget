@@ -588,7 +588,6 @@ function pickBestMedia(media) {
 
 function getDownloadLabel(contentType) {
   switch (contentType) {
-    case "course": return tr("popup_lbl_course");
     case "playlist": return tr("popup_lbl_playlist");
     case "video": return tr("popup_lbl_video");
     case "reel": return tr("popup_lbl_reel");

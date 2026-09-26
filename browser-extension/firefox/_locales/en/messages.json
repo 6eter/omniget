@@ -33,7 +33,7 @@
     "message": "The current page is not a supported media page for the OmniGet extension."
   },
   "error_invalid_url_detail": {
-    "message": "Try again from a direct video, reel, post, playlist, or course page."
+    "message": "Try again from a direct video, reel, post or playlist page."
   },
   "error_launch_failed_title": {
     "message": "OmniGet could not be launched from your browser"
@@ -155,9 +155,6 @@
   },
   "popup_get_app": {
     "message": "Get OmniGet"
-  },
-  "popup_lbl_course": {
-    "message": "Send course to OmniGet"
   },
   "popup_lbl_playlist": {
     "message": "Send playlist to OmniGet"

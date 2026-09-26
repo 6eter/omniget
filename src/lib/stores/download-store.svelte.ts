@@ -5,34 +5,19 @@ export type QueueKind =
   | "audio"
   | "image"
   | "pdf"
-  | "book"
   | "webpage"
-  | "telegram_media"
-  | "course_lesson"
   | "generic";
 
 type BaseItem = {
   id: number;
   name: string;
-  percent: number;
+  /** `null` = total unknown: show bytes and an indeterminate bar, never a number. */
+  percent: number | null;
   status: DownloadStatus;
   error?: string;
   startedAt: number;
   lastUpdateAt: number;
   queueKind?: QueueKind;
-  external?: boolean;
-};
-
-export type CourseDownloadItem = BaseItem & {
-  kind: "course";
-  currentModule: string;
-  currentPage: string;
-  bytesDownloaded: number;
-  speed: number;
-  totalPages: number;
-  completedPages: number;
-  totalModules: number;
-  currentModuleIndex: number;
 };
 
 /** Stream (formato) que o yt-dlp está baixando; vem de `%(info.*)s` no template de progresso. */
@@ -92,17 +77,61 @@ export type GenericProgressExtra = {
   plannedFormats?: string[] | null;
 };
 
-export type DownloadItem = CourseDownloadItem | GenericDownloadItem;
+export type DownloadItem = GenericDownloadItem;
 
 export type SpeedPoint = { t: number; bps: number };
 
 const SPEED_SMOOTHING = 0.3;
 const SPEED_HISTORY_MAX = 60;
+const AGGREGATE_SAMPLE_MS = 900;
 
 let downloads = $state(new Map<number, DownloadItem>());
 const speedHistory = new Map<number, SpeedPoint[]>();
 const suppressedGenericIds = new Set<number>();
 let flushScheduled = false;
+
+let aggregateSpeedHistory = $state<SpeedPoint[]>([]);
+let lastAggregateSampleAt = 0;
+let aggregateBatch = $state(new Map<number, DownloadItem>());
+let aggregateBatchId = 0;
+let batchWasPending = false;
+let batchCancelled = false;
+let acknowledgedFailures = $state(new Set<number>());
+
+function isPending(item: DownloadItem): boolean {
+  return item.status === "queued" || item.status === "downloading" || item.status === "paused";
+}
+
+function updateAggregateBatch() {
+  const pending = [...downloads.values()].some(isPending);
+  let next = new Map(aggregateBatch);
+  if (pending && !batchWasPending) {
+    next = new Map();
+    aggregateBatchId++;
+    batchCancelled = false;
+  }
+  for (const [id, previous] of next) {
+    if (!downloads.has(id) && previous.status !== "complete" && previous.status !== "seeding") {
+      next.delete(id);
+      batchCancelled = true;
+    }
+  }
+  for (const [id, item] of downloads) {
+    if (isPending(item) || next.has(id)) next.set(id, { ...item });
+    if (item.status !== "error") acknowledgedFailures.delete(id);
+  }
+  for (const id of acknowledgedFailures) {
+    if (!downloads.has(id)) acknowledgedFailures.delete(id);
+  }
+  batchWasPending = pending;
+  aggregateBatch = next;
+}
+
+export function dismissAggregateFailures() {
+  acknowledgedFailures = new Set(
+    [...downloads.values()].filter(item => item.status === "error").map(item => item.id),
+  );
+}
 
 function pushSpeedPoint(id: number, bps: number) {
   let arr = speedHistory.get(id);
@@ -124,17 +153,55 @@ function clearSpeedHistory(id: number) {
   speedHistory.delete(id);
 }
 
+function sampleAggregateSpeed(now: number) {
+  let bps = 0;
+  let anyActive = false;
+  let anyPending = false;
+  for (const item of downloads.values()) {
+    if (item.status === "downloading") {
+      bps += finiteBytes(item.speed);
+      anyActive = true;
+    } else if (item.status === "queued" || item.status === "paused") {
+      anyPending = true;
+    }
+  }
+
+  if (!anyActive && !anyPending) {
+    if (aggregateSpeedHistory.length > 0) aggregateSpeedHistory = [];
+    lastAggregateSampleAt = 0;
+    return;
+  }
+
+  if (now - lastAggregateSampleAt < AGGREGATE_SAMPLE_MS) return;
+  if (!anyActive && aggregateSpeedHistory.length === 0) return;
+
+  lastAggregateSampleAt = now;
+  const next = aggregateSpeedHistory.length >= SPEED_HISTORY_MAX
+    ? aggregateSpeedHistory.slice(aggregateSpeedHistory.length - SPEED_HISTORY_MAX + 1)
+    : aggregateSpeedHistory.slice();
+  next.push({ t: now, bps });
+  aggregateSpeedHistory = next;
+}
+
+export function getAggregateSpeedHistory(): SpeedPoint[] {
+  return aggregateSpeedHistory;
+}
+
 function scheduleFlush() {
+  updateAggregateBatch();
   if (flushScheduled) return;
   flushScheduled = true;
   requestAnimationFrame(() => {
     flushScheduled = false;
+    sampleAggregateSpeed(Date.now());
     downloads = new Map(downloads);
   });
 }
 
 function flushNow() {
+  updateAggregateBatch();
   flushScheduled = false;
+  sampleAggregateSpeed(Date.now());
   downloads = new Map(downloads);
 }
 
@@ -165,91 +232,92 @@ export function getCounts(): DownloadCounts {
   return { active, queued, badge: active + queued, paused, finished };
 }
 
-export function getActiveCount(): number {
-  return getCounts().active;
+export type DownloadAggregate = {
+  batchId: number;
+  outcome: "idle" | "working" | "complete" | "stopped";
+  activeCount: number;
+  queuedCount: number;
+  pausedCount: number;
+  failedCount: number;
+  speedBps: number;
+  downloadedBytes: number;
+  totalBytes: number | null;
+  percent: number | null;
+  etaSeconds: number | null;
+};
+
+function finiteBytes(value: number | null | undefined): number {
+  return value != null && Number.isFinite(value) ? Math.max(0, value) : 0;
 }
 
-export function getQueuedCount(): number {
-  return getCounts().queued;
-}
-
-export function getBadgeCount(): number {
-  return getCounts().badge;
-}
-
-export function getPausedCount(): number {
-  return getCounts().paused;
-}
-
-export function upsertProgress(
-  courseId: number,
-  courseName: string,
-  percent: number,
-  currentModule: string,
-  currentPage: string,
-  downloadedBytes: number,
-  totalPages: number,
-  completedPages: number,
-  totalModules: number,
-  currentModuleIndex: number,
-) {
-  const now = Date.now();
-  const existing = downloads.get(courseId);
-
-  let speed = 0;
-  if (existing && existing.kind === "course" && existing.bytesDownloaded > 0 && downloadedBytes > existing.bytesDownloaded) {
-    const dt = (now - existing.lastUpdateAt) / 1000;
-    if (dt > 0.1) {
-      const instantSpeed = (downloadedBytes - existing.bytesDownloaded) / dt;
-      speed = existing.speed > 0
-        ? existing.speed * (1 - SPEED_SMOOTHING) + instantSpeed * SPEED_SMOOTHING
-        : instantSpeed;
-    } else {
-      speed = existing.speed;
+export function getAggregate(): DownloadAggregate {
+  let activeCount = 0, queuedCount = 0, pausedCount = 0, failedCount = 0;
+  let speedBps = 0;
+  for (const item of downloads.values()) {
+    if (item.status === "queued") queuedCount++;
+    if (item.status === "paused") pausedCount++;
+    if (item.status === "downloading") {
+      activeCount++;
+      speedBps += finiteBytes(item.speed);
     }
   }
 
-  downloads.set(courseId, {
-    kind: "course",
-    id: courseId,
-    name: courseName,
-    percent: Math.max(0, percent),
-    currentModule,
-    currentPage,
-    status: "downloading",
-    startedAt: existing?.startedAt ?? now,
-    bytesDownloaded: downloadedBytes,
-    lastUpdateAt: now,
-    speed,
-    totalPages,
-    completedPages,
-    totalModules,
-    currentModuleIndex,
-  });
-  pushSpeedPoint(courseId, speed);
-  scheduleFlush();
-}
-
-export function markComplete(courseName: string, success: boolean, error?: string) {
-  for (const [id, item] of downloads) {
-    if (item.name === courseName) {
-      const base = {
-        ...item,
-        percent: success ? 100 : item.percent,
-        status: (success ? "complete" : "error") as DownloadStatus,
-        error,
-        lastUpdateAt: Date.now(),
-      };
-      if (item.kind === "course") {
-        downloads.set(id, { ...base, kind: "course", speed: 0 } as CourseDownloadItem);
-      } else {
-        downloads.set(id, base as GenericDownloadItem);
-      }
-      clearSpeedHistory(id);
-      flushNow();
-      break;
-    }
+  let downloadedBytes = 0, knownTotal = 0, remainingBytes = 0;
+  let reportedPercentTotal = 0;
+  let allTotalsKnown = aggregateBatch.size > 0;
+  let allPercentsKnown = aggregateBatch.size > 0;
+  let remainingTotalsKnown = true, everyRemainingHasEta = true;
+  let allSucceeded = aggregateBatch.size > 0 && !batchCancelled;
+  let hasFailed = false;
+  let maxItemEta = 0;
+  for (const item of aggregateBatch.values()) {
+    if (item.status === "error" && !acknowledgedFailures.has(item.id)) failedCount++;
+    const finished = item.status === "complete" || item.status === "seeding";
+    allSucceeded &&= finished;
+    hasFailed ||= item.status === "error";
+    const reportedPercent = finished
+      ? 100
+      : knownPercent(item.percent);
+    if (reportedPercent === null) allPercentsKnown = false;
+    else reportedPercentTotal += reportedPercent;
+    const bytes = finiteBytes(item.downloadedBytes);
+    const total = finiteBytes(item.totalBytes) > 0
+      ? finiteBytes(item.totalBytes)
+      : finished && bytes > 0 ? bytes : null;
+    downloadedBytes += finished && total !== null ? total : total !== null ? Math.min(bytes, total) : bytes;
+    if (total === null) allTotalsKnown = false;
+    else knownTotal += total;
+    if (!isPending(item)) continue;
+    if (total === null) remainingTotalsKnown = false;
+    else remainingBytes += Math.max(0, total - bytes);
+    const reportedEta = item.etaSeconds;
+    const estimate = reportedEta != null && Number.isFinite(reportedEta) && reportedEta > 0
+      ? reportedEta
+      : total !== null && finiteBytes(item.speed) > 0 ? Math.max(0, total - bytes) / item.speed : null;
+    if (item.status !== "downloading" || finiteBytes(item.speed) === 0 || estimate === null) everyRemainingHasEta = false;
+    else maxItemEta = Math.max(maxItemEta, estimate);
   }
+
+  const totalBytes = allTotalsKnown && knownTotal > 0 ? knownTotal : null;
+  // Some engines (notably segmented yt-dlp downloads) know logical progress
+  // before they know the final combined byte total. The item card already uses
+  // that reported percentage, so the global bar must use it as its fallback
+  // instead of switching to an unrelated indeterminate animation.
+  const percent = totalBytes !== null
+    ? Math.min(100, downloadedBytes / totalBytes * 100)
+    : allPercentsKnown ? reportedPercentTotal / aggregateBatch.size : null;
+  let etaSeconds: number | null = null;
+  if (speedBps > 0 && activeCount > 0 && pausedCount === 0 && queuedCount === 0 && !hasFailed && everyRemainingHasEta) {
+    const eta = remainingTotalsKnown ? remainingBytes / speedBps : maxItemEta;
+    if (Number.isFinite(eta) && eta > 0) etaSeconds = eta;
+  }
+  const pending = activeCount + queuedCount + pausedCount > 0;
+  return {
+    batchId: aggregateBatchId,
+    outcome: pending ? "working" : allSucceeded ? "complete" : aggregateBatch.size || batchCancelled ? "stopped" : "idle",
+    activeCount, queuedCount, pausedCount, failedCount,
+    speedBps, downloadedBytes, totalBytes, percent, etaSeconds,
+  };
 }
 
 export function clearFinished() {
@@ -280,7 +348,7 @@ type QueueItemInfo = {
   platform: string;
   title: string;
   status: { type: string; data?: unknown };
-  percent: number;
+  percent: number | null;
   speed_bytes_per_sec: number;
   downloaded_bytes: number;
   total_bytes: number | null;
@@ -289,7 +357,6 @@ type QueueItemInfo = {
   file_count: number | null;
   thumbnail_url: string | null;
   kind?: QueueKind;
-  external?: boolean;
   eta_seconds?: number | null;
   quality?: string | null;
   download_mode?: string | null;
@@ -304,6 +371,11 @@ type QueueItemInfo = {
   started_at_ms?: number | null;
   command?: CommandRecord | null;
 };
+
+/** Backend percent, or `null` when the engine does not know the total. */
+export function knownPercent(value: number | null | undefined): number | null {
+  return value != null && Number.isFinite(value) ? Math.min(100, Math.max(0, value)) : null;
+}
 
 function queueStatusToDownloadStatus(status: { type: string; data?: unknown }): DownloadStatus {
   switch (status.type) {
@@ -356,7 +428,7 @@ export function syncQueueState(items: QueueItemInfo[]) {
       id: qi.id,
       name: qi.title,
       platform: qi.platform,
-      percent: Math.max(0, qi.percent),
+      percent: knownPercent(qi.percent),
       speed: effectiveSpeed,
       downloadedBytes: qi.downloaded_bytes,
       totalBytes: qi.total_bytes,
@@ -370,7 +442,6 @@ export function syncQueueState(items: QueueItemInfo[]) {
       fileCount: qi.file_count ?? undefined,
       thumbnail_url: qi.thumbnail_url,
       queueKind: qi.kind,
-      external: qi.external,
       quality: qi.quality ?? null,
       downloadMode: qi.download_mode ?? null,
       author: qi.author ?? null,
@@ -429,7 +500,7 @@ export function upsertGenericProgress(
   id: number,
   title: string,
   platform: string,
-  percent: number,
+  percent: number | null,
   speedBytesPerSec: number,
   downloadedBytes: number,
   totalBytes: number | null,
@@ -470,7 +541,7 @@ export function upsertGenericProgress(
     id,
     name: title || prev?.name || "",
     platform: platform || prev?.platform || "",
-    percent: Math.max(0, percent),
+    percent: knownPercent(percent),
     speed: effectiveSpeed,
     downloadedBytes,
     totalBytes: totalBytes ?? prev?.totalBytes ?? null,

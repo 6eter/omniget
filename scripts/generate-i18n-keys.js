@@ -81,7 +81,12 @@ export type TranslationKeys =\n`;
   output += "  // Allows dynamic/computed keys while preserving autocomplete for known keys\n";
   output += "  | (string & {});\n";
 
-  fs.writeFileSync(outputFile, output, "utf-8");
+  const existing = fs.existsSync(outputFile)
+    ? fs.readFileSync(outputFile, "utf-8").replace(/\r\n/g, "\n")
+    : null;
+  if (existing !== output) {
+    fs.writeFileSync(outputFile, output, "utf-8");
+  }
   console.log(`Generated ${keys.length} translation keys in keys.ts`);
 
   const otherLocales = fs

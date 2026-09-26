@@ -1,9 +1,8 @@
 //! Binarios que o usuario apontou, em vez dos que o OmniGet gerencia.
 //!
-//! Pedido na issue #222: quem ja tem yt-dlp, FFmpeg ou PDFium instalado nao
-//! quer uma segunda copia dentro do diretorio do app. Ate aqui so o PDFium
-//! aceitava arquivo customizado, e mesmo assim **copiava** — o que resolve
-//! metade do problema e cria a outra metade, porque a copia envelhece sozinha.
+//! Pedido na issue #222: quem ja tem yt-dlp ou FFmpeg instalado nao quer uma
+//! segunda copia dentro do diretorio do app. Copiar resolve metade do problema
+//! e cria a outra metade, porque a copia envelhece sozinha.
 //!
 //! Aqui o caminho e guardado e usado no lugar. Se o usuario atualizar o yt-dlp
 //! dele pelo gerenciador de pacotes, o OmniGet passa a usar a versao nova sem
@@ -20,7 +19,7 @@ const OVERRIDES_FILE: &str = "binary-overrides.json";
 
 /// Nomes aceitos. Fechado de proposito: aceitar qualquer string deixaria o
 /// arquivo virar depósito de chave escrita errada que nunca tem efeito.
-pub const SUPPORTED: [&str; 3] = ["yt-dlp", "FFmpeg", "PDFium"];
+pub const SUPPORTED: [&str; 2] = ["yt-dlp", "FFmpeg"];
 
 pub fn is_supported(name: &str) -> bool {
     SUPPORTED.contains(&name)
@@ -142,10 +141,10 @@ mod tests {
     }
 
     #[test]
-    fn so_as_tres_ferramentas_conhecidas_sao_aceitas() {
+    fn so_as_ferramentas_conhecidas_sao_aceitas() {
         assert!(is_supported("yt-dlp"));
         assert!(is_supported("FFmpeg"));
-        assert!(is_supported("PDFium"));
+        assert!(!is_supported("PDFium"));
         // Nome escrito diferente nao pode virar entrada morta no arquivo.
         assert!(!is_supported("ffmpeg"));
         assert!(!is_supported("aria2c"));

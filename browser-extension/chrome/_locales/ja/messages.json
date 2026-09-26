@@ -33,7 +33,7 @@
     "message": "現在のページは OmniGet 拡張機能でサポートされているメディアページではありません。"
   },
   "error_invalid_url_detail": {
-    "message": "動画、リール、投稿、再生リスト、またはコースの直接ページからもう一度お試しください。"
+    "message": "動画、リール、投稿、または再生リストの直接ページからもう一度お試しください。"
   },
   "error_launch_failed_title": {
     "message": "ブラウザから OmniGet を起動できませんでした"
@@ -155,9 +155,6 @@
   },
   "popup_get_app": {
     "message": "OmniGet を入手"
-  },
-  "popup_lbl_course": {
-    "message": "コースを OmniGet に送信"
   },
   "popup_lbl_playlist": {
     "message": "プレイリストを OmniGet に送信"

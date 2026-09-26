@@ -54,6 +54,9 @@ jobs:
 
       - name: Test
         working-directory: src-tauri
+        # A hung test must fail with its log, not sit until the job is
+        # cancelled (a cancelled job keeps no log to read).
+        timeout-minutes: 30
         run: cargo test --workspace
 
   rust-debian:

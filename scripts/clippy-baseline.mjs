@@ -13,9 +13,12 @@
 //   node scripts/clippy-baseline.mjs --check    reprova se piorou
 //   node scripts/clippy-baseline.mjs --update   regrava o baseline
 //
-// Roda em um SO só (ubuntu na CI): clippy enxerga código diferente por
-// `#[cfg(target_os)]`, então um baseline único não descreve as três
-// plataformas. Um baseline por SO seria possível, e é dívida registrada.
+// Um arquivo por SO: clippy enxerga código diferente por `#[cfg(target_os)]`,
+// então um baseline único não descreve as três plataformas. A CI roda este
+// passo nas três, cada uma contra o seu próprio arquivo.
+//
+// Plataforma sem baseline ainda não gerado não reprova: o passo imprime o
+// conteúdo a ser commitado (ver a mensagem de baseline ausente abaixo).
 
 import { spawn } from "node:child_process";
 import fs from "node:fs";

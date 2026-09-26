@@ -27,10 +27,6 @@ export function dismissChangelog(): void {
   localStorage.removeItem(CHANGELOG_BODY_KEY);
 }
 
-export function showChangelog(): void {
-  showDialog = true;
-}
-
 export function storeChangelogForUpdate(body: string, version: string): void {
   localStorage.setItem(CHANGELOG_BODY_KEY, JSON.stringify({ body, version }));
 }
@@ -39,7 +35,7 @@ export async function initChangelog(): Promise<void> {
   try {
     currentVersion = await getVersion();
   } catch {
-    currentVersion = "0.9.2";
+    currentVersion = "0.10.1";
   }
 
   const lastSeen = localStorage.getItem(STORAGE_KEY);

@@ -20,8 +20,6 @@
     pdf: "paperclip",
     book: "books",
     webpage: "link",
-    telegram_media: "satellite_antenna",
-    course_lesson: "clapper_board",
     generic: "package",
   };
 
@@ -98,8 +96,6 @@
   .poster[data-kind="image"] .poster-fallback { background: radial-gradient(120% 90% at 20% 0%, var(--queue-kind-image-bg) 0%, transparent 70%), linear-gradient(160deg, var(--fill-2), var(--fill-1)); }
   .poster[data-kind="pdf"] .poster-fallback { background: radial-gradient(120% 90% at 20% 0%, var(--queue-kind-pdf-bg) 0%, transparent 70%), linear-gradient(160deg, var(--fill-2), var(--fill-1)); }
   .poster[data-kind="book"] .poster-fallback { background: radial-gradient(120% 90% at 20% 0%, var(--queue-kind-book-bg) 0%, transparent 70%), linear-gradient(160deg, var(--fill-2), var(--fill-1)); }
-  .poster[data-kind="telegram_media"] .poster-fallback { background: radial-gradient(120% 90% at 20% 0%, var(--queue-kind-telegram_media-bg) 0%, transparent 70%), linear-gradient(160deg, var(--fill-2), var(--fill-1)); }
-  .poster[data-kind="course_lesson"] .poster-fallback { background: radial-gradient(120% 90% at 20% 0%, var(--queue-kind-course_lesson-bg) 0%, transparent 70%), linear-gradient(160deg, var(--fill-2), var(--fill-1)); }
 
   .poster-art {
     width: 34px;

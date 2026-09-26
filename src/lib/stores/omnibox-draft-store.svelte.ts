@@ -7,7 +7,3 @@ export function getOmniboxDraftUrl(): string {
 export function setOmniboxDraftUrl(url: string) {
   draftUrl = url;
 }
-
-export function clearOmniboxDraftUrl() {
-  draftUrl = "";
-}

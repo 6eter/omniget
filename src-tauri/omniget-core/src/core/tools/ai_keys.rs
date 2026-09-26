@@ -2,25 +2,43 @@
 //! de contas de IA (site → chave → modelos → saldo), teste de conectividade,
 //! saldo onde a API dá (OpenRouter, DeepSeek, SiliconFlow, painéis New API)
 //! e exportação para os clientes (.env, Claude Code, Cherry Studio, Codex,
-//! opencode). Chaves ficam em `<app_data>/tools/ai-keys.json`, como o
-//! `ai_config.json` do app; a UI só recebe o início e o fim de cada chave.
+//! opencode). A UI só recebe o início e o fim de cada chave.
+//!
+//! Storage, since the LLM expansion: `<app_data>/tools/ai-keys.json` holds
+//! metadata only (name, kind, base URL, model, last check, balance). The secret
+//! itself lives in [`crate::core::secrets`] under the `ai_keys` namespace —
+//! keychain in the app, encrypted file in the CLI — keyed by `kind:id` (see
+//! [`migrate`]). Files written by older builds are migrated on the first read,
+//! with a 0600 backup beside them.
+//!
+//! `Kind` is the provider table and its `id` is the `ProviderId` string the LLM
+//! layer uses ("openai", "anthropic", "openrouter", …).
 
-use std::sync::Mutex;
+use std::sync::{Mutex, OnceLock};
 
 use anyhow::anyhow;
+use base64::Engine as _;
 use serde::{Deserialize, Serialize};
+
+use crate::core::secrets::{self, AI_KEYS};
+
+#[path = "ai_keys_migrate.rs"]
+pub mod migrate;
 
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct KeyEntry {
     pub id: String,
     pub name: String,
-    /// openai | anthropic | openrouter | deepseek | gemini | groq | xai | mistral | siliconflow | newapi | ollama | custom
+    /// openai | anthropic | openrouter | deepseek | gemini | groq | xai | mistral | siliconflow | requesty | newapi | ollama | custom
     pub kind: String,
     pub base_url: String,
-    #[serde(default)]
+    /// Never serialised: the vault file holds metadata only. Deserialising it
+    /// still works, because that is how the UI sends a new key in and how a
+    /// pre-migration file is read.
+    #[serde(default, skip_serializing)]
     pub key: String,
     /// New API: token de acesso do painel (Configurações → Token de acesso)
-    #[serde(default)]
+    #[serde(default, skip_serializing)]
     pub access_token: String,
     #[serde(default)]
     pub user_id: String,
@@ -99,6 +117,8 @@ pub fn hint(key: &str) -> String {
     format!("{}…{}", start, end)
 }
 
+/// One provider. `id` is the `ProviderId` the LLM layer routes on, which is why
+/// this table — not an enum — is the single source of truth for a provider.
 #[derive(Debug, Clone, Serialize)]
 pub struct Kind {
     pub id: &'static str,
@@ -106,6 +126,41 @@ pub struct Kind {
     pub base_url: &'static str,
     pub balance: bool,
     pub env: &'static str,
+    /// Which HTTP dialect this provider speaks: `openai`, `anthropic` or
+    /// `gemini`. Everything not natively one of the other two is OpenAI-shaped.
+    pub wire: &'static str,
+    /// Token-by-token responses (SSE for the OpenAI and Anthropic wires,
+    /// `streamGenerateContent` for Gemini).
+    pub streaming: bool,
+    /// Tool/function calling at the provider level. A given model may still not
+    /// do it — an Ollama build with a small model is the usual case.
+    pub tools: bool,
+}
+
+impl Kind {
+    /// The base URL an entry gets when the user leaves the field empty.
+    pub fn base_url_default(&self) -> &'static str {
+        self.base_url
+    }
+
+    /// The environment variable the ecosystem expects this key under, used by
+    /// the `.env`/Codex exports. Empty when the provider needs no key.
+    pub fn env_var(&self) -> &'static str {
+        self.env
+    }
+
+    pub fn supports_streaming(&self) -> bool {
+        self.streaming
+    }
+
+    pub fn supports_tools(&self) -> bool {
+        self.tools
+    }
+
+    /// `true` when the provider talks the OpenAI dialect, whoever hosts it.
+    pub fn is_openai_wire(&self) -> bool {
+        self.wire == "openai"
+    }
 }
 
 pub const KINDS: &[Kind] = &[
@@ -115,6 +170,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.openai.com/v1",
         balance: false,
         env: "OPENAI_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "anthropic",
@@ -122,6 +180,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.anthropic.com/v1",
         balance: false,
         env: "ANTHROPIC_API_KEY",
+        wire: "anthropic",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "openrouter",
@@ -129,6 +190,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://openrouter.ai/api/v1",
         balance: true,
         env: "OPENROUTER_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "deepseek",
@@ -136,6 +200,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.deepseek.com",
         balance: true,
         env: "DEEPSEEK_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "gemini",
@@ -143,6 +210,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://generativelanguage.googleapis.com/v1beta",
         balance: false,
         env: "GEMINI_API_KEY",
+        wire: "gemini",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "groq",
@@ -150,6 +220,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.groq.com/openai/v1",
         balance: false,
         env: "GROQ_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "xai",
@@ -157,6 +230,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.x.ai/v1",
         balance: false,
         env: "XAI_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "mistral",
@@ -164,6 +240,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.mistral.ai/v1",
         balance: false,
         env: "MISTRAL_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "siliconflow",
@@ -171,6 +250,19 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://api.siliconflow.cn/v1",
         balance: true,
         env: "SILICONFLOW_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
+    },
+    Kind {
+        id: "requesty",
+        name: "Requesty",
+        base_url: "https://router.requesty.ai/v1",
+        balance: false,
+        env: "REQUESTY_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "newapi",
@@ -178,6 +270,9 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://seu-site.com/v1",
         balance: true,
         env: "OPENAI_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
     Kind {
         id: "ollama",
@@ -185,6 +280,11 @@ pub const KINDS: &[Kind] = &[
         base_url: "http://localhost:11434/v1",
         balance: false,
         env: "",
+        wire: "openai",
+        streaming: true,
+        // Provider-level yes; whether the pulled model does it is another
+        // question, answered by the model roster and not by this table.
+        tools: true,
     },
     Kind {
         id: "custom",
@@ -192,38 +292,99 @@ pub const KINDS: &[Kind] = &[
         base_url: "https://…/v1",
         balance: false,
         env: "OPENAI_API_KEY",
+        wire: "openai",
+        streaming: true,
+        tools: true,
     },
 ];
 
-fn kind_of(id: &str) -> &'static Kind {
-    KINDS
-        .iter()
-        .find(|k| k.id == id)
-        .unwrap_or(&KINDS[KINDS.len() - 1])
+/// The table entry for a provider id, or `None` when nothing matches.
+pub fn find_kind(id: &str) -> Option<&'static Kind> {
+    KINDS.iter().find(|k| k.id == id)
+}
+
+/// The table entry, falling back to the OpenAI-compatible `custom` row.
+pub fn kind_of(id: &str) -> &'static Kind {
+    find_kind(id).unwrap_or(&KINDS[KINDS.len() - 1])
 }
 
 // ── Armazenamento ──────────────────────────────────────────────────────
 
 static LOCK: Mutex<()> = Mutex::new(());
 
-fn file() -> Option<std::path::PathBuf> {
+pub fn file() -> Option<std::path::PathBuf> {
     super::tools_dir().map(|d| d.join("ai-keys.json"))
 }
 
-fn load() -> Vec<KeyEntry> {
+/// Move the plaintext of a pre-LLM-expansion vault into the secret store, once
+/// per process. Cheap after the first run: the check is one file read, and the
+/// file is only rewritten when something was actually moved.
+fn migrate_once() {
+    static ONCE: OnceLock<()> = OnceLock::new();
+    ONCE.get_or_init(|| {
+        if let Some(path) = file() {
+            migrate::migrate_vault_file(&path);
+        }
+    });
+}
+
+/// Metadata as it sits on disk, with the secret fields empty.
+fn load_metadata() -> Vec<KeyEntry> {
     file()
         .and_then(|p| std::fs::read_to_string(p).ok())
         .and_then(|s| serde_json::from_str(&s).ok())
         .unwrap_or_default()
 }
 
+/// Fill the secret fields from the store. One read per account; the app's store
+/// caches, so a second `list()` in the same session costs nothing.
+fn hydrate(list: &mut [KeyEntry]) {
+    for entry in list.iter_mut() {
+        entry.key = secrets::get(AI_KEYS, &migrate::key_account(&entry.kind, &entry.id))
+            .unwrap_or_else(|e| {
+                tracing::warn!("[ai-keys] could not read the key of {}: {}", entry.id, e);
+                None
+            })
+            .unwrap_or_default();
+        entry.access_token = secrets::get(AI_KEYS, &migrate::token_account(&entry.kind, &entry.id))
+            .unwrap_or_default()
+            .unwrap_or_default();
+    }
+}
+
+fn load() -> Vec<KeyEntry> {
+    migrate_once();
+    let mut list = load_metadata();
+    hydrate(&mut list);
+    list
+}
+
+/// Write the vault: secrets to the store, everything else to the JSON. The
+/// entries are cloned and blanked first, so the file can never carry a key even
+/// if a caller hands us a hydrated list (which it always does).
 fn save(list: &[KeyEntry]) -> anyhow::Result<()> {
     let p = file().ok_or_else(|| anyhow!("sem pasta de dados"))?;
+    let mut list = list.to_vec();
+    for (account, value) in migrate::take_secrets(&mut list) {
+        secrets::put_or_delete(AI_KEYS, &account, &value).map_err(|e| anyhow!(e))?;
+    }
     std::fs::create_dir_all(p.parent().unwrap())?;
     let tmp = p.with_extension("json.tmp");
-    std::fs::write(&tmp, serde_json::to_string_pretty(list)?)?;
+    std::fs::write(&tmp, serde_json::to_string_pretty(&list)?)?;
     std::fs::rename(&tmp, &p)?;
     Ok(())
+}
+
+/// Forget everything an entry owns in the secret store.
+fn forget_secrets(entry: &KeyEntry) {
+    for account in [
+        migrate::key_account(&entry.kind, &entry.id),
+        migrate::token_account(&entry.kind, &entry.id),
+    ] {
+        if let Err(e) = secrets::delete(AI_KEYS, &account) {
+            tracing::warn!("[ai-keys] could not forget {}: {}", account, e);
+        }
+    }
 }
 
 pub fn list() -> Vec<KeyView> {
@@ -278,6 +439,12 @@ pub fn upsert(mut entry: KeyEntry) -> anyhow::Result<KeyView> {
         if entry.access_token.trim().is_empty() {
             entry.access_token = existing.access_token.clone();
         }
+        // The key is filed under `kind:id`: changing the provider of an entry
+        // moves the account, so the old one has to be forgotten.
+        if existing.kind != entry.kind {
+            let stale = existing.clone();
+            forget_secrets(&stale);
+        }
         entry.created = existing.created;
         entry.last_ok = existing.last_ok;
         entry.last_checked = existing.last_checked;
@@ -296,8 +463,15 @@ pub fn upsert(mut entry: KeyEntry) -> anyhow::Result<KeyView> {
 pub fn delete(id: &str) -> anyhow::Result<()> {
     let _g = LOCK.lock().unwrap_or_else(|e| e.into_inner());
     let mut list = load();
+    let removed: Vec<KeyEntry> = list.iter().filter(|e| e.id == id).cloned().collect();
     list.retain(|e| e.id != id);
-    save(&list)
+    save(&list)?;
+    // After the file is safely rewritten: dropping the row and leaving the key
+    // in the keychain is the one failure mode worth avoiding here.
+    for entry in &removed {
+        forget_secrets(entry);
+    }
+    Ok(())
 }
 
 // ── Rede ───────────────────────────────────────────────────────────────
@@ -506,7 +680,7 @@ pub async fn balance(id: &str) -> anyhow::Result<KeyView> {
 // ── Exportar ───────────────────────────────────────────────────────────
 
 fn is_openai_compatible(kind: &str) -> bool {
-    !matches!(kind, "anthropic" | "gemini")
+    kind_of(kind).is_openai_wire()
 }
 
 pub fn export(format: &str, ids: &[String]) -> anyhow::Result<String> {
@@ -621,28 +795,205 @@ pub fn export(format: &str, ids: &[String]) -> anyhow::Result<String> {
     })
 }
 
+/// The base URL the app's chat should call for this entry. Gemini is the one
+/// provider whose native route is not OpenAI-shaped, so it goes through its own
+/// OpenAI-compatible endpoint instead of being refused.
+pub fn app_base_url(kind: &str, base_url: &str) -> String {
+    let base = if base_url.trim().is_empty() {
+        kind_of(kind).base_url_default()
+    } else {
+        base_url.trim()
+    }
+    .trim_end_matches('/')
+    .to_string();
+    if kind == "gemini" && !base.ends_with("/openai") {
+        return format!("{}/openai", base);
+    }
+    base
+}
+
 /// Usa esta chave como a IA do OmniGet (Ajustes → IA).
+///
+/// The entry's `kind` is kept as it is: the app config records the provider id,
+/// and `AiProvider` is derived from the wire instead of every non-OpenAI entry
+/// being filed as `Local`.
 pub fn use_in_app(id: &str) -> anyhow::Result<()> {
     let e = get(id)?;
-    use crate::core::ai::{self, AiProvider};
-    match e.kind.as_str() {
-        "openai" => {
-            ai::set(AiProvider::Openai, e.model.clone(), String::new(), Some(e.key.clone()), None);
-        }
-        "anthropic" => {
-            ai::set(AiProvider::Anthropic, e.model.clone(), String::new(), None, Some(e.key.clone()));
-        }
-        "gemini" => return Err(anyhow!("o chat do OmniGet fala OpenAI/Anthropic; use a rota OpenAI-compatível do Gemini (…/v1beta/openai) como personalizado")),
-        _ => {
-            ai::set(AiProvider::Local, e.model.clone(), e.base_url.clone(), Some(e.key.clone()), None);
-        }
-    }
+    crate::core::ai::set_from_key(
+        &e.kind,
+        &e.id,
+        e.model.clone(),
+        app_base_url(&e.kind, &e.base_url),
+        e.key.clone(),
+    );
     Ok(())
+}
+
+// ── Sign in with OpenRouter (OAuth PKCE, sem backend) ──────────────────
+
+/// Where OpenRouter sends the browser back. The `omniget://` scheme is already
+/// registered by the app (`tauri-plugin-deep-link`), so no local HTTP server and
+/// no backend of ours is involved.
+///
+/// WHY the state rides in the callback URL: the OAuth PKCE flow documented at
+/// <https://openrouter.ai/docs/use-cases/oauth-pkce> only promises to append
+/// `code` to `callback_url`; it does not define a `state` parameter of its own.
+/// A parameter we put in `callback_url` does come back intact, so that is the
+/// one the check can rely on. `state` is also sent as a top-level query
+/// parameter, which costs nothing and is echoed by any provider that does
+/// implement it.
+pub const OPENROUTER_CALLBACK: &str = "omniget://openrouter-auth";
+const OPENROUTER_AUTH: &str = "https://openrouter.ai/auth";
+const OPENROUTER_KEYS: &str = "https://openrouter.ai/api/v1/auth/keys";
+/// How long a started sign-in stays valid. Long enough to create an account,
+/// short enough that a forgotten verifier does not sit in memory all session.
+const PKCE_TTL_SECS: i64 = 600;
+
+/// What the UI needs to open the browser. The verifier never leaves the core.
+#[derive(Debug, Clone, Serialize)]
+pub struct PkceStart {
+    pub url: String,
+    pub state: String,
+    pub callback_url: String,
+}
+
+struct Pending {
+    state: String,
+    verifier: String,
+    started: i64,
+}
+
+static PENDING: Mutex<Option<Pending>> = Mutex::new(None);
+
+/// 32 random bytes, base64url without padding: 43 chars, inside the 43–128 the
+/// RFC 7636 verifier allows, and every character is already unreserved.
+fn random_token() -> String {
+    let mut bytes = [0u8; 32];
+    rand::Rng::fill_bytes(&mut rand::rng(), &mut bytes);
+    base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(bytes)
+}
+
+/// S256: base64url(sha256(verifier)), no padding.
+pub fn pkce_challenge(verifier: &str) -> String {
+    use sha2::{Digest, Sha256};
+    let mut h = Sha256::new();
+    h.update(verifier.as_bytes());
+    base64::engine::general_purpose::URL_SAFE_NO_PAD.encode(h.finalize())
+}
+
+/// The callback OpenRouter is given, carrying the state it has to hand back.
+/// Pure, so the deep link the app has to recognise is a test and not a comment.
+pub fn openrouter_callback_url(state: &str) -> String {
+    format!(
+        "{}?state={}",
+        OPENROUTER_CALLBACK,
+        urlencoding::encode(state)
+    )
+}
+
+/// The URL the browser opens. Pure, so the shape is a test and not a comment.
+pub fn openrouter_auth_url(callback_url: &str, challenge: &str, state: &str) -> String {
+    format!(
+        "{}?callback_url={}&code_challenge={}&code_challenge_method=S256&state={}",
+        OPENROUTER_AUTH,
+        urlencoding::encode(callback_url),
+        urlencoding::encode(challenge),
+        urlencoding::encode(state)
+    )
+}
+
+/// Start a sign-in. The last start wins: one browser window at a time.
+pub fn pkce_start() -> PkceStart {
+    let verifier = random_token();
+    let state = random_token();
+    let challenge = pkce_challenge(&verifier);
+    if let Ok(mut slot) = PENDING.lock() {
+        *slot = Some(Pending {
+            state: state.clone(),
+            verifier,
+            started: chrono::Utc::now().timestamp(),
+        });
+    }
+    let callback_url = openrouter_callback_url(&state);
+    PkceStart {
+        url: openrouter_auth_url(&callback_url, &challenge, &state),
+        state,
+        callback_url,
+    }
+}
+
+/// Take the pending verifier, checking the state that came back through the
+/// callback and the deadline. Consumed either way: a code is single use, and a
+/// second attempt has to start a new sign-in.
+///
+/// The state is mandatory. A callback that arrives without one is not a callback
+/// this process started — it is somebody else handing the app a code, which is
+/// exactly what the parameter exists to refuse.
+fn take_pending(state: Option<&str>) -> anyhow::Result<String> {
+    let mut slot = PENDING.lock().unwrap_or_else(|e| e.into_inner());
+    let pending = slot.take().ok_or_else(|| anyhow!("ERR_PKCE_NO_START"))?;
+    match state.map(str::trim).filter(|s| !s.is_empty()) {
+        Some(state) if state == pending.state => {}
+        _ => return Err(anyhow!("ERR_PKCE_STATE")),
+    }
+    if chrono::Utc::now().timestamp() - pending.started > PKCE_TTL_SECS {
+        return Err(anyhow!("ERR_PKCE_EXPIRED"));
+    }
+    Ok(pending.verifier)
+}
+
+/// Exchange the code for a key and file it in the vault. The key goes straight
+/// into the secret store; the caller only ever sees the masked view.
+pub async fn pkce_finish(code: &str, state: Option<&str>) -> anyhow::Result<KeyView> {
+    let code = code.trim();
+    if code.is_empty() {
+        return Err(anyhow!("ERR_PKCE_NO_CODE"));
+    }
+    let verifier = take_pending(state)?;
+    let body = serde_json::json!({
+        "code": code,
+        "code_verifier": verifier,
+        "code_challenge_method": "S256",
+    });
+    let resp = client()?.post(OPENROUTER_KEYS).json(&body).send().await?;
+    let status = resp.status();
+    let text = resp.text().await.unwrap_or_default();
+    if !status.is_success() {
+        return Err(anyhow!(
+            "ERR_PKCE_EXCHANGE: HTTP {} {}",
+            status.as_u16(),
+            text.chars().take(200).collect::<String>()
+        ));
+    }
+    let json: serde_json::Value = serde_json::from_str(&text)
+        .map_err(|_| anyhow!("ERR_PKCE_EXCHANGE: resposta nao e JSON"))?;
+    let key = json
+        .get("key")
+        .and_then(|v| v.as_str())
+        .unwrap_or_default()
+        .trim()
+        .to_string();
+    if key.is_empty() {
+        return Err(anyhow!("ERR_PKCE_EXCHANGE: resposta sem chave"));
+    }
+    let existing = list()
+        .into_iter()
+        .find(|v| v.kind == "openrouter" && v.name == "OpenRouter");
+    upsert(KeyEntry {
+        id: existing.map(|v| v.id).unwrap_or_default(),
+        name: "OpenRouter".to_string(),
+        kind: "openrouter".to_string(),
+        base_url: kind_of("openrouter").base_url_default().to_string(),
+        key,
+        ..Default::default()
+    })
 }
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::path::PathBuf;
+    use std::sync::{MutexGuard, OnceLock};
 
     #[test]
     fn hints() {
@@ -651,5 +1002,300 @@ mod tests {
         assert_eq!(hint("sk-1234567890abcd"), "sk-1…abcd");
         assert_eq!(site_of("https://x.com/v1/"), "https://x.com");
         assert_eq!(site_of("https://x.com"), "https://x.com");
+    }
+
+    /// The table is the provider registry the LLM layer routes on, so every row
+    /// has to answer the four questions and no id may repeat.
+    #[test]
+    fn every_kind_answers_the_capability_questions() {
+        let mut ids: Vec<&str> = KINDS.iter().map(|k| k.id).collect();
+        let before = ids.len();
+        ids.sort_unstable();
+        ids.dedup();
+        assert_eq!(ids.len(), before, "duplicate provider id in KINDS");
+
+        for k in KINDS {
+            assert!(!k.base_url_default().is_empty(), "{}", k.id);
+            assert!(k.supports_streaming(), "{}", k.id);
+            assert!(
+                matches!(k.wire, "openai" | "anthropic" | "gemini"),
+                "{}",
+                k.id
+            );
+            // Only the local provider needs no key, so only it has no variable.
+            assert_eq!(k.env_var().is_empty(), k.id == "ollama", "{}", k.id);
+        }
+        assert!(find_kind("openrouter").unwrap().supports_tools());
+        assert!(find_kind("anthropic").unwrap().supports_tools());
+        assert!(find_kind("nope").is_none());
+        // An unknown id degrades to the OpenAI-compatible row instead of panicking.
+        assert_eq!(kind_of("nope").id, "custom");
+        assert!(kind_of("openrouter").is_openai_wire());
+        assert!(!kind_of("anthropic").is_openai_wire());
+        assert!(!kind_of("gemini").is_openai_wire());
+    }
+
+    /// `use_in_app` no longer refuses Gemini, and no longer flattens a provider
+    /// into `Local` without a base URL.
+    #[test]
+    fn the_app_base_url_falls_back_to_the_table_and_routes_gemini() {
+        assert_eq!(
+            app_base_url("openrouter", ""),
+            "https://openrouter.ai/api/v1"
+        );
+        assert_eq!(
+            app_base_url("openai", "https://relay.example/v1/"),
+            "https://relay.example/v1"
+        );
+        assert_eq!(
+            app_base_url("gemini", ""),
+            "https://generativelanguage.googleapis.com/v1beta/openai"
+        );
+        // Idempotent: a user who already pasted the compatible route keeps it.
+        assert_eq!(
+            app_base_url(
+                "gemini",
+                "https://generativelanguage.googleapis.com/v1beta/openai"
+            ),
+            "https://generativelanguage.googleapis.com/v1beta/openai"
+        );
+    }
+
+    /// RFC 7636 appendix B, so the challenge is right without a network call.
+    #[test]
+    fn the_pkce_challenge_matches_the_rfc_vector() {
+        assert_eq!(
+            pkce_challenge("dBjftJeZ4CVP-mB92K27uhbUJU1p1r_wW1gFWFOEjXk"),
+            "E9Melhoa2OwvFrEMTJguCHaoeK1t8URWbuGJSstw-cM"
+        );
+        // The callback carries the state, because OpenRouter only promises to
+        // append `code` to it — a parameter already in the URL comes back.
+        assert_eq!(
+            openrouter_callback_url("s+t/u"),
+            "omniget://openrouter-auth?state=s%2Bt%2Fu"
+        );
+        let url = openrouter_auth_url(&openrouter_callback_url("st8"), "abc+/=", "st8");
+        assert!(url.starts_with("https://openrouter.ai/auth?"), "{url}");
+        assert!(
+            url.contains("callback_url=omniget%3A%2F%2Fopenrouter-auth%3Fstate%3Dst8"),
+            "{url}"
+        );
+        assert!(url.contains("code_challenge=abc%2B%2F%3D"), "{url}");
+        assert!(url.contains("&code_challenge_method=S256"), "{url}");
+        assert!(url.ends_with("&state=st8"), "{url}");
+    }
+
+    /// One test for the whole pending slot, because it is process-wide and two
+    /// tests poking it in parallel would race.
+    #[test]
+    fn a_finish_is_refused_without_a_start_a_code_or_the_right_state() {
+        // An empty code never even looks for a pending start.
+        let err = futures::executor::block_on(pkce_finish("  ", Some("x")))
+            .unwrap_err()
+            .to_string();
+        assert_eq!(err, "ERR_PKCE_NO_CODE");
+
+        if let Ok(mut slot) = PENDING.lock() {
+            *slot = None;
+        }
+        let err = futures::executor::block_on(pkce_finish("code", Some("x")))
+            .unwrap_err()
+            .to_string();
+        assert_eq!(err, "ERR_PKCE_NO_START");
+
+        // A callback whose state does not match the start is somebody else's.
+        let started = pkce_start();
+        assert!(!started.state.is_empty());
+        // base64url needs no escaping, so the state is literal in the callback.
+        assert!(started.callback_url.ends_with(&started.state));
+        assert!(started.url.ends_with(&started.state));
+        let err = futures::executor::block_on(pkce_finish("code", Some("not-the-state")))
+            .unwrap_err()
+            .to_string();
+        assert_eq!(err, "ERR_PKCE_STATE");
+        // ...and it consumed the start: the code is single use either way.
+        let err = futures::executor::block_on(pkce_finish("code", Some(&started.state)))
+            .unwrap_err()
+            .to_string();
+        assert_eq!(err, "ERR_PKCE_NO_START");
+
+        // A callback with no state at all is refused too, which is the case the
+        // old `if let` silently let through.
+        pkce_start();
+        let err = futures::executor::block_on(pkce_finish("code", None))
+            .unwrap_err()
+            .to_string();
+        assert_eq!(err, "ERR_PKCE_STATE");
+        let err = futures::executor::block_on(pkce_finish("code", Some("   ")))
+            .unwrap_err()
+            .to_string();
+        assert_eq!(err, "ERR_PKCE_NO_START");
+    }
+
+    // ── Storage and migration ────────────────────────────────────────────
+
+    /// `set_var` is process-global and cargo runs tests on threads, so every
+    /// test that moves the data directory takes this lock.
+    fn env_lock() -> MutexGuard<'static, ()> {
+        static LOCK: OnceLock<Mutex<()>> = OnceLock::new();
+        LOCK.get_or_init(|| Mutex::new(()))
+            .lock()
+            .unwrap_or_else(|p| p.into_inner())
+    }
+
+    struct Sandbox {
+        root: PathBuf,
+        _guard: MutexGuard<'static, ()>,
+        previous: Vec<(&'static str, Option<String>)>,
+    }
+
+    impl Sandbox {
+        fn new(name: &str) -> Self {
+            let guard = env_lock();
+            let root = std::env::temp_dir().join(format!(
+                "omniget-ai-keys-{}-{}-{}",
+                name,
+                std::process::id(),
+                std::time::SystemTime::now()
+                    .duration_since(std::time::UNIX_EPOCH)
+                    .map(|d| d.as_nanos())
+                    .unwrap_or(0)
+            ));
+            let _ = std::fs::remove_dir_all(&root);
+            std::fs::create_dir_all(root.join("tools")).unwrap();
+            let mut previous = Vec::new();
+            for (key, value) in [
+                ("OMNIGET_DATA_DIR", root.to_str().unwrap().to_string()),
+                (
+                    crate::core::secrets::SECRETS_DIR_ENV,
+                    root.join("secrets").to_str().unwrap().to_string(),
+                ),
+            ] {
+                previous.push((key, std::env::var(key).ok()));
+                std::env::set_var(key, value);
+            }
+            Self {
+                root,
+                _guard: guard,
+                previous,
+            }
+        }
+
+        fn vault(&self) -> PathBuf {
+            self.root.join("tools").join("ai-keys.json")
+        }
+    }
+
+    impl Drop for Sandbox {
+        fn drop(&mut self) {
+            for (key, value) in self.previous.iter().rev() {
+                match value {
+                    Some(v) => std::env::set_var(key, v),
+                    None => std::env::remove_var(key),
+                }
+            }
+            let _ = std::fs::remove_dir_all(&self.root);
+        }
+    }
+
+    /// The whole point of the phase: a vault written by an older build loses its
+    /// plaintext, keeps working, and does not lose the key.
+    #[test]
+    fn the_migration_moves_plaintext_out_and_is_idempotent() {
+        let sb = Sandbox::new("migrate");
+        let legacy = r#"[
+          { "id": "e1", "name": "OpenRouter", "kind": "openrouter",
+            "base_url": "https://openrouter.ai/api/v1", "key": "sk-or-legacy", "created": 1 },
+          { "id": "e2", "name": "Painel", "kind": "newapi",
+            "base_url": "https://p.example/v1", "key": "sk-relay",
+            "access_token": "panel-token", "user_id": "7", "created": 2 }
+        ]"#;
+        std::fs::write(sb.vault(), legacy).unwrap();
+
+        let report = migrate::migrate_vault_file(&sb.vault());
+        assert_eq!(report.moved, 3, "two keys and one access token");
+        assert!(report.ran());
+
+        // The file no longer holds any of it...
+        let after = std::fs::read_to_string(sb.vault()).unwrap();
+        for secret in ["sk-or-legacy", "sk-relay", "panel-token"] {
+            assert!(!after.contains(secret), "{secret} still in {after}");
+        }
+        // ...the backup does, at 0600...
+        let backup = report.backup.clone().unwrap();
+        assert!(std::fs::read_to_string(&backup)
+            .unwrap()
+            .contains("sk-or-legacy"));
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::PermissionsExt;
+            let mode = std::fs::metadata(&backup).unwrap().permissions().mode();
+            assert_eq!(mode & 0o777, 0o600, "backup mode was {:o}", mode);
+        }
+        // ...and the secret is readable again through the store.
+        assert_eq!(
+            entry_with_secret("e1").unwrap().key,
+            "sk-or-legacy".to_string()
+        );
+        let e2 = entry_with_secret("e2").unwrap();
+        assert_eq!(e2.key, "sk-relay");
+        assert_eq!(e2.access_token, "panel-token");
+
+        // Idempotent: nothing left to move, no second backup.
+        let stamp = std::fs::metadata(&backup).unwrap().modified().unwrap();
+        let again = migrate::migrate_vault_file(&sb.vault());
+        assert_eq!(again, migrate::Report::default());
+        assert_eq!(
+            std::fs::metadata(&backup).unwrap().modified().unwrap(),
+            stamp
+        );
+    }
+
+    /// The UI never gets more than four characters of a key, and deleting an
+    /// entry forgets the secret instead of orphaning it in the store.
+    #[test]
+    fn saving_keeps_the_secret_out_of_the_file_and_deleting_forgets_it() {
+        let sb = Sandbox::new("roundtrip");
+        let view = upsert(KeyEntry {
+            name: "Minha conta".into(),
+            kind: "openai".into(),
+            key: "sk-proj-0123456789".into(),
+            ..Default::default()
+        })
+        .unwrap();
+        assert_eq!(view.key_hint, "sk-p…6789");
+        assert!(view.has_key);
+        let json = serde_json::to_string(&view).unwrap();
+        assert!(!json.contains("sk-proj-0123456789"), "{json}");
+
+        let on_disk = std::fs::read_to_string(sb.vault()).unwrap();
+        assert!(!on_disk.contains("sk-proj-0123456789"), "{on_disk}");
+        assert!(on_disk.contains("Minha conta"));
+
+        // A save with an empty key keeps the stored one (the UI never echoes it).
+        let again = upsert(KeyEntry {
+            id: view.id.clone(),
+            name: "Minha conta".into(),
+            kind: "openai".into(),
+            model: "gpt-4.1".into(),
+            ..Default::default()
+        })
+        .unwrap();
+        assert!(again.has_key);
+        assert_eq!(
+            entry_with_secret(&view.id).unwrap().key,
+            "sk-proj-0123456789"
+        );
+
+        let account = migrate::key_account("openai", &view.id);
+        assert_eq!(
+            crate::core::secrets::get(AI_KEYS, &account)
+                .unwrap()
+                .as_deref(),
+            Some("sk-proj-0123456789")
+        );
+        delete(&view.id).unwrap();
+        assert!(list().is_empty());
+        assert_eq!(crate::core::secrets::get(AI_KEYS, &account).unwrap(), None);
     }
 }

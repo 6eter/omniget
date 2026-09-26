@@ -5,6 +5,7 @@ export type AppSettings = {
   appearance: {
     theme: string;
     language: string;
+    sidebar_collapsed?: boolean;
   };
   download: {
     default_output_dir: string;
@@ -12,7 +13,6 @@ export type AppSettings = {
     always_ask_path: boolean;
     video_quality: string;
     skip_existing: boolean;
-    download_attachments: boolean;
     download_descriptions: boolean;
     embed_metadata: boolean;
     embed_thumbnail: boolean;
@@ -93,8 +93,20 @@ export type AppSettings = {
     large_image_key: string;
   };
   omnidisc?: {
-    enabled?: boolean;
     voice?: OmnidiscVoiceSettings;
+  };
+  world?: {
+    enabled?: boolean;
+    tier_override?: number | null;
+    tier_measured?: number | null;
+    /** Force a renderer backend (gl2, gl1, canvas2d); null picks by tier. */
+    backend_override?: "gl2" | "gl1" | "canvas2d" | null;
+    measured_median_ms?: number | null;
+    measured_app_version?: string | null;
+    thinking?: boolean;
+    think_interval_s?: number;
+    room_server?: string;
+    city_server?: string;
   };
   league?: {
     enabled?: boolean;
@@ -126,6 +138,7 @@ export type AppSettings = {
   onboarding_completed: boolean;
   start_with_system: boolean;
   start_minimized: boolean;
+  exit_on_close: boolean;
   legal_acknowledged?: boolean;
   last_download_options?: {
     mode?: "auto" | "audio" | "mute" | null;

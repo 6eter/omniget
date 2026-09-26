@@ -5,12 +5,6 @@
   import { showToast } from "$lib/stores/toast-store.svelte";
   import { t } from "$lib/i18n";
 
-  type DependencyVariantInfo = {
-    id: string;
-    label: string;
-    recommended: boolean;
-  };
-
   type Props = {
     name: string;
     installed: boolean;
@@ -20,39 +14,15 @@
     path?: string | null;
     outdated?: boolean;
     busy: boolean;
-    onInstall: (variant: string | null) => void | Promise<void>;
+    onInstall: () => void | Promise<void>;
     onAfterCustomFile?: () => void | Promise<void>;
   };
 
   let { name, installed, version, source = "missing", path = null, outdated = false, busy, onInstall, onAfterCustomFile }: Props =
     $props();
 
-  let variants = $state<DependencyVariantInfo[]>([]);
-  let selectedVariant = $state<string | null>(null);
   let installDir = $state<string | null>(null);
   let menuOpen = $state(false);
-  let loadingVariants = $state(false);
-
-  async function loadVariants() {
-    if (loadingVariants) return;
-    loadingVariants = true;
-    try {
-      const list = await invoke<DependencyVariantInfo[]>("dependency_variants", {
-        name,
-      });
-      variants = list;
-      const recommended = list.find((v) => v.recommended);
-      if (recommended && selectedVariant === null) {
-        selectedVariant = recommended.id;
-      } else if (list.length > 0 && selectedVariant === null) {
-        selectedVariant = list[0].id;
-      }
-    } catch (e) {
-      console.error("dependency_variants failed", e);
-    } finally {
-      loadingVariants = false;
-    }
-  }
 
   async function loadInstallDir() {
     try {
@@ -70,7 +40,6 @@
     const dep = name;
     untrack(() => {
       if (!dep) return;
-      void loadVariants();
       void loadInstallDir();
       void loadArchived();
       void loadCustomPath();
@@ -78,16 +47,12 @@
   });
 
   async function handleInstall() {
-    await onInstall(selectedVariant);
+    await onInstall();
   }
 
   async function handlePickCustom() {
     menuOpen = false;
-    const filters: { name: string; extensions: string[] }[] = [];
-    if (name === "PDFium") {
-      filters.push({ name: $t("settings.dependencies.filter_pdfium") as string, extensions: ["dll", "dylib", "so"] });
-    }
-    filters.push({ name: $t("settings.dependencies.filter_all_files") as string, extensions: ["*"] });
+    const filters = [{ name: $t("settings.dependencies.filter_all_files") as string, extensions: ["*"] }];
     try {
       const selected = await openDialog({
         title: $t("settings.dependencies.pick_dialog_title", { name }) as string,
@@ -141,8 +106,8 @@
     }
   });
 
-  // #222: as tres, e nao so o PDFium.
-  let supportsCustomFile = $derived(["yt-dlp", "FFmpeg", "PDFium"].includes(name));
+  // #222: yt-dlp e FFmpeg aceitam um binario apontado pelo usuario.
+  let supportsCustomFile = $derived(["yt-dlp", "FFmpeg"].includes(name));
 
   let customPath = $state<string | null>(null);
 
@@ -230,22 +195,6 @@
   </td>
   <td class="deps-cell-action">
     <div class="deps-actions">
-      {#if variants.length > 0}
-        <select
-          class="variant-select"
-          value={selectedVariant ?? ""}
-          onchange={(e) => (selectedVariant = (e.currentTarget as HTMLSelectElement).value)}
-          disabled={busy}
-          aria-label={$t("settings.dependencies.variant_aria") as string}
-        >
-          {#each variants as v (v.id)}
-            <option value={v.id}>
-              {v.label}{v.recommended ? " ★" : ""}
-            </option>
-          {/each}
-        </select>
-      {/if}
-
       {#if busy}
         <span class="dep-spinner" aria-hidden="true"></span>
       {:else}
@@ -392,20 +341,6 @@
     justify-content: flex-end;
     gap: 6px;
     flex-wrap: wrap;
-  }
-  .variant-select {
-    padding: 5px 8px;
-    border: none;
-    border-radius: var(--radius-sm, 6px);
-    background: var(--surface);
-    color: var(--text);
-    font: inherit;
-    font-size: 12px;
-    max-width: 160px;
-  }
-  .variant-select:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
   }
   .button.dep-btn {
     padding: 5px 12px;

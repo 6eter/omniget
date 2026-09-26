@@ -29,6 +29,10 @@ export type SearchResult = {
 
 export type HomeInputMode = "url" | "batch" | "torrent" | "p2p";
 
+export type MoreAction = "batch" | "torrent" | "p2p" | "advanced";
+
+export type HomeArt = "idle" | "analyzing" | "success" | "error" | "unsupported" | "drop";
+
 export function isUrl(value: string): boolean {
   return (
     value.startsWith("http://") ||
@@ -36,26 +40,5 @@ export function isUrl(value: string): boolean {
     value.startsWith("magnet:") ||
     value.startsWith("p2p:") ||
     value.endsWith(".torrent")
-  );
-}
-
-export function showInspectorForState(state: OmniState): boolean {
-  return (
-    state.kind === "detected" ||
-    state.kind === "preparing" ||
-    state.kind === "error"
-  );
-}
-
-export function showOmniboxForState(state: OmniState): boolean {
-  return (
-    state.kind === "idle" ||
-    state.kind === "detecting" ||
-    state.kind === "detected" ||
-    state.kind === "unsupported" ||
-    state.kind === "batch" ||
-    state.kind === "searching" ||
-    state.kind === "search-results" ||
-    state.kind === "search-empty"
   );
 }

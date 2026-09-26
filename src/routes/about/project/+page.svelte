@@ -3,7 +3,7 @@
   import { t } from "$lib/i18n";
 
   const GITHUB_URL = "https://github.com/tonhowtf/omniget";
-  const APP_VERSION = "0.9.2";
+  const APP_VERSION = "0.10.1";
 
   async function openGitHub() {
     await open(GITHUB_URL);
@@ -39,7 +39,6 @@
   <h5 class="card-title">{$t('about.features_title')}</h5>
   <div class="features-list">
     <p class="feature-item">{$t('about.feature_platforms')}</p>
-    <p class="feature-item">{$t('about.feature_hotmart')}</p>
     <p class="feature-item">{$t('about.feature_progress')}</p>
     <p class="feature-item">{$t('about.feature_mascot')}</p>
     <p class="feature-item">{$t('about.feature_themes')}</p>

@@ -33,7 +33,7 @@
     "message": "La página actual no es una página de medios compatible con la extensión de OmniGet."
   },
   "error_invalid_url_detail": {
-    "message": "Inténtalo de nuevo desde una página de vídeo directo, reel, publicación, lista o curso."
+    "message": "Inténtalo de nuevo desde una página de vídeo directo, reel, publicación o lista."
   },
   "error_launch_failed_title": {
     "message": "No se pudo iniciar OmniGet desde el navegador"
@@ -155,9 +155,6 @@
   },
   "popup_get_app": {
     "message": "Obtener OmniGet"
-  },
-  "popup_lbl_course": {
-    "message": "Enviar curso a OmniGet"
   },
   "popup_lbl_playlist": {
     "message": "Enviar lista a OmniGet"

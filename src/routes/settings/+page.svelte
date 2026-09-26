@@ -1,4 +1,7 @@
 <script lang="ts">
+  import { page } from "$app/state";
+  import { goto } from "$app/navigation";
+  import WorkspaceAppearance from "$components/settings/WorkspaceAppearance.svelte";
   import { tick } from "svelte";
   import { invoke } from "@tauri-apps/api/core";
   import { open } from "@tauri-apps/plugin-dialog";
@@ -10,11 +13,12 @@
   import { refreshYtdlpStatus } from "$lib/stores/dependency-store.svelte";
   import { isDebugEnabled, setDebugEnabled, setDebugPanelOpen } from "$lib/stores/debug-store.svelte";
   import ContextHint from "$components/hints/ContextHint.svelte";
-  import SettingsPlugins from "$components/settings/SettingsPlugins.svelte";
+  import SettingsDependencies from "$components/settings/SettingsDependencies.svelte";
   import SettingsAdvanced from "$components/settings/SettingsAdvanced.svelte";
   import SettingsRules from "$components/settings/SettingsRules.svelte";
   import SettingsStorage from "$components/settings/SettingsStorage.svelte";
   import SettingsAppearance from "$components/settings/SettingsAppearance.svelte";
+  import SettingsProfile from "$components/settings/SettingsProfile.svelte";
   import SettingsNetwork from "$components/settings/SettingsNetwork.svelte";
   import SettingsDownloads from "$components/settings/SettingsDownloads.svelte";
   import SettingsTypography from "$components/settings/SettingsTypography.svelte";
@@ -22,6 +26,7 @@
   import SettingsCookies from "$components/settings/SettingsCookies.svelte";
   import SettingsChannels from "$components/settings/SettingsChannels.svelte";
   import SettingsAI from "$components/settings/SettingsAI.svelte";
+  import SettingsWorld from "$components/settings/SettingsWorld.svelte";
 
   type DependencyStatus = {
     name: string;
@@ -58,11 +63,11 @@
     }
   }
 
-  async function handleInstallDep(name: string, variant: string | null = null) {
+  async function handleInstallDep(name: string) {
     const wasInstalled = deps.find((d) => d.name === name)?.installed ?? false;
     installingDep = name;
     try {
-      const version = await invoke<string>("install_dependency", { name, variant, force: wasInstalled });
+      const version = await invoke<string>("install_dependency", { name, force: wasInstalled });
       await loadDeps();
       await refreshYtdlpStatus();
       showToast(
@@ -155,7 +160,7 @@
     await updateSettings({ download: { video_quality: value } });
   }
 
-  type SettingsCategory = "downloads" | "appearance" | "typography" | "network" | "cookies" | "channels" | "ai" | "plugins" | "advanced";
+  type SettingsCategory = "downloads" | "appearance" | "profile" | "typography" | "network" | "cookies" | "channels" | "ai" | "world" | "dependencies" | "advanced";
 
   const SETTINGS_NAV_GROUPS: {
     labelKey: string;
@@ -165,6 +170,7 @@
       labelKey: "settings.group_general",
       items: [
         ["appearance", "settings.cat_appearance"],
+        ["profile", "settings.cat_profile"],
         ["typography", "settings.cat_typography"],
       ],
     },
@@ -179,7 +185,8 @@
         ["cookies", "settings.cat_cookies"],
         ["channels", "settings.cat_channels"],
         ["ai", "settings.cat_ai"],
-        ["plugins", "settings.cat_plugins"],
+        ["world", "settings.cat_world"],
+        ["dependencies", "settings.dependencies.title"],
       ],
     },
     {
@@ -190,15 +197,10 @@
 
   let activeCategory = $state<SettingsCategory>("downloads");
 
-  let tabApplied = false;
   $effect(() => {
-    if (tabApplied || typeof window === "undefined") return;
-    tabApplied = true;
-    const tab = new URLSearchParams(window.location.search).get("tab");
-    const valid = ["downloads", "appearance", "typography", "network", "cookies", "channels", "ai", "plugins", "advanced"];
-    if (tab && valid.includes(tab)) {
-      activeCategory = tab as SettingsCategory;
-    }
+    const tab = page.url.searchParams.get("tab");
+    const valid = ["downloads", "appearance", "profile", "typography", "network", "cookies", "channels", "ai", "world", "dependencies", "advanced"];
+    activeCategory = tab && valid.includes(tab) ? tab as SettingsCategory : "downloads";
   });
 
   let searchQuery = $state("");
@@ -351,13 +353,15 @@
 
   const CATEGORY_ICONS: Record<string, string> = {
     appearance: "M12 3a9 9 0 1 0 0 18c1.2 0 1.6-.9 1.2-1.7-.5-1 .1-2.3 1.3-2.3H16a5 5 0 0 0 5-5c0-5-4-9-9-9zM7.5 12a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm3-4a1 1 0 1 1 0-2 1 1 0 0 1 0 2zm5 0a1 1 0 1 1 0-2 1 1 0 0 1 0 2z",
+    profile: "M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 20a8 8 0 0 1 16 0",
     typography: "M4 7V5h16v2M12 5v14M9 19h6",
+    world: "M12 3l9 5-9 5-9-5 9-5zM3 12l9 5 9-5M3 16l9 5 9-5",
     downloads: "M12 4v11m0 0 4-4m-4 4-4-4M5 20h14",
     network: "M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM3 12h18M12 4c3 3 3 13 0 16M12 4c-3 3-3 13 0 16",
     cookies: "M12 3a9 9 0 1 0 9 9 3 3 0 0 1-3-3 3 3 0 0 1-3-3 3 3 0 0 1-3-3zM8 12h.01M12 16h.01M9 8h.01M15 13h.01",
     channels: "M4 6h16v12H4zM4 10h16M9 14h6",
     ai: "M12 3l1.9 5.8a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z",
-    plugins: "M9 3h6v2.5a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2zM6 7h12a2 2 0 0 1 2 2v4h-2a2 2 0 1 0 0 4h2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2h2a2 2 0 1 0 0-4H4V9a2 2 0 0 1 2-2z",
+    dependencies: "M9 3h6v2.5a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2zM6 7h12a2 2 0 0 1 2 2v4h-2a2 2 0 1 0 0 4h2v2a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2h2a2 2 0 1 0 0-4H4V9a2 2 0 0 1 2-2z",
     advanced: "M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6",
   };
 
@@ -540,7 +544,7 @@
                     class="settings-mac-cat"
                     class:active={!isSearching && activeCategory === cat}
                     class:search-match={isSearching && (categoryMatchCounts[cat] ?? 0) > 0}
-                    onclick={() => { activeCategory = cat; searchQuery = ""; }}
+                    onclick={() => { searchQuery = ""; void goto(`/settings?tab=${cat}`, { noScroll: true, keepFocus: true }); }}
                   >
                     <span class="settings-mac-cat-icon" aria-hidden="true">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d={CATEGORY_ICONS[cat] ?? "M12 6v12M6 12h12"} /></svg>
@@ -561,7 +565,15 @@
 
     {#if isSearching || activeCategory === "appearance"}
       <div class="settings-panel" data-settings-cat="appearance">
+        <WorkspaceAppearance />
         <SettingsAppearance searchActive={isSearching} />
+      </div>
+    {/if}
+
+    {#if isSearching || activeCategory === "profile"}
+      <div class="settings-panel" data-settings-cat="profile">
+        <SettingsProfile />
+        <WorkspaceAppearance />
       </div>
     {/if}
 
@@ -577,9 +589,9 @@
       </div>
     {/if}
 
-    {#if isSearching || activeCategory === "plugins"}
-      <div class="settings-panel" data-settings-cat="plugins">
-        <SettingsPlugins
+    {#if isSearching || activeCategory === "dependencies"}
+      <div class="settings-panel" data-settings-cat="dependencies">
+        <SettingsDependencies
           {deps}
           {installingDep}
           onInstallDep={handleInstallDep}
@@ -610,6 +622,12 @@
     {#if isSearching || activeCategory === "ai"}
       <div class="settings-panel" data-settings-cat="ai">
         <SettingsAI />
+      </div>
+    {/if}
+
+    {#if isSearching || activeCategory === "world"}
+      <div class="settings-panel" data-settings-cat="world">
+        <SettingsWorld />
       </div>
     {/if}
 

@@ -134,7 +134,7 @@ mod tests {
         assert!(applies(&info(MediaType::Audio)));
         assert!(!applies(&info(MediaType::Photo)));
         assert!(!applies(&info(MediaType::Carousel)));
-        assert!(!applies(&info(MediaType::Course)));
+        assert!(!applies(&info(MediaType::File)));
     }
 
     #[test]
