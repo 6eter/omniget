@@ -10,24 +10,25 @@
   </developer>
   <description>
     <p>
-      OmniGet downloads the Udemy and Hotmart courses you bought, YouTube, Instagram,
-      TikTok, X, Reddit, Twitch, Pinterest, Telegram, torrents and about 1,800 other
-      sites through a graphical interface for yt-dlp, then plays, reads, transcribes
-      and converts what you saved.
+      OmniGet turns a link into a file. Paste a link from YouTube, Instagram, TikTok,
+      X, Reddit, Twitch, Pinterest, Bilibili or one of the sites yt-dlp supports, pick
+      a quality, and the video, audio, images or torrent land in your folder. It
+      installs and updates yt-dlp and FFmpeg for you.
     </p>
     <p>
-      It also runs AI coding agents on your machine: Claude Code, Codex, Gemini CLI
-      and local Ollama models, with permissions, undo, background jobs, loops that
-      repeat until your tests pass, and a built-in MCP server.
+      Its MCP server lets Claude Code, Cursor, VS Code and Codex queue and follow
+      downloads for you. It also runs AI coding agents on your machine: Claude Code,
+      Codex, Gemini CLI and local Ollama models, with permissions, undo, background
+      jobs and loops that repeat until your tests pass.
     </p>
     <p>Features include:</p>
     <ul>
-      <li>Udemy, Hotmart and Rocketseat course downloader with a course player</li>
       <li>YouTube downloader and yt-dlp GUI with queue, resume and subtitles</li>
-      <li>Instagram, TikTok, X, Reddit, Pinterest, Twitch, Bilibili and Telegram downloads</li>
-      <li>156 tools in 24 categories: transcription, PDF, video, images and more</li>
+      <li>Instagram, TikTok, X, Reddit, Pinterest, Twitch and Bilibili downloads</li>
+      <li>Torrents, magnet links, direct files and image galleries</li>
+      <li>Browser extension that downloads with your own session</li>
+      <li>MCP server for Claude Code, Cursor and VS Code</li>
       <li>AI agents with per-folder permissions, undo, jobs, loops and triggers</li>
-      <li>MCP server with 56 tools for Claude Code, Cursor and VS Code</li>
       <li>The World: an isometric house where your agents are seen working</li>
     </ul>
   </description>
