@@ -1,7 +1,7 @@
 use std::path::{Path, PathBuf};
 use std::sync::Arc;
 
-use serde_json::{json, Value};
+use serde_json::json;
 
 use super::policy::{EffectRunner, Engine, Envelope, Policy, PolicyEffect, PolicyResult, Trigger};
 use super::*;
@@ -1259,9 +1259,6 @@ fn rubric_criteria_wait_for_a_person_unless_one_review_is_allowed() {
     assert!(v.passed);
     assert_eq!(m.state, MissionState::Succeeded);
 }
-
-#[allow(dead_code)]
-fn _unused(_: Value) {}
 
 #[test]
 fn a27_a_runtime_without_tools_is_not_asked_to_pretend() {

@@ -33,7 +33,7 @@
     "message": "当前页面不是 OmniGet 扩展程序支持的媒体页面。"
   },
   "error_invalid_url_detail": {
-    "message": "请从视频、Reel、帖子、播放列表或课程的直接页面重试。"
+    "message": "请从视频、Reel、帖子或播放列表的直接页面重试。"
   },
   "error_launch_failed_title": {
     "message": "浏览器无法启动 OmniGet"
@@ -155,9 +155,6 @@
   },
   "popup_get_app": {
     "message": "获取 OmniGet"
-  },
-  "popup_lbl_course": {
-    "message": "发送课程到 OmniGet"
   },
   "popup_lbl_playlist": {
     "message": "发送播放列表到 OmniGet"

@@ -361,31 +361,6 @@ pub async fn assist_run_resolve(
     }
 }
 
-/// Real capabilities of a runtime (probes the installed executable).
-/// `runtime` is the roster's `RuntimeKind` JSON.
-#[tauri::command]
-pub async fn assist_runtime_caps(runtime: Value) -> Result<Value, String> {
-    let kind: omniget_core::core::llm::agent::RuntimeKind =
-        serde_json::from_value(runtime).map_err(|e| format!("{ERR_ASSIST_RUNS}: {e}"))?;
-    let caps = omniget_core::core::llm::caps::probe(&kind).await;
-    serde_json::to_value(caps).map_err(|e| e.to_string())
-}
-
-/// Budget pools with reservations in flight (Activity → advanced details).
-#[tauri::command]
-pub async fn assist_budget_in_flight(state: State<'_, AppState>) -> Result<Value, String> {
-    let budget = state.llm.budget();
-    let flights = budget.in_flight();
-    let mut pools: Vec<String> = flights.iter().map(|f| f.pool.clone()).collect();
-    pools.sort();
-    pools.dedup();
-    let views: Vec<Value> = pools
-        .iter()
-        .map(|p| json!({ "pool": p, "view": budget.pool(p) }))
-        .collect();
-    Ok(json!({ "in_flight": flights, "pools": views }))
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

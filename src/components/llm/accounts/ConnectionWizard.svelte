@@ -8,6 +8,7 @@
   import { loadAccounts, type AccountView, type AccountsSnapshot, type CliDetected } from '$lib/stores/llm-accounts-store.svelte';
   import { loadRoster, selectAgent } from '$lib/stores/llm-store.svelte';
   import type { AgentDef } from '$lib/llm/types';
+  import AgentOrb from '../AgentOrb.svelte';
   let { initial = '' }: { initial?: string } = $props();
   type Kind = { id: string; name: string; base_url: string };
   let mode = $state('');
@@ -200,7 +201,7 @@
         <p>{$t('llm.accounts.wizard.preserved_retry')}</p>
       </div>
     {/if}
-    {#if busy && step !== 3}<p role="status">{$t('llm.accounts.wizard.connecting')}</p>{/if}
+    {#if busy && step !== 3}<p class="connecting" role="status"><AgentOrb activity="connecting" />{$t('llm.accounts.wizard.connecting')}</p>{/if}
   {/if}
 </section>
 <style>
@@ -216,6 +217,7 @@
   .steps li span { display:grid; place-items:center; width:26px; height:26px; border:1px solid var(--separator); border-radius:50%; }
   .steps .current { color:var(--text); font-weight:600; } .steps .current span,.steps .done span { background:var(--fill-secondary); }
   .error { color:var(--error, #b42318); overflow-wrap:anywhere; }
+  .connecting { display:flex; align-items:center; gap:8px; }
   .problem { display:grid; gap:8px; padding:12px; border:1px solid var(--separator); border-radius:var(--radius-sm); }
   .problem summary { cursor:pointer; font-size:13px; } .detail { font-family:var(--font-mono); font-size:12px; overflow-wrap:anywhere; } .actions { justify-content:flex-start; }
   @media(max-width:650px) { .choices { grid-template-columns:1fr; } .connection { padding:16px; } }

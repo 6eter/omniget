@@ -27,10 +27,6 @@ export function dismissChangelog(): void {
   localStorage.removeItem(CHANGELOG_BODY_KEY);
 }
 
-export function showChangelog(): void {
-  showDialog = true;
-}
-
 export function storeChangelogForUpdate(body: string, version: string): void {
   localStorage.setItem(CHANGELOG_BODY_KEY, JSON.stringify({ body, version }));
 }

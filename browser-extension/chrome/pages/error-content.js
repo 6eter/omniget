@@ -11,7 +11,7 @@ const ERROR_PAGE_MESSAGES = Object.freeze({
   error_invalid_url_body:
     "The current page is not a supported media page for the OmniGet extension.",
   error_invalid_url_detail:
-    "Try again from a direct video, reel, post, playlist, or course page.",
+    "Try again from a direct video, reel, post or playlist page.",
   error_launch_failed_title: "OmniGet could not be launched from your browser",
   error_launch_failed_body:
     "The extension talked to the native host, but the desktop app did not start correctly.",

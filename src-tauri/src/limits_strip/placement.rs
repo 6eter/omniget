@@ -19,6 +19,8 @@ pub const CARD_W: f64 = 300.0;
 pub const CARD_H: f64 = 290.0;
 /// Air between the strip and the edge of the work area.
 pub const MARGIN: f64 = 6.0;
+/// Room for the percentage under a ring (`StripPrefs::show_percent`).
+pub const LABEL: f64 = 12.0;
 
 /// A monitor work area: menu bar, dock and taskbar already subtracted.
 #[derive(Clone, Copy, Debug, PartialEq)]
@@ -44,12 +46,37 @@ pub fn strip_len(rings: usize) -> f64 {
 }
 
 pub fn window_size(edge: Edge, rings: usize, expanded: bool) -> (f64, f64) {
-    let len = strip_len(rings);
-    let (along, across) = match (expanded, edge.is_vertical()) {
-        (false, _) => (len, THICK),
-        (true, false) => (len.max(CARD_W), THICK + CARD_H),
-        (true, true) => (len.max(CARD_H), THICK + CARD_W),
+    window_size_for(edge, rings, expanded, 1.0, false)
+}
+
+/// [`window_size`] for a strip drawn at `scale` (the page zooms everything by
+/// the same factor) and with a percentage under each ring. On a horizontal
+/// edge the label makes the strip thicker; on a vertical one every cell
+/// longer.
+pub fn window_size_for(
+    edge: Edge,
+    rings: usize,
+    expanded: bool,
+    scale: f64,
+    labels: bool,
+) -> (f64, f64) {
+    let label = if labels { LABEL } else { 0.0 };
+    let (len, thick) = if edge.is_vertical() {
+        (strip_len(rings) + rings.max(1) as f64 * label, THICK)
+    } else {
+        (strip_len(rings), THICK + label)
     };
+    let s = if scale.is_finite() && scale > 0.0 {
+        scale
+    } else {
+        1.0
+    };
+    let (along, across) = match (expanded, edge.is_vertical()) {
+        (false, _) => (len, thick),
+        (true, false) => (len.max(CARD_W), thick + CARD_H),
+        (true, true) => (len.max(CARD_H), thick + CARD_W),
+    };
+    let (along, across) = (along * s, across * s);
     if edge.is_vertical() {
         (across, along)
     } else {
@@ -224,5 +251,26 @@ mod tests {
         // Dropped outside the area: still a sane answer.
         assert_eq!(snap(-50.0, 425.0, SCREEN), (Edge::Left, 0.5));
         assert_eq!(snap(-1900.0, 100.0, SECOND).0, Edge::Left);
+    }
+
+    #[test]
+    fn labels_and_scale_grow_the_window_the_right_way() {
+        let (w, h) = window_size(Edge::Top, 3, false);
+        let (lw, lh) = window_size_for(Edge::Top, 3, false, 1.0, true);
+        assert_eq!((lw, lh), (w, h + LABEL), "a top strip only gets thicker");
+        let (vw, vh) = window_size(Edge::Left, 3, false);
+        let (lvw, lvh) = window_size_for(Edge::Left, 3, false, 1.0, true);
+        assert_eq!(
+            (lvw, lvh),
+            (vw, vh + 3.0 * LABEL),
+            "a side strip gets longer"
+        );
+        let (bw, bh) = window_size_for(Edge::Top, 3, false, 1.25, false);
+        assert_eq!((bw, bh), (w * 1.25, h * 1.25));
+        // A broken scale never collapses the window.
+        assert_eq!(
+            window_size_for(Edge::Top, 3, false, f64::NAN, false),
+            (w, h)
+        );
     }
 }

@@ -10,7 +10,6 @@
 
 use serde::{Deserialize, Serialize};
 
-use super::super::error::{LlmError, ERR_LLM_PARSE};
 use super::{ERR_CLI_AUTH, ERR_CLI_RATE};
 
 /// One window of a subscription plan, normalised to `0.0..=1.0` used.
@@ -179,13 +178,6 @@ pub fn classify_error_text(text: &str) -> Option<&'static str> {
         return Some(ERR_CLI_AUTH);
     }
     None
-}
-
-/// An `LlmError` for a line that is not JSON at all. Kept as `ERR_LLM_PARSE`
-/// because the coordinator already knows that code.
-pub fn parse_error(line: &str) -> LlmError {
-    let head: String = line.chars().take(120).collect();
-    LlmError::new(ERR_LLM_PARSE, format!("unparseable CLI line: {head}"))
 }
 
 /// Splits a chunk of stdout into complete lines, returning the leftover.

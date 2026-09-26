@@ -25,17 +25,7 @@
       }
     ],
     "security": {
-      "csp": null,
-      "assetProtocol": {
-        "enable": true,
-        "scope": {
-          "allow": [
-            "**"
-          ],
-          "deny": [],
-          "requireLiteralLeadingDot": false
-        }
-      }
+      "csp": null
     },
     "macOSPrivateApi": true
   },
@@ -75,9 +65,6 @@
     },
     "linux": {
       "deb": {
-        "depends": [
-          "libasound2"
-        ],
         "desktopTemplate": "./desktop.template"
       },
       "rpm": {

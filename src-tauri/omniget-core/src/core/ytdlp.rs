@@ -1167,17 +1167,6 @@ pub enum UpdateCheck {
     AlreadyChecked,
 }
 
-/// `yt-dlp --update-to <canal>` uma vez por sessão, no mesmo canal que
-/// `check_ytdlp_freshness` usa (`OMNIGET_YTDLP_CHANNEL`, padrão stable). Antes
-/// o boot pedia `nightly` e a freshness pedia `stable`, e um rebaixava o
-/// outro (B2).
-pub async fn check_ytdlp_update(ytdlp: &Path) -> anyhow::Result<bool> {
-    Ok(matches!(
-        check_ytdlp_update_detailed(ytdlp).await?,
-        UpdateCheck::Updated
-    ))
-}
-
 pub async fn check_ytdlp_update_detailed(ytdlp: &Path) -> anyhow::Result<UpdateCheck> {
     if YTDLP_UPDATE_CHECKED.load(Ordering::Relaxed) {
         return Ok(UpdateCheck::AlreadyChecked);
@@ -3556,22 +3545,6 @@ fn adjusted_multi_stream_progress(
     }
 }
 
-pub async fn write_netscape_cookie_file(
-    cookies: &[(String, String)],
-    domain: &str,
-    path: &Path,
-) -> anyhow::Result<()> {
-    let mut content = String::from("# Netscape HTTP Cookie File\n");
-    for (name, value) in cookies {
-        content.push_str(&format!(
-            "{}\tTRUE\t/\tTRUE\t0\t{}\t{}\n",
-            domain, name, value
-        ));
-    }
-    std::fs::write(path, content)?;
-    Ok(())
-}
-
 #[allow(clippy::too_many_arguments)]
 pub async fn download_video(
     ytdlp: &Path,
@@ -5293,12 +5266,6 @@ fn friendly_ytdlp_error(stderr: &str) -> anyhow::Error {
     };
 
     anyhow!("yt-dlp: {}", msg)
-}
-
-pub fn get_rate_limit_stats() -> serde_json::Value {
-    serde_json::json!({
-        "rate_limit_429_count": RATE_LIMIT_429_COUNT.load(Ordering::Relaxed)
-    })
 }
 
 /// Corpo de uma linha do nosso `--progress-template`.

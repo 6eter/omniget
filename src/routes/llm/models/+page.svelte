@@ -78,8 +78,8 @@
     try {
       const start = await invoke<PkceStart>("tool_ai_keys_openrouter_pkce");
       if (!start?.url) throw new Error("ERR_PKCE_NO_START");
-      const { openUrl } = await import("@tauri-apps/plugin-opener");
-      await openUrl(start.url);
+      const { open } = await import("@tauri-apps/plugin-shell");
+      await open(start.url);
       // `signingIn` stays true until `llm://openrouter-auth` answers: the user is
       // in the browser and there is nothing to do here in the meantime.
       showToast("info", $t("llm.models.openrouter_started"));

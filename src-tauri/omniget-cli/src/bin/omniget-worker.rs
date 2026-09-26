@@ -553,7 +553,7 @@ fn fit_ceiling(info: &mut MediaInfo, ceiling: u32) {
         .any(|v| v.format != "ytdlp" && v.height > 0 && v.height <= ceiling)
     {
         q.retain(|v| v.format != "ytdlp" && v.height > 0 && v.height <= ceiling);
-        q.sort_by(|a, b| b.height.cmp(&a.height));
+        q.sort_by_key(|v| std::cmp::Reverse(v.height));
         return;
     }
     q.retain(|v| v.height == 0);
@@ -1015,7 +1015,6 @@ mod tests {
         assert!(validate(&serde_json::from_value(v).unwrap()).is_err());
     }
     fn private_dir(tag: &str) -> PathBuf {
-        use std::os::unix::fs::DirBuilderExt;
         let p = std::env::temp_dir().join(format!(
             "omniget-worker-{tag}-{}-{}",
             std::process::id(),
@@ -1024,7 +1023,13 @@ mod tests {
                 .unwrap()
                 .as_nanos()
         ));
-        std::fs::DirBuilder::new().mode(0o700).create(&p).unwrap();
+        let mut builder = std::fs::DirBuilder::new();
+        #[cfg(unix)]
+        {
+            use std::os::unix::fs::DirBuilderExt;
+            builder.mode(0o700);
+        }
+        builder.create(&p).unwrap();
         p.canonicalize().unwrap()
     }
     /// Live, opt-in: one inspect worker then one download worker (in-process,

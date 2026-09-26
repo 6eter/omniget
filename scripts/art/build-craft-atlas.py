@@ -10,8 +10,8 @@ from farm_scene import prepare, generate
 
 ROOT = Path(__file__).resolve().parents[2]
 RAW = ROOT / 'art/world/craft-v1'
-BASE = ROOT / 'static/world/tiles/casa-v1-src'
-OUT = ROOT / 'static/world/tiles/craft-v1-src'
+BASE = ROOT / 'art/world/casa-v1-src'
+OUT = ROOT / 'art/world/craft-v1-src'
 KEYS = ['floor/moss', 'floor/cobble', 'object/door', 'object/workbench',
         'object/chair', 'object/chest', 'object/bookshelf']
 

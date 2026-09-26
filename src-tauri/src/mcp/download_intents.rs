@@ -993,13 +993,6 @@ fn cleanup_dir(dir: &Path, identity: &Identity) -> Result<Vec<String>, String> {
     Ok(removed)
 }
 
-/// Local UI retry cannot bypass explicit durable attempt admission.
-pub fn retry_is_prepared(id: u64) -> bool {
-    load(id).ok().flatten().is_some_and(|i| {
-        i.attempt > 0 && matches!(i.stage.as_str(), "prepared" | "admitting" | "enqueued")
-    })
-}
-
 /// Reconciliation cannot prove whether an admitted effect completed.
 pub fn unknown(id: u64) -> Result<(), String> {
     connection()?

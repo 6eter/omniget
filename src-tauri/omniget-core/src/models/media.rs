@@ -25,7 +25,6 @@ pub enum MediaType {
     Gif,
     Carousel,
     Playlist,
-    Course,
     File,
 }
 

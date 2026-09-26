@@ -537,15 +537,6 @@ fn bot_view(
     })
 }
 
-/// Prepares (or replays) a derived bot with the installed roster.
-pub fn prepare_bot(
-    db: &AssistDb,
-    principal: &str,
-    req: &BotRequest,
-) -> Result<DerivedBotView, String> {
-    prepare_bot_with(db, roster()?.as_ref(), principal, req)
-}
-
 pub fn prepare_bot_with(
     db: &AssistDb,
     roster: &dyn BotRoster,
@@ -708,11 +699,6 @@ fn mark_conflict(db: &AssistDb, principal: &str, key: &str) -> Result<(), String
     .map(|_| ())
 }
 
-/// Derived bots of this principal, with their current validity.
-pub fn list_bots(db: &AssistDb, principal: &str) -> Result<Vec<DerivedBotView>, String> {
-    list_bots_with(db, installed_roster().as_deref(), principal)
-}
-
 pub fn list_bots_with(
     db: &AssistDb,
     roster: Option<&dyn BotRoster>,
@@ -796,10 +782,6 @@ fn validate_room_request(req: &RoomRequest) -> Result<(), String> {
         return Err("INVALID_ARGUMENTS".into());
     }
     Ok(())
-}
-
-pub fn prepare_room(db: &AssistDb, principal: &str, req: &RoomRequest) -> Result<RoomView, String> {
-    prepare_room_with(db, roster()?.as_ref(), principal, req)
 }
 
 pub fn prepare_room_with(

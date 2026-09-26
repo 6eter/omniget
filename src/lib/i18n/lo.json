@@ -495,7 +495,6 @@
     "empty": "ບໍ່ມີຜົນລັບ",
     "navigate": "ນຳທາງ",
     "select": "ເລືອກ",
-    "close": "ປິດ",
     "group_nav": "ນຳທາງ",
     "group_action": "ການດຳເນີນການ",
     "action_paste": "ວາງ URL ຈາກຄລິບບອດ"
@@ -523,13 +522,7 @@
     "adv_title": "ຄຳສັ່ງ yt-dlp",
     "success_title": "ເພີ່ມໃສ່ການດາວໂຫຼດແລ້ວ",
     "success_first": "ການດາວໂຫຼດຄັ້ງທຳອິດຂອງທ່ານ!",
-    "success_open": "ເປີດການດາວໂຫຼດ",
-    "batch_hint": "ມີຫຼາຍລິ້ງບໍ? ວາງທັງໝົດພ້ອມກັນ, ແຖວລະໜຶ່ງລິ້ງ."
-  },
-  "tools": {
-    "common": {
-      "copied": "ສຳເນົາແລ້ວ"
-    }
+    "success_open": "ເປີດການດາວໂຫຼດ"
   },
   "downloads": {
     "phase_downloading": "ກຳລັງດາວໂຫຼດ",
@@ -570,7 +563,6 @@
       "invalid": "ບໍ່ສາມາດເອີ້ນໃຊ້ຄຳສັ່ງໄດ້: {{error}}",
       "engine_custom": "ກຳນົດເອງ"
     },
-    "title": "ການດາວໂຫຼດ",
     "empty": "ຕອນນີ້ບໍ່ມີຫຍັງກຳລັງດາວໂຫຼດ",
     "status": {
       "queued": "ຢູ່ໃນຄິວ",
@@ -596,8 +588,6 @@
     "pause_all": "ຢຸດທັງໝົດຊົ່ວຄາວ",
     "resume_all": "ສືບຕໍ່ທັງໝົດ",
     "reorder_hint": "ລາກເພື່ອຈັດລຳດັບ",
-    "history_toggle": "ສະຫຼັບປະຫວັດການດາວໂຫຼດ",
-    "history_toggle_hint": "ເບິ່ງການດາວໂຫຼດທີ່ຜ່ານມາ (Ctrl+H)",
     "history_view_link": "ເບິ່ງປະຫວັດການດາວໂຫຼດ",
     "history_loading": "ກຳລັງໂຫຼດປະຫວັດ…",
     "history_empty": "ຍັງບໍ່ມີຫຍັງສຳເລັດ. ການດາວໂຫຼດທີ່ສຳເລັດຈະຢູ່ບ່ອນນີ້ ເພື່ອໃຫ້ທ່ານເປີດ ຫຼື ດາວໂຫຼດຄືນໄດ້.",
@@ -670,7 +660,6 @@
       "paused_all": "ຢຸດຊົ່ວຄາວທັງໝົດ",
       "eta": "ເຫຼືອປະມານ {{eta}}",
       "open": "ເບິ່ງການດາວໂຫຼດ",
-      "indeterminate": "ກຳລັງດາວໂຫຼດ, ບໍ່ຮູ້ຂະໜາດທັງໝົດ",
       "complete": "ດາວໂຫຼດສຳເລັດແລ້ວ",
       "paused": "ຢຸດຊົ່ວຄາວ {{count}} ລາຍການ",
       "failed": "ລົ້ມເຫຼວ {{count}} ລາຍການ",
@@ -679,20 +668,12 @@
     }
   },
   "toast": {
-    "download_preparing": "ກຳລັງກຽມດາວໂຫຼດ...",
     "download_complete": "ສຳເລັດ! {{name}} ຢູ່ໃນໂຟລເດີຂອງທ່ານແລ້ວ",
     "clipboard_url_detected": "ພົບລິ້ງ! ວາງເພື່ອດາວໂຫຼດ",
     "clipboard_empty": "ຄລິບບອດຫວ່າງເປົ່າ",
     "auto_download_started": "ເລີ່ມດາວໂຫຼດອັດຕະໂນມັດແລ້ວ",
     "external_url_ready": "ໄດ້ຮັບ URL ແລະ ພ້ອມດາວໂຫຼດ",
     "external_url_queued": "ເພີ່ມການດາວໂຫຼດຈາກສ່ວນຂະຫຍາຍ Chrome ແລ້ວ",
-    "hotkey_queued": "ເລີ່ມດາວໂຫຼດຈາກຄລິບບອດຂອງທ່ານແລ້ວ",
-    "hotkey_already_queued": "ລິ້ງນັ້ນຢູ່ໃນຄິວຂອງທ່ານແລ້ວ",
-    "hotkey_not_a_url": "ສຳເນົາລິ້ງກ່ອນ — ບໍ່ມີທີ່ຢູ່ເວັບໃນຄລິບບອດຂອງທ່ານ",
-    "hotkey_unsupported": "ບໍ່ມີຕົວດາວໂຫຼດໃດຮອງຮັບລິ້ງນັ້ນ. ວາງມັນໃນໜ້າຫຼັກເພື່ອເບິ່ງຕົວເລືອກ.",
-    "hotkey_clipboard_error": "ບໍ່ສາມາດອ່ານຄລິບບອດໄດ້. ສຳເນົາລິ້ງອີກຄັ້ງ ແລ້ວກົດປຸ່ມລັດ.",
-    "channel_new": "{{channel}}: {{count}} ວິດີໂອໃໝ່",
-    "channel_new_auto": "{{channel}}: ກຳລັງດາວໂຫຼດ {{count}} ວິດີໂອໃໝ່",
     "file_copied_to_clipboard": "ສຳເນົາໄຟລ໌ໄປຄລິບບອດແລ້ວ",
     "generic_download_complete": "{{name}} — ດາວໂຫຼດສຳເລັດ!"
   },
@@ -774,10 +755,7 @@
       "section_clipboard_hotkeys": "ຄລິບບອດ ແລະ ປຸ່ມລັດ",
       "section_clipboard_hotkeys_desc": "ການກວດຈັບການວາງ ແລະ ປຸ່ມລັດທົ່ວລະບົບ.",
       "section_per_platform": "ຕົວເລືອກຕາມແພລດຟອມ",
-      "section_per_platform_desc": "ການຕັ້ງຄ່າສະເພາະ YouTube, ຄອສຮຽນ ແລະ Bilibili.",
-      "download_attachments": "ດາວໂຫຼດໄຟລ໌ແນບ",
-      "download_attachments_desc": "Save course attachments alongside the downloaded lessons.",
-      "download_descriptions": "ບັນທຶກຄຳອະທິບາຍ",
+      "section_per_platform_desc": "ການຕັ້ງຄ່າສະເພາະ YouTube ແລະ Bilibili.",
       "embed_metadata": "ຝັງເມຕາເດຕາ",
       "embed_metadata_desc": "ຂຽນຊື່ ແລະ ຂໍ້ມູນສິລະປິນລົງໃນໄຟລ໌ທີ່ດາວໂຫຼດ",
       "embed_thumbnail": "ຝັງຮູບຫຍໍ້ເປັນໜ້າປົກ",
@@ -792,13 +770,11 @@
       "organize_by_platform_desc": "ບັນທຶກໄຟລ໌ໃນໂຟລເດີຍ່ອຍຕາມຊື່ແພລດຟອມ",
       "download_subtitles": "ດາວໂຫຼດຄຳບັນຍາຍ",
       "download_subtitles_desc": "ດາວໂຫຼດຄຳບັນຍາຍທີ່ມີພ້ອມກັບວິດີໂອ (YouTube)",
-      "what_to_also_save": "ສິ່ງທີ່ຈະບັນທຶກເພີ່ມ",
       "youtube_specific": "ສະເພາະ YouTube",
       "include_auto_subtitles": "ລວມຄຳບັນຍາຍທີ່ສ້າງອັດຕະໂນມັດ",
       "include_auto_subtitles_desc": "ດຶງຄຳບັນຍາຍທີ່ YouTube ສ້າງອັດຕະໂນມັດນຳ ເມື່ອບໍ່ມີແບບທີ່ເຮັດດ້ວຍມື (ຄຸນນະພາບບໍ່ແນ່ນອນ)",
       "caption_locale": "ພາສາຄຳບັນຍາຍ",
       "caption_locale_desc": "ພາສາທີ່ຈະດາວໂຫຼດຄຳບັນຍາຍ (ຖ້າມີ). ຖ້າບໍ່ມີ ຈະໃຊ້ພາສາທີ່ແຫຼ່ງມີ.",
-      "caption_locale_auto": "ຕາມພາສາແອັບ",
       "keep_vtt": "ເກັບໄຟລ໌ .vtt ຕົ້ນສະບັບ",
       "keep_vtt_desc": "ເກັບ WebVTT ຕົ້ນສະບັບໄວ້ພ້ອມກັບ SRT ທີ່ແປງແລ້ວ. ມີປະໂຫຍດສຳລັບເຄື່ອງຫຼິ້ນ ຫຼື ສະຄຣິບທີ່ຕ້ອງການຮູບແບບເດີມ.",
       "bilibili_section": "Bilibili",
@@ -852,8 +828,6 @@
       "split_by_chapters_desc": "ເມື່ອແຫຼ່ງມີເຄື່ອງໝາຍບົດ ຈະບັນທຶກແຕ່ລະບົດເປັນໄຟລ໌ແຍກ",
       "live_from_start": "ບັນທຶກການຖ່າຍທອດສົດຕັ້ງແຕ່ເລີ່ມຕົ້ນ",
       "live_from_start_desc": "ເມື່ອດາວໂຫຼດການຖ່າຍທອດສົດທີ່ກຳລັງດຳເນີນຢູ່ ຈະບັນທຶກຕັ້ງແຕ່ຕົ້ນແທນທີ່ຈະເລີ່ມຈາກຕອນນີ້",
-      "presets": "ພຣີເຊັດດ່ວນ",
-      "presets_desc": "ຕັ້ງຄ່າຄລິກດຽວສຳລັບການໃຊ້ງານທົ່ວໄປ. ແຕະບັດເພື່ອນຳໃຊ້.",
       "preset_fast": "ໄວ",
       "preset_fast_desc": "480p · ບໍ່ມີເມຕາເດຕາ · ບໍ່ມີຄຳບັນຍາຍ",
       "preset_quality": "ຄຸນນະພາບ",
@@ -872,7 +846,7 @@
       "music_hotkey_enabled_desc": "ດາວໂຫຼດ URL ໃນຄລິບບອດເປັນສຽງດ້ວຍປຸ່ມລັດ (ໃຊ້ຮູບແບບເພງດ້ານລຸ່ມ)",
       "music_hotkey_binding": "ປຸ່ມລັດເພງ",
       "music_audio_format": "ຮູບແບບການດາວໂຫຼດເພງ",
-      "music_audio_format_desc": "ຮູບແບບສຽງທີ່ໃຊ້ໂດຍປຸ່ມລັດເພງ ແລະ ຕົວດາວໂຫຼດຂອງປລັກອິນ Music",
+      "music_audio_format_desc": "ຮູບແບບສຽງທີ່ໃຊ້ໂດຍປຸ່ມລັດເພງ",
       "copy_to_clipboard_on_hotkey": "ສຳເນົາໄຟລ໌ໄປຄລິບບອດຫຼັງດາວໂຫຼດດ້ວຍປຸ່ມລັດ",
       "copy_to_clipboard_on_hotkey_desc": "ສຳເນົາໄຟລ໌ທີ່ດາວໂຫຼດໄປຄລິບບອດອັດຕະໂນມັດ ເພື່ອວາງໄດ້ງ່າຍ",
       "filename_template": "ແມ່ແບບຊື່ໄຟລ໌",
@@ -958,12 +932,10 @@
       "status_missing": "ບໍ່ມີ",
       "source_managed": "ຈັດການໂດຍແອັບ",
       "download_managed": "ຮັບແບບຈັດການໂດຍແອັບ",
-      "not_found": "ບໍ່ພົບ",
       "install": "ຕິດຕັ້ງ",
       "update": "ອັບເດດ",
       "install_success": "ຕິດຕັ້ງ {{name}} {{version}} ແລ້ວ",
       "update_success": "ອັບເດດ {{name}} ເປັນ {{version}} ແລ້ວ",
-      "variant_aria": "ຕົວແປ",
       "more_options": "ຕົວເລືອກເພີ່ມເຕີມ",
       "pick_custom_file": "ເລືອກໄຟລ໌ຈາກດິສກ໌…",
       "show_folder": "ສະແດງໂຟລເດີ",
@@ -975,7 +947,6 @@
       "rollback_done": "ຍ້ອນກັບໄປ {{version}} ແລ້ວ",
       "rollback_failed": "ຍ້ອນກັບລົ້ມເຫຼວ: {{msg}}",
       "pick_dialog_title": "ເລືອກໄຟລ໌ສຳລັບ {{name}}",
-      "filter_pdfium": "ຫ້ອງສະໝຸດ PDFium",
       "filter_all_files": "ໄຟລ໌ທັງໝົດ",
       "set_file_failed": "ຕັ້ງໄຟລ໌ບໍ່ສຳເລັດ: {{msg}}",
       "open_folder_failed": "ເປີດໂຟລເດີບໍ່ສຳເລັດ: {{msg}}",
@@ -1019,24 +990,7 @@
       "username": "ຊື່ຜູ້ໃຊ້",
       "password": "ລະຫັດຜ່ານ"
     },
-    "ytdlp_flags": {
-      "title": "ແຟລັກ yt-dlp",
-      "embed_subs": "ຝັງຄຳບັນຍາຍ",
-      "write_thumbnail": "ບັນທຶກຮູບຫຍໍ້",
-      "write_description": "ບັນທຶກຄຳອະທິບາຍ",
-      "write_comments": "ບັນທຶກຄຳເຫັນ",
-      "restrict_filenames": "ຊື່ໄຟລ໌ ASCII",
-      "no_overwrites": "ບໍ່ຂຽນທັບ",
-      "prefer_free_formats": "ຮູບແບບເສລີ",
-      "force_ipv4": "ບັງຄັບ IPv4",
-      "geo_bypass": "ຂ້າມການບລັອກພູມິພາກ",
-      "limit_rate": "ຈຳກັດອັດຕາ",
-      "sleep_interval": "ໄລຍະພັກ",
-      "limit_rate_ph": "ເຊັ່ນ 1M",
-      "sleep_interval_ph": "ເຊັ່ນ 5"
-    },
     "advanced": {
-      "title": "ຂັ້ນສູງ",
       "max_concurrent_downloads": "ການດາວໂຫຼດພ້ອມກັນ",
       "max_concurrent_downloads_desc": "ຈຳນວນການດາວໂຫຼດພ້ອມກັນສູງສຸດ",
       "max_concurrent_segments": "ຈຳນວນຊິ້ນທີ່ດາວໂຫຼດຂະໜານສຳລັບສະຕຣີມ HLS (ຂັ້ນສູງ)",
@@ -1071,9 +1025,7 @@
       "cookies_from_browser_placeholder": "ເຊັ່ນ: firefox, chrome, edge",
       "user_agent": "User-Agent ກຳນົດເອງ (ຂັ້ນສູງ)",
       "user_agent_desc": "ສົ່ງ User-Agent ກຳນົດເອງໃນການດາວໂຫຼດ. ປະວ່າງໄວ້ເພື່ອໃຊ້ຄ່າເລີ່ມຕົ້ນ.",
-      "user_agent_placeholder": "User-Agent ບຣາວເຊີເລີ່ມຕົ້ນ",
-      "twitter_manual_cookie": "ຄຸກກີ້ແບບກຳນົດເອງ",
-      "twitter_manual_cookie_desc": "ຖ້າການດາວໂຫຼດລົ້ມເຫຼວ, ທ່ານສາມາດວາງສ່ວນຫົວ Cookie ດ້ວຍຕົນເອງທີ່ນີ້ ແລ້ວລອງໃໝ່. ບໍ່ຈຳກັດສະເພາະ Twitter/X. ຕົວຢ່າງ: sessionid=...; csrftoken=...; auth_token=..."
+      "user_agent_placeholder": "User-Agent ບຣາວເຊີເລີ່ມຕົ້ນ"
     },
     "group_general": "ທົ່ວໄປ",
     "group_media": "ມີເດຍ",
@@ -1265,32 +1217,17 @@
       "cleared_toast": "ຍ້າຍຄຸກກີ້ໄປຖັງຂີ້ເຫຍື້ອແລ້ວ",
       "add_account_label": "ເພີ່ມບັນຊີອື່ນ",
       "add_account_success": "ເພີ່ມບັນຊີ '{{slug}}' ແລ້ວ — {{count}} ຄຸກກີ້",
-      "account_primary_tag": "ຄ່າເລີ່ມຕົ້ນ",
       "bilibili": {
         "login_qr_title": "ເຂົ້າສູ່ລະບົບ Bilibili ດ້ວຍ QR Code",
         "login_qr_subtitle": "ເປີດແອັບ Bilibili ແລ້ວສະແກນ QR code ດ້ານລຸ່ມ.",
         "login_qr_pending": "ກຳລັງລໍຖ້າການສະແກນ...",
         "login_qr_scanned": "ສະແກນແລ້ວ. ຢືນຢັນການເຂົ້າສູ່ລະບົບໃນໂທລະສັບຂອງທ່ານ.",
         "login_qr_expired": "QR code ໝົດອາຍຸແລ້ວ. ສ້າງອັນໃໝ່.",
-        "login_qr_cancelled": "ຍົກເລີກການເຂົ້າສູ່ລະບົບແລ້ວ.",
         "login_qr_regenerate": "ສ້າງລະຫັດໃໝ່",
         "login_qr_success": "ເຂົ້າສູ່ລະບົບເປັນ {{uname}}",
-        "login_sms_title": "ເຂົ້າສູ່ລະບົບດ້ວຍ SMS",
-        "login_sms_country": "ລະຫັດປະເທດ",
-        "login_sms_phone": "ເບີໂທລະສັບ",
-        "login_sms_send_code": "ສົ່ງລະຫັດ",
-        "login_sms_resend_in": "ສົ່ງໃໝ່ໃນ {{seconds}} ວິນາທີ",
-        "login_sms_code": "ລະຫັດຢືນຢັນ",
-        "login_sms_submit": "ເຂົ້າສູ່ລະບົບ",
-        "login_sms_captcha_required": "ແກ້ captcha ກ່ອນ",
-        "login_sms_captcha_solve": "ເປີດ captcha",
-        "login_sms_sent": "ສົ່ງ SMS ແລ້ວ. ປ້ອນລະຫັດທີ່ທ່ານໄດ້ຮັບ.",
         "login_close": "ປິດ",
         "login_cancel": "ຍົກເລີກ",
         "login_error_generic": "ເຂົ້າສູ່ລະບົບບໍ່ສຳເລັດ. ລອງໃໝ່.",
-        "add_account_qr_btn": "ເຂົ້າສູ່ລະບົບດ້ວຍ QR Code",
-        "add_account_sms_btn": "ເຂົ້າສູ່ລະບົບດ້ວຍ SMS",
-        "add_account_manual_btn": "ວາງຄຸກກີ້ດ້ວຍຕົນເອງ",
         "import_watch_later": "ນຳເຂົ້າ ເບິ່ງພາຍຫຼັງ",
         "import_history": "ນຳເຂົ້າປະຫວັດ",
         "import_no_account": "ເຂົ້າສູ່ລະບົບ Bilibili ກ່ອນ",
@@ -1318,7 +1255,6 @@
     "media_changed": "ລິ້ງນີ້ມີການປ່ຽນແປງຕັ້ງແຕ່ທ່ານດາວໂຫຼດຄັ້ງລ່າສຸດ: {{summary}}",
     "rule_applied": "ນຳໃຊ້ກົດ “{{name}}” ແລ້ວ",
     "preflight_skips": "ຂ້າມ {{skipped}} ຈາກ {{total}}: ບໍ່ຮອງຮັບ ຫຼື ຊ້ຳກັນ.",
-    "batch_file_open": "ໂຫຼດຈາກໄຟລ໌",
     "batch_file_title": "ເລືອກໄຟລ໌ .txt ທີ່ມີ URL",
     "batch_file_empty": "ບໍ່ພົບ URL ທີ່ຖືກຕ້ອງໃນໄຟລ໌",
     "mode_auto": "ອັດຕະໂນມັດ",
@@ -1381,7 +1317,6 @@
       "clip": "ຄລິບ",
       "short": "Short",
       "playlist": "ເພລລິສ",
-      "course": "ຄອສຮຽນ",
       "file": "ໄຟລ໌",
       "unknown": "ມີເດຍ"
     },
@@ -1394,8 +1329,6 @@
     "fmt_speed": "ຄວາມໄວ",
     "cookie_account": "ບັນຊີ",
     "cookie_account_cookies": "ຄຸກກີ້",
-    "mode_normal": "ປົກກະຕິ",
-    "mode_advanced": "ຂັ້ນສູງ",
     "adv": {
       "url_label": "URL",
       "url_placeholder": "https://...",
@@ -1489,7 +1422,6 @@
       "overview": "ພາບລວມ",
       "terms": "ເງື່ອນໄຂ",
       "project": "ໂປຣເຈັກ",
-      "roadmap": "ແຜນພັດທະນາ",
       "changelog": "ບັນທຶກການປ່ຽນແປງ",
       "debug": "ຂໍ້ມູນດີບັກ"
     },
@@ -1529,13 +1461,6 @@
     "feature_themes": "11 ທີມ: Dark, Light, Catppuccin (4 ແບບ), One Dark Pro, Dracula, NyxVamp (3 ແບບ)",
     "feature_i18n": "ມີໃຫ້ໃຊ້ໃນພາສາອັງກິດ, ປອກຕຸຍການ, ຈີນ, ຍີ່ປຸ່ນ, ອີຕາລີ ແລະ ຝຣັ່ງ",
     "feature_tech": "ສ້າງດ້ວຍ Tauri + Rust. ໄວ ແລະ ເບົາ",
-    "roadmap_intro": "ສິ່ງທີ່ວາງແຜນໄວ້ສຳລັບເວີຊັນຕໍ່ໄປຂອງ OmniGet.",
-    "roadmap_platforms_title": "ການເຊື່ອມຕໍ່",
-    "roadmap_features_title": "ຄຸນສົມບັດ",
-    "roadmap_community_title": "ມີໄອເດຍບໍ?",
-    "roadmap_community_text": "ພວກເຮົາຍິນດີຮັບໄອເດຍ ແລະ ຄຳແນະນຳ! ເປັນວິທີທີ່ດີໃນການຂໍແພລດຟອມ ຫຼື ຄຸນສົມບັດໃໝ່.",
-    "roadmap_community_discord": "ຕິດຕໍ່ຫາພວກເຮົາໃນ discord:",
-    "roadmap_community_issue": "ຫຼື ເປີດ issue ໃນ repository:",
     "tagline": "ດາວໂຫຼດທຸກຢ່າງ, ຈາກທຸກບ່ອນ.",
     "credit": "ສ້າງດ້ວຍຄວາມຮັກໂດຍ tonho.wtf"
   },
@@ -1545,7 +1470,7 @@
   },
   "onboarding": {
     "welcome_title": "ວາງລິ້ງ. ຮັບໄຟລ໌.",
-    "welcome_desc": "OmniGet ດາວໂຫຼດວິດີໂອ, ສຽງ, ຮູບພາບ ແລະ ຄອສຮຽນຈາກ 1,000+ ເວັບໄຊ. ສອງຂັ້ນຕອນສັ້ນໆ, ແລ້ວວາງລິ້ງທຳອິດຂອງທ່ານ.",
+    "welcome_desc": "OmniGet ດາວໂຫຼດວິດີໂອ, ສຽງ ແລະ ຮູບພາບຈາກຫຼາຍເວັບໄຊ. ສອງຂັ້ນຕອນສັ້ນໆ, ແລ້ວວາງລິ້ງທຳອິດຂອງທ່ານ.",
     "next": "ຕໍ່ໄປ",
     "skip": "ຂ້າມການຕັ້ງຄ່າ",
     "back": "ກັບຄືນ",
@@ -1569,7 +1494,7 @@
     "agents_desc": "OmniGet now has a team of AI agents and a house where they live. Both are in the sidebar.",
     "agents_llm": "Chat, attach a folder and let an agent read, edit and run your code. It asks before it writes.",
     "agents_world": "The house where your agents walk around, work at the bench when a tool runs, and receive visitors.",
-    "more_later": "ປລັກອິນສຳລັບຄອສຮຽນ ແລະ Telegram, ປຸ່ມລັດທົ່ວລະບົບ ແລະ ສະຖານະ Discord ຢູ່ໃນການຕັ້ງຄ່າ ເມື່ອໃດທີ່ທ່ານຕ້ອງການ.",
+    "more_later": "ປຸ່ມລັດທົ່ວລະບົບ, ສ່ວນຂະຫຍາຍບຣາວເຊີ ແລະ ສະຖານະ Discord ຢູ່ໃນການຕັ້ງຄ່າ ເມື່ອໃດທີ່ທ່ານຕ້ອງການ.",
     "profile": {
       "title": "Pick a nickname",
       "desc": "It stays on this computer and shows up when you share something. You can skip this.",
@@ -1580,26 +1505,18 @@
     }
   },
   "hints": {
-    "omnibox": "ວາງ URL ຂອງວິດີໂອ ຫຼື ມີເດຍທີ່ທ່ານຕ້ອງການດາວໂຫຼດຢູ່ນີ້.",
     "hotkey": "ປຸ່ມລັດທົ່ວລະບົບ: ດາວໂຫຼດ URL ທີ່ຢູ່ໃນຄລິບບອດອັດຕະໂນມັດ.",
     "clipboard": "ກວດຫາ URL ອັດຕະໂນມັດເມື່ອທ່ານສຳເນົາລິ້ງ ແລະ ຕື່ມໃສ່ omnibox."
   },
   "common": {
     "cancel": "ຍົກເລີກ",
     "clear": "ລ້າງ",
-    "retry": "ລອງໃໝ່",
     "close": "ປິດ",
     "hint": "ຄຳແນະນຳ",
     "error": "ຂໍ້ຜິດພາດ",
     "loading": "ກຳລັງໂຫຼດ…",
     "unknown_error": "ຂໍ້ຜິດພາດທີ່ບໍ່ຮູ້ຈັກ",
-    "ytdlp_missing": "ຍັງບໍ່ໄດ້ຕິດຕັ້ງ yt-dlp. ຕິດຕັ້ງໃນການຕັ້ງຄ່າເພື່ອເປີດໃຊ້ການດາວໂຫຼດ.",
-    "go_to_settings": "ໄປທີ່ການຕັ້ງຄ່າ",
-    "cookie_error_message": "ການກວດຫາຄຸກກີ້ອັດຕະໂນມັດໃຊ້ໄດ້ກັບ Firefox ເທົ່ານັ້ນ. Chrome, Edge ແລະ ບຣາວເຊີອື່ນທີ່ອີງໃສ່ Chromium ຈະບລັອກການເຂົ້າເຖິງຄຸກກີ້. ເພື່ອໃຊ້ຄຸກກີ້: ຕິດຕັ້ງ Firefox ແລະ ເຂົ້າສູ່ລະບົບບັນຊີຂອງທ່ານຢູ່ນັ້ນ, ຫຼື ສົ່ງອອກໄຟລ໌ cookies.txt ຈາກບຣາວເຊີຂອງທ່ານ ແລະ ຕັ້ງຄ່າໃນ ການຕັ້ງຄ່າ > ດາວໂຫຼດ > ໄຟລ໌ຄຸກກີ້.",
-    "cookie_file_label": "ໄຟລ໌ຄຸກກີ້ (cookies.txt)",
-    "cookie_file_choose": "ເລືອກໄຟລ໌",
-    "cookie_file_hint": "ສົ່ງອອກຄຸກກີ້ຈາກບຣາວເຊີຂອງທ່ານໂດຍໃຊ້ສ່ວນຂະຫຍາຍເຊັ່ນ 'Get cookies.txt LOCALLY' ແລ້ວເລືອກໄຟລ໌ຢູ່ນີ້. ຈຳເປັນສຳລັບຜູ້ໃຊ້ Chrome/Edge ທີ່ຕ້ອງການດາວໂຫຼດແບບຢືນຢັນຕົວຕົນ.",
-    "dismiss": "ປິດ"
+    "cookie_error_message": "ການກວດຫາຄຸກກີ້ອັດຕະໂນມັດໃຊ້ໄດ້ກັບ Firefox ເທົ່ານັ້ນ. Chrome, Edge ແລະ ບຣາວເຊີອື່ນທີ່ອີງໃສ່ Chromium ຈະບລັອກການເຂົ້າເຖິງຄຸກກີ້. ເພື່ອໃຊ້ຄຸກກີ້: ຕິດຕັ້ງ Firefox ແລະ ເຂົ້າສູ່ລະບົບບັນຊີຂອງທ່ານຢູ່ນັ້ນ, ຫຼື ສົ່ງອອກໄຟລ໌ cookies.txt ຈາກບຣາວເຊີຂອງທ່ານ ແລະ ຕັ້ງຄ່າໃນ ການຕັ້ງຄ່າ > ດາວໂຫຼດ > ໄຟລ໌ຄຸກກີ້."
   },
   "platforms": {
     "bilibili": {
@@ -1647,22 +1564,6 @@
         "64k": "64 kbps",
         "unknown": "ບໍ່ຮູ້ຈັກ"
       },
-      "badge": {
-        "charging_exclusive": "ສະເພາະຜູ້ສະໜັບສະໜູນ",
-        "preview": "ຕົວຢ່າງ",
-        "paid_locked": "ເສຍເງິນ",
-        "partial_preview": "ທົດລອງ",
-        "pgc": "ຊີຣີ",
-        "collab": "ຮ່ວມມື",
-        "expired": "ໝົດອາຍຸ"
-      },
-      "phase": {
-        "preview": "ກຳລັງອ່ານຄຸນນະພາບ",
-        "connecting": "ກຳລັງເຊື່ອມຕໍ່ CDN",
-        "downloading": "ກຳລັງດາວໂຫຼດ",
-        "muxing": "ກຳລັງລວມໄຟລ໌",
-        "done": "ສຳເລັດ"
-      },
       "preview": {
         "loading": "ກຳລັງອ່ານຄຸນນະພາບທີ່ມີ...",
         "auto": "ອັດຕະໂນມັດ",
@@ -1671,12 +1572,6 @@
         "audio": "ສຽງ",
         "no_account_hint": "ເຂົ້າສູ່ລະບົບ Bilibili ເພື່ອປົດລັອກ 4K, HDR, Hi-Res Lossless ແລະ Dolby.",
         "premium_hint": "ບາງຄຸນນະພາບຢູ່ນີ້ຕ້ອງການການສະໝັກສະມາຊິກ 大会员 (premium) ໃນ Bilibili."
-      },
-      "notice": {
-        "session_expired_title": "ເຊສຊັນໝົດອາຍຸ",
-        "session_expired_body": "ເຊສຊັນ Bilibili ຂອງທ່ານໝົດອາຍຸແລ້ວ. ເຂົ້າສູ່ລະບົບອີກຄັ້ງເພື່ອດາວໂຫຼດຄຸນນະພາບ premium ຕໍ່.",
-        "session_expired_action": "ເຂົ້າສູ່ລະບົບອີກຄັ້ງ",
-        "session_expired_dismiss": "ພາຍຫຼັງ"
       }
     }
   },
@@ -1729,7 +1624,6 @@
     "filter_network": "ເຄືອຂ່າຍ",
     "filter_auth": "ການຢືນຢັນຕົວຕົນ",
     "filter_system": "ລະບົບ",
-    "filter_convert": "ແປງໄຟລ໌",
     "filter_errors": "ສະເພາະຂໍ້ຜິດພາດ",
     "copy_report": "ສຳເນົາລາຍງານ",
     "report_copied": "ສຳເນົາລາຍງານການວິນິດໄສໄປຍັງຄລິບບອດແລ້ວ",
@@ -1739,7 +1633,6 @@
     "open_panel_desc": "ເປີດແຜງບັນທຶກກິດຈະກຳແບບສົດໃນ ກ່ຽວກັບ → Debug."
   },
   "p2p": {
-    "send_file": "ສົ່ງໄຟລ໌",
     "send_title": "ສົ່ງໄຟລ໌ຜ່ານ P2P",
     "send_description": "ສົ່ງໄຟລ໌ໃດກໍໄດ້ໃຫ້ຜູ້ໃຊ້ OmniGet ຄົນອື່ນ. ລະບົບຈະສ້າງລະຫັດແບ່ງປັນ — ຜູ້ຮັບວາງລະຫັດໃນ omnibox ເພື່ອດາວໂຫຼດ.",
     "select_file": "ເລືອກໄຟລ໌",
@@ -1760,22 +1653,6 @@
     "accept_transfer": "ຍອມຮັບ ແລະ ດາວໂຫຼດ",
     "reject_transfer": "ປະຕິເສດ",
     "searching_hint": "ກຳລັງເຊື່ອມຕໍ່ເຊີບເວີ relay..."
-  },
-  "mascot": {
-    "idle": "ວາງລິ້ງ ຫຼື ຄົ້ນຫາເພື່ອເລີ່ມຕົ້ນ!|ມື້ນີ້ຈະດາວໂຫຼດຫຍັງດີ?|ພ້ອມແລ້ວເມື່ອທ່ານພ້ອມ!",
-    "detecting": "ອືມ, ຂໍກວດເບິ່ງກ່ອນ...|ກຳລັງວິເຄາະລິ້ງ...|ລໍຖ້າແປັບໜຶ່ງ...",
-    "detected": "ໄດ້ແລ້ວ! ພ້ອມເມື່ອທ່ານພ້ອມ!|ພົບແລ້ວ! ໄປກັນເລີຍບໍ?|ພ້ອມໝົດແລ້ວ!",
-    "preparing": "ກຳລັງກຽມການ...|ເກືອບພ້ອມແລ້ວ...|ກຳລັງກຽມການດາວໂຫຼດຂອງທ່ານ...",
-    "search": "ນີ້ຄືສິ່ງທີ່ຂ້ອຍພົບ!|ລອງເບິ່ງດູ!|ເບິ່ງອັນນີ້ເລີຍ!",
-    "error": "ອຸ້ຍ, ມີບາງຢ່າງຜິດພາດ. ລອງໃໝ່ບໍ?|ບໍ່ສຳເລັດ. ລອງໃໝ່ກັນບໍ?|ອືມ, ມີບາງຢ່າງເສຍ...",
-    "complete": "ສຳເລັດແລ້ວ!|ດາວໂຫຼດສຳເລັດ!|ໄດ້ມາໃຫ້ແລ້ວ!",
-    "amazed": "ວ້າວ, ການດາວໂຫຼດຄັ້ງທຳອິດຂອງທ່ານ! 🎉|ນັ້ນແຫຼະ — ອັນທຳອິດຂອງທ່ານ!|ບັນທຶກແລ້ວ! ຍິນດີຕ້ອນຮັບ!",
-    "downloading": "ກຳລັງດາວໂຫຼດ...|ກຳລັງເຮັດຢູ່!|ກຳລັງເອົາໄຟລ໌ຂອງທ່ານ...",
-    "stalled": "ອືມ, ໃຊ້ເວລາດົນໜ້ອຍໜຶ່ງ...|ລໍຖ້າກ່ອນ, ຍັງເຮັດຢູ່...|ການເຊື່ອມຕໍ່ເບິ່ງຄືຊ້າ...",
-    "queue": "ກຳລັງລໍຖ້າຄິວ...|ອົດທົນໜ້ອຍໜຶ່ງ, ເກືອບຮອດແລ້ວ...|ຈະຮອດຄິວທ່ານໃນໄວໆນີ້!"
-  },
-  "torrent": {
-    "open_file": "ເປີດ .torrent"
   },
   "omnidisc": {
     "error": {
@@ -1890,18 +1767,14 @@
     },
     "title": "World",
     "subtitle": "ເຮືອນຂອງທ່ານໃນຄອມພິວເຕີນີ້ ແລະ ເມືອງທີ່ທ່ານໃຊ້ຮ່ວມກັບຄົນອື່ນ.",
-    "start": "Start",
-    "stop": "Stop",
     "loading": "Starting the renderer…",
     "bench_running": "Benchmark running…",
     "error": "Renderer error:",
     "stats": {
-      "backend": "Backend",
       "tier": "Tier",
       "fps": "FPS",
       "cpu": "CPU",
-      "draws": "Draw calls",
-      "sprites": "Sprites"
+      "draws": "Draw calls"
     },
     "settings": {
       "title": "World",
@@ -1949,8 +1822,7 @@
       "recentre": "Recentre",
       "pause": "Pause",
       "resume": "Resume",
-      "open_house": "Open the house",
-      "phase9": "Visits arrive in a later version."
+      "open_house": "Open the house"
     },
     "slot": {
       "title": "Slot",
@@ -2008,7 +1880,6 @@
       "hint": "ເຮືອນຂອງທ່ານຢູ່ທີ່ນັ້ນມີທີ່ຢູ່, ຊາວບ້ານຍັງໃຊ້ຊີວິດຕໍ່ໄປເຖິງແມ່ນແອັບປິດຢູ່ ແລະ ທຸກຄົນເຫັນຖະໜົນດຽວກັນ.",
       "in": "ຢູ່ໃນ {{city}}",
       "inside": "ພາຍໃນ",
-      "outside": "ພາຍນອກ",
       "address": "ທີ່ຢູ່ຂອງທ່ານ",
       "go_home": "ກັບບ້ານ",
       "claim": "ຈອງດິນຕອນໜຶ່ງ",
@@ -2044,7 +1915,6 @@
       "edit_mode": "ກຳລັງແກ້ໄຂ: ຄລິກວັດຖຸເພື່ອເລືອກ, ຄລິກຊ່ອງວ່າງເພື່ອຍ້າຍ",
       "edit_placing": "ກຳລັງວາງ {{asset}}: ຄລິກຊ່ອງວ່າງ, Esc ເພື່ອຢຸດ",
       "edit_selected": "ຄລິກຊ່ອງວ່າງເພື່ອຍ້າຍ, R ເພື່ອໝຸນ, Delete ເພື່ອເອົາອອກ",
-      "edit_catalogue": "ລາຍການ",
       "edit_undo": "ຍົກເລີກ",
       "edit_redo": "ເຮັດຄືນ",
       "edit_remove": "ເອົາອອກ",
@@ -2229,7 +2099,6 @@
       "calls": "calls",
       "agents": "Agents",
       "no_agents": "No agent has spoken yet.",
-      "wire": "Wire probe",
       "diagnostics": "Diagnostics",
       "throughput": "Throughput",
       "first_token": "First token",
@@ -2286,12 +2155,10 @@
       "band_critical": "almost out"
     },
     "title": "LLM",
-    "subtitle": "Your agents, their models and what they are allowed to touch.",
     "tab": {
       "chat": "Chat",
       "roster": "Roster",
       "models": "Models & Routing",
-      "observatory": "Observatory",
       "mcp": "MCP",
       "skills": "Skills",
       "accounts": "Accounts",
@@ -2300,8 +2167,6 @@
       "jobs": "Jobs",
       "loops": "Loops"
     },
-    "soon_title": "Coming soon",
-    "soon_body": "This tab is part of a later phase of the LLM section.",
     "demo_banner": "Demo data: the LLM backend is not wired yet.",
     "rail": {
       "title": "Agents",
@@ -2329,7 +2194,6 @@
       "cancelled": "Turn cancelled.",
       "error": "Turn failed",
       "switch_model": "Switch model",
-      "new": "New chat",
       "no_agent": "Pick an agent on the left.",
       "tool_ask": "The agent wants to run a tool",
       "allow": "Allow",
@@ -2366,7 +2230,6 @@
       "new": "New agent",
       "name": "Name",
       "role": "Role",
-      "system_prompt": "System prompt",
       "model_policy": "Model",
       "fixed": "Fixed",
       "route": "Route",
@@ -2403,8 +2266,7 @@
       "title": "Models & Routing",
       "providers": "Providers",
       "no_providers": "No API key saved yet.",
-      "add_key_hint": "Keys live in Tools → AI keys.",
-      "list": "Models",
+      "add_key_hint": "Keys live in LLM → Models & Routing.",
       "load": "Load models",
       "loading": "Loading…",
       "count": "{{count}} models",
@@ -2417,7 +2279,6 @@
       "rule_local_desc": "Tries Ollama or llama-server before anything paid.",
       "rule_quality": "Quality first",
       "rule_quality_desc": "Keeps the head of the chain unless it fails.",
-      "rule_hint": "The rule is a default for new agents; each agent can override it.",
       "openrouter_started": "Finish the sign-in in your browser.",
       "openrouter_ok": "OpenRouter key saved.",
       "openrouter_failed": "OpenRouter sign-in failed: {{error}}",
@@ -2432,31 +2293,7 @@
       "turn_failed": "The turn could not start."
     },
     "local": {
-      "title": "Local models",
-      "servers": "Servers on this machine",
-      "running": "Running",
-      "notRunning": "Not running",
-      "install": "Install",
-      "download": "Download",
-      "start": "Start",
-      "stop": "Stop",
-      "bridgeTitle": "OpenAI-compatible bridge",
-      "bridgeHint": "Lets any app that speaks OpenAI use your agents at omniget/<agent>. Off by default: whoever holds the bridge token spends your tokens.",
       "explanation": "Local model management is not available here yet. Configure an existing local provider in Models & Routing."
-    },
-    "error": {
-      "ERR_LLM_NO_AGENT": "That agent no longer exists.",
-      "ERR_LLM_NO_TURN": "That turn already finished.",
-      "ERR_LLM_NO_ASK": "That tool question was already answered.",
-      "ERR_LLM_ROSTER_DUP": "An agent with this id already exists.",
-      "ERR_LLM_ROSTER_MISSING": "Agent not found.",
-      "ERR_LLM_ROSTER_ID": "The id must use only lowercase letters, digits, - and _.",
-      "ERR_LLM_ROSTER_TEMPLATE": "Unknown template.",
-      "ERR_LLM_LOCAL_BINARY": "Could not install llama-server.",
-      "ERR_LLM_LOCAL_MODEL": "Model not available.",
-      "ERR_LLM_LOCAL_SPAWN": "Could not start llama-server.",
-      "ERR_LLM_LOCAL_HASH": "The downloaded file failed its checksum.",
-      "ERR_LLM_BRIDGE_OFF": "The OpenAI-compatible bridge is off."
     },
     "skills": {
       "title": "Skills",
@@ -2510,17 +2347,6 @@
       "err_path": "The path pointed outside the skills folder.",
       "err_io": "The skills folder could not be read or written.",
       "err_generic": "The skill operation failed.",
-      "err": {
-        "ERR_SKILL_PARSE": "This SKILL.md could not be read: it needs a `---` frontmatter block at the top.",
-        "ERR_SKILL_NAME": "The skill name is invalid: use lowercase letters, digits and hyphens, up to 64 characters.",
-        "ERR_SKILL_DESCRIPTION": "The skill has no description. Add a `description` line to its frontmatter.",
-        "ERR_SKILL_IO": "The skill could not be read or written on disk.",
-        "ERR_SKILL_NOT_FOUND": "No skill by that name is installed.",
-        "ERR_SKILL_ZIP": "This zip was refused: one of its files points outside the destination folder.",
-        "ERR_SKILL_GIT": "The clone failed. Check that git is installed and that the address is right.",
-        "ERR_SKILL_TOO_BIG": "This skill is over the size limit (2000 files or 32 MB).",
-        "ERR_SKILL_PATH": "That path points outside the skill folder."
-      },
       "catalog": {
         "unlicensed": "This catalogue declares no licence. Check the terms with its authors before using it."
       },
@@ -2579,8 +2405,6 @@
       "save": "ບັນທຶກ",
       "cancel": "ຍົກເລີກ",
       "copy": "ສຳເນົາ",
-      "show": "ສະແດງ",
-      "hide": "ເຊື່ອງ",
       "grants_for": "ສິ່ງທີ່ເຮັດວຽກໄດ້ເທິງ {{server}}",
       "grants_hint": "ເຄື່ອງມືທີ່ບໍ່ມີການອະນຸຍາດຈະບໍ່ຖືກສະເໜີໃຫ້ໂມເດວເລີຍ. \"ຖາມ\" ຈະຢຸດຮອບນີ້ ແລະ ລໍຖ້າທ່ານ.",
       "tool": "ເຄື່ອງມື",
@@ -2640,8 +2464,6 @@
       "bridge_off": "ຂົວເຊື່ອມຕໍ່ພາຍໃນຖືກປິດໃຊ້ໃນ ການຕັ້ງຄ່າ → ສ່ວນຂະຫຍາຍບຣາວເຊີ; ປາຍທາງ MCP ຕ້ອງການມັນ",
       "endpoint": "ປາຍທາງ",
       "selftest": "ທົດສອບ",
-      "token": "ໂທເຄັນ Bearer",
-      "token_hint": "ໂທເຄັນດຽວກັນກັບທີ່ສ່ວນຂະຫຍາຍບຣາວເຊີໃຊ້. ປ່ຽນໃໝ່ໄດ້ໃນ ການຕັ້ງຄ່າ → ສ່ວນຂະຫຍາຍບຣາວເຊີ.",
       "connect": "ເຊື່ອມຕໍ່ໄຄລເອັນ",
       "connect_hint": "ສຳເນົາໂຄດສຳລັບເອເຈນຂອງທ່ານ. Claude Code: ແລ່ນຄຳສັ່ງ. ອື່ນໆ: ວາງໃນໄຟລ໌ຕັ້ງຄ່າ.",
       "exposed": "{{count}} ເຄື່ອງມືທີ່ເປີດໃຫ້ໃຊ້",
@@ -2657,7 +2479,8 @@
         "unknown_agent": "ເອເຈນນັ້ນບໍ່ຢູ່ໃນລາຍຊື່ອີກແລ້ວ.",
         "generic": "ເຊີບເວີ MCP ລົ້ມເຫຼວ."
       },
-      "import_queue": "ມີອີກ {{count}} ເຊີບເວີຈາກການຕັ້ງຄ່ານັ້ນລໍຖ້າການກວດສອບ."
+      "import_queue": "ມີອີກ {{count}} ເຊີບເວີຈາກການຕັ້ງຄ່ານັ້ນລໍຖ້າການກວດສອບ.",
+      "copied": "ສຳເນົາແລ້ວ"
     },
     "accounts": {
       "title": "Accounts & quota",
@@ -2716,7 +2539,6 @@
       "heatmap_more": "more",
       "heatmap_peak": "peak",
       "top_tools": "Top tools",
-      "top_prompts": "Most expensive prompts",
       "sessions_title": "Sessions",
       "turns": "turns",
       "session_live": "live",
@@ -2863,7 +2685,6 @@
       "unknown": "Unavailable"
     },
     "jobs": {
-      "title": "Jobs",
       "lede": "Agent runs that work in the background while you do something else.",
       "new_title": "New job",
       "agent": "Agent",
@@ -2931,7 +2752,6 @@
       "no_matches": "No tasks in this filter."
     },
     "loops": {
-      "title": "Loops",
       "lede": "Run the same prompt round after round until the work checks out.",
       "new_title": "New Loop",
       "agent": "Agent",
@@ -2945,7 +2765,6 @@
       "max_rounds": "Max rounds",
       "max_minutes": "Max minutes",
       "check_command": "Check command",
-      "stop_hint": "The loop stops when the check command exits 0, or when rounds or minutes run out; with none set it stops after 10 rounds.",
       "start": "Start loop",
       "list_title": "Loops",
       "empty": "No loops yet. Start one above.",
@@ -2977,6 +2796,20 @@
       "edge_bottom": "Bottom",
       "edge_left": "Left",
       "drag_hint": "You can also drag the strip: it snaps to the nearest edge.",
+      "appearance": "ຮູບລັກສະນະ",
+      "size": "ຂະໜາດ",
+      "size_s": "ນ້ອຍ",
+      "size_m": "ກາງ",
+      "size_l": "ໃຫຍ່",
+      "show_percent": "ສະແດງເປີເຊັນ",
+      "show_percent_hint": "ສ່ວນທີ່ໃຊ້ແລ້ວ ຢູ່ລຸ່ມແຕ່ລະວົງ.",
+      "show_pace": "ສະແດງຈັງຫວະ",
+      "show_pace_hint": "ເຄື່ອງໝາຍເທິງແຕ່ລະວົງ ບ່ອນທີ່ການໃຊ້ຄວນຢູ່ຖ້າໃຊ້ສະໝ່ຳສະເໝີ ແລະ ທ່ານໃຊ້ໄວກວ່າຫຼືບໍ່.",
+      "contrast": "ຄອນທຣາສສູງ",
+      "contrast_hint": "ພື້ນຫຼັງທຶບ, ເສັ້ນ ແລະ ຂໍ້ຄວາມເຂັ້ມຂຶ້ນ.",
+      "notifications": "ການແຈ້ງເຕືອນ",
+      "notify_pace": "ເຕືອນເມື່ອຈັງຫວະນີ້ຈະໃຊ້ໝົດ",
+      "notify_pace_hint": "ເທື່ອດຽວຕໍ່ຮອບ ເມື່ອຈັງຫວະປັດຈຸບັນຈະໃຊ້ໝົດກ່ອນຣີເຊັດ.",
       "providers": "What it may read",
       "privacy": "Each reader only opens the login that tool already keeps on this computer, read-only, and asks that provider's own server. Tokens are never logged, stored or shown. Each provider is asked at most every 5 minutes, and never while the strip is closed.",
       "beta": "beta",
@@ -3026,17 +2859,19 @@
           "needs_auth": "Sign in again in the tool itself.",
           "rate_limited": "The provider asked us to wait.",
           "error": "Could not read."
+        },
+        "near_limit": "ໃກ້ຮອດຂີດຈຳກັດ",
+        "accounts": "ບັນຊີ",
+        "pace": {
+          "on": "ຕາມຈັງຫວະ",
+          "under": "ຊ້າກວ່າຈັງຫວະ {{delta}}%",
+          "ahead": "ໄວກວ່າຈັງຫວະ {{delta}}%",
+          "ahead_out": "ໄວກວ່າຈັງຫວະ {{delta}}% · ໝົດໃນ {{time}}"
         }
       }
     },
     "chat": {
       "details": "Agent details"
-    },
-    "nav": {
-      "work": "Work",
-      "configure": "Configure",
-      "monitor": "Monitor",
-      "experimental": "Experimental"
     },
     "arena": {
       "explanation": "Compare the same task across models. This feature is not available yet; use Chat to work with a configured agent."
@@ -3105,7 +2940,6 @@
     }
   },
   "omni": {
-    "avatar_label": "Omni, the assistant mascot",
     "sidebar_profile": "Your profile"
   },
   "pet": {
@@ -3411,7 +3245,6 @@
       "skill_bound": "ທັກສະຄັດເລືອກຮູບເງົາຕິດຕັ້ງ ແລະ ເຊື່ອມກັບບອດນີ້ແລ້ວ."
     },
     "bots": {
-      "nav": "ສ້າງບອດ",
       "advanced": "ລາຍລະອຽດຂັ້ນສູງ",
       "back": "ເອເຈນ",
       "cancel": "ຍົກເລີກ",
@@ -4215,7 +4048,6 @@
       "unblock_unknown": "ສືບຕໍ່ໂດຍບໍ່ຮູ້",
       "budget_title": "ງົບປະມານ",
       "budget_details": "ລາຍລະອຽດງົບປະມານ",
-      "budget_edit_hint": "ເພື່ອເພີ່ມງົບປະມານ, ສ້າງພາລະກິດໃໝ່ທີ່ມີຂີດຈຳກັດສູງກວ່າ ຫຼື ຍົກເລີກ ແລ້ວສ້າງອັນນີ້ຄືນໃໝ່.",
       "pool_in_flight": "ການເອີ້ນທີ່ກຳລັງດຳເນີນ",
       "pool_reserved": "ຈອງໄວ້",
       "context_title": "ແກ້ໄຂບໍລິບົດ",
@@ -4231,7 +4063,6 @@
       "exit_code": "ລະຫັດອອກ",
       "artifact": "ໄຟລ໌",
       "confidence": "ຄວາມໝັ້ນໃຈ",
-      "verified": "ກວດອີກຄັ້ງແລ້ວ.",
       "export": "ສົ່ງອອກຂໍ້ມູນວິນິດໄສ",
       "exported": "ບັນທຶກຂໍ້ມູນວິນິດໄສໄປທີ່ {{path}} ແລ້ວ",
       "picker_failed": "ໜ້າຕ່າງບັນທຶກບໍ່ພ້ອມໃຊ້ຢູ່ນີ້.",
@@ -4344,7 +4175,6 @@
       "tokens_now": "ໃຊ້ໄປ {{spent}} ຈາກ {{limit}}",
       "minutes": "ຂີດຈຳກັດເວລາໃໝ່ (ນາທີເຮັດວຽກ)",
       "minutes_now": "ເຮັດວຽກ {{spent}} ຈາກ {{limit}} ນາທີ",
-      "none": "ບໍ່ມີຂີດຈຳກັດ",
       "why_minutes": "ຂີດຈຳກັດເວລາເຮັດໃຫ້ມັນຢຸດ: ໃຫ້ນາທີເພີ່ມ. ປ່ອຍຊ່ອງຫວ່າງໄວ້ເພື່ອຮັກສາຄ່າເດີມ.",
       "keep_blank": "ປ່ອຍຊ່ອງຫວ່າງໄວ້ເພື່ອຮັກສາຄ່າເດີມ.",
       "submit": "ເພີ່ມຂີດຈຳກັດ",
@@ -4470,5 +4300,55 @@
     "open_settings": "ເປີດການຕັ້ງຄ່າຄຸກກີ້",
     "done": "ຂ້ອຍເຂົ້າສູ່ລະບົບແລ້ວ",
     "deny": "ປະຕິເສດ"
+  },
+  "usage_tray": {
+    "menu": {
+      "accounts": "Accounts shown",
+      "no_accounts": "No Claude Code or Codex login found",
+      "icon_shows": "Icon shows",
+      "shows_session": "Session (5 h)",
+      "shows_weekly": "Weekly",
+      "shows_busiest": "Most used account",
+      "percent_text": "Show percentage",
+      "colored": "Loop in colour",
+      "thresholds": "Alert thresholds",
+      "threshold_item": "Orange at {{warn}}%, red at {{critical}}%",
+      "open_claude": "Open Claude Code in this account",
+      "add_account": "Add account…",
+      "open_app": "Open OmniGet",
+      "refresh": "Refresh now",
+      "hide": "Hide this icon",
+      "tooltip": "OmniGet usage",
+      "toggle": "Usage icon in the menu bar",
+      "default_login": "Terminal login",
+      "session": "session",
+      "weekly": "weekly"
+    },
+    "panel": {
+      "title": "Usage",
+      "empty_title": "Which accounts should the icon watch?",
+      "empty_body": "Nothing is read until you pick an account. OmniGet only asks each tool's own server, with the login the tool already keeps.",
+      "no_logins": "No Claude Code or Codex login found. Add one below.",
+      "session": "Session",
+      "weekly": "Weekly",
+      "resets_at": "resets {{when}}",
+      "runs_out": "at this pace, limit at {{when}}",
+      "lasts": "lasts until the reset",
+      "spent_today": "{{amount}} today",
+      "updated": "updated {{when}}",
+      "pending": "reading…",
+      "needs_auth": "login expired: open the tool to sign in again",
+      "rate_limited": "the server asked to wait",
+      "error": "could not read",
+      "refresh": "Refresh",
+      "open_app": "Open OmniGet",
+      "add_account": "Add account",
+      "open_claude": "Open Claude Code",
+      "choose": "Accounts",
+      "now": "now",
+      "in_min": "in {{count}} min",
+      "in_hours": "in {{hours}}h{{minutes}}",
+      "in_days": "in {{count}} days"
+    }
   }
 }

@@ -223,7 +223,7 @@ fn build() -> Vec<ToolEntry> {
             ToolImpl::Host, "code", Paid),
         entry(
             "download_url",
-            "Queue a URL (video, audio, playlist, course, image) in the OmniGet Downloads panel. Same as pasting it in the app.",
+            "Queue a URL (video, audio, playlist, image, torrent) in the OmniGet Downloads panel. Same as pasting it in the app.",
             obj(json!({ "url": { "type": "string" } }), &["url"]),
             ToolImpl::Host,
             "downloads",

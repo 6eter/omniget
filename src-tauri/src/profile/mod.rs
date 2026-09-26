@@ -1,12 +1,12 @@
 //! The local profile: an ed25519 identity, a nickname and a skin. No account,
 //! no e-mail, no password, no network.
 //!
-//! The public key is the identifier the multiplayer layer and `omnidisc-mls`
-//! already expect, so the profile is the one place in the app that answers "who
-//! is this machine". Everything here is lazy: [`ProfileManager::new`] takes no
-//! arguments and touches nothing, because `AppState` is built before the Tauri
-//! app exists; the first call that needs the identity loads it and caches it,
-//! and every call after that is a read lock and a clone.
+//! The public key is the identifier the multiplayer layer already expects, so
+//! the profile is the one place in the app that answers "who is this machine".
+//! Everything here is lazy: [`ProfileManager::new`] takes no arguments and
+//! touches nothing, because `AppState` is built before the Tauri app exists;
+//! the first call that needs the identity loads it and caches it, and every
+//! call after that is a read lock and a clone.
 //!
 //! Error strings are stable codes the UI maps directly: `ERR_PROFILE_NICKNAME`,
 //! `ERR_PROFILE_STORE`, `ERR_PROFILE_SECRET`, `ERR_PROFILE_SIGN`, optionally
@@ -167,12 +167,6 @@ impl ProfileManager {
             public_key_b64: identity::encode_public_key(&loaded.public_key),
             fingerprint: identity::fingerprint(&loaded.public_key),
         })
-    }
-
-    /// Drop the cache so the next call reads disk again. Used by tests that
-    /// move the profile directory around inside one process.
-    pub fn reset_cache(&self) {
-        *self.cached.write().unwrap_or_else(|p| p.into_inner()) = None;
     }
 }
 

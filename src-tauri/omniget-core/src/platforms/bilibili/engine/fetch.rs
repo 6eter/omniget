@@ -7,7 +7,7 @@ use reqwest::header::{HeaderMap, HeaderName, HeaderValue, COOKIE, REFERER, USER_
 use tokio::sync::mpsc;
 use tokio_util::sync::CancellationToken;
 
-use super::super::api::{ApiClient, BilibiliError, Result};
+use super::super::api::{BilibiliError, Result};
 
 pub struct FetchOptions<'a> {
     pub url: &'a str,
@@ -78,8 +78,4 @@ pub async fn fetch_stream(
         .download(progress)
         .await
         .map_err(|_| BilibiliError::ContentUnavailable)
-}
-
-pub fn from_api_client(client: &ApiClient) -> (&str, Option<&str>) {
-    (client.user_agent(), client.cookie_header())
 }

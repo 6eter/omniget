@@ -34,6 +34,7 @@ pub mod profile;
 pub mod secrets;
 pub mod storage;
 pub mod tray;
+pub mod usage_tray;
 pub mod world_bench;
 pub mod world_manager;
 
@@ -313,7 +314,6 @@ pub fn run() {
         .plugin(tauri_plugin_store::Builder::default().build())
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
-        .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_updater::Builder::new().build())
         .plugin(tauri_plugin_process::init())
         .plugin(
@@ -714,6 +714,7 @@ pub fn run() {
                 }
             }
             tray::setup(app.handle())?;
+            usage_tray::setup(app.handle());
             hotkey::register_from_settings(app.handle());
 
             // Migration: drop the manifests / binary copies the previous
@@ -850,7 +851,6 @@ pub fn run() {
             _ => {}
         })
         .invoke_handler(tauri::generate_handler![
-            commands::auth_webview::open_auth_webview,
             commands::league::league_status,
             commands::league::league_get,
             commands::league::league_set_positions,
@@ -963,22 +963,6 @@ pub fn run() {
             commands::video_ops::video_op_preset,
             commands::video_ops::video_op_propose,
             commands::video_ops::video_op_run,
-            commands::video_ops::detect_shot_changes,
-            commands::video_ops::waveform_peaks,
-            commands::subtitle_ws::subtitle_load,
-            commands::subtitle_ws::subtitle_save,
-            commands::subtitle_ws::subtitle_translate,
-            commands::subtitle_ws::subtitle_grammar_fix,
-            commands::downloads::metadata_fetch,
-            commands::downloads::thumbnails_list,
-            commands::downloads::thumbnail_save,
-            commands::downloads::subtitles_list,
-            commands::downloads::subtitles_save,
-            commands::downloads::subtitles_merge,
-            commands::downloads::comments_fetch,
-            commands::downloads::chapters_fetch,
-            commands::downloads::tools_save_text,
-            commands::downloads::livechat_fetch,
             commands::downloads::download_with_custom_args,
             commands::downloads::cancel_generic_download,
             commands::yt_templates::yt_templates_list,
@@ -994,7 +978,6 @@ pub fn run() {
             commands::downloads::update_max_concurrent,
             commands::downloads::clear_finished_downloads,
             commands::downloads::get_download_log,
-            commands::downloads::get_download_command,
             commands::downloads::retry_download_with_command,
             commands::downloads::parse_batch_file,
             commands::downloads::get_recovery_items,
@@ -1011,8 +994,6 @@ pub fn run() {
             commands::settings::mark_onboarding_complete,
             commands::settings::mark_legal_acknowledged,
             commands::rpc::rpc_test_connection,
-            commands::rpc::rpc_set_source,
-            commands::rpc::rpc_clear_source,
             commands::rpc::rpc_set_idle_stats,
             commands::settings::get_bridge_info,
             commands::settings::rotate_bridge_token,
@@ -1056,8 +1037,6 @@ pub fn run() {
             commands::dedupe::deduplicate_files,
             commands::dedupe::content_store_stats,
             commands::smart_speed::compute_silence_map,
-            commands::torrent_playback::torrent_playback_readiness,
-            commands::dependencies::dependency_variants,
             commands::dependencies::dependency_install_dir,
             commands::dependencies::set_dependency_path,
             commands::search::search_videos,
@@ -1066,6 +1045,7 @@ pub fn run() {
             commands::p2p::p2p_pause_send,
             commands::p2p::p2p_resume_send,
             commands::app_lifecycle::force_exit_app,
+            commands::app_lifecycle::get_debug_info,
             commands::app_lifecycle::get_portable_info,
             // Fase 1 (perfil local) — f1-perfil-core
             commands::profile::profile_get,
@@ -1080,6 +1060,8 @@ pub fn run() {
             commands::llm::roster::llm_roster_delete,
             commands::llm::roster::llm_roster_apply_template,
             commands::llm::prompts::sync_llm_prompts,
+            commands::llm::chat::llm_conversation_list,
+            commands::llm::chat::llm_conversation_get,
             commands::llm::chat::llm_turn_start,
             commands::llm::help::help_turn_start,
             commands::llm::help::help_tool_call,
@@ -1129,6 +1111,16 @@ pub fn run() {
             limits_strip::commands::limits_strip_state,
             limits_strip::commands::limits_strip_refresh,
             limits_strip::commands::limits_strip_set_expanded,
+            usage_tray::usage_tray_view,
+            usage_tray::usage_tray_toggle_account,
+            usage_tray::usage_tray_set,
+            usage_tray::usage_tray_refresh,
+            usage_tray::usage_tray_open_claude,
+            usage_tray::usage_tray_open_app,
+            usage_tray::usage_tray_resize,
+            usage_tray::usage_tray_open_panel,
+            usage_tray::usage_tray_close_panel,
+            usage_tray::usage_tray_sync_strings,
             commands::llm::keys::tool_ai_keys_openrouter_pkce,
             // Rodada 3: Fase 3 (MCP, skills) e Fase 4 (contas)
             commands::llm::mcp::llm_mcp_list,
@@ -1193,7 +1185,6 @@ pub fn run() {
             commands::assist::memory::assist_memory_list,
             commands::assist::memory::assist_memory_scopes,
             commands::assist::memory::assist_memory_history,
-            commands::assist::memory::assist_memory_profile,
             commands::assist::memory::assist_memory_create,
             commands::assist::memory::assist_memory_correct,
             commands::assist::memory::assist_memory_confirm,
@@ -1206,7 +1197,6 @@ pub fn run() {
             commands::assist::memory::assist_memory_reindex,
             commands::assist::reading::assist_reading_overview,
             commands::assist::reading::assist_reading_list_all,
-            commands::assist::reading::assist_reading_journey,
             commands::assist::reading::assist_reading_start_journey,
             commands::assist::reading::assist_reading_update_journey,
             commands::assist::reading::assist_reading_delete_journey,
@@ -1214,14 +1204,10 @@ pub fn run() {
             commands::assist::reading::assist_reading_note_context,
             commands::assist::reading::assist_reading_record_viewing,
             commands::assist::reading::assist_reading_forget_reaction,
-            commands::assist::reading::assist_reading_get_prefs,
             commands::assist::reading::assist_reading_set_prefs,
-            commands::assist::reading::assist_reading_assess,
-            commands::assist::reading::assist_reading_skill_status,
             commands::assist::reading::assist_reading_install_skill,
             commands::assist::bots::assist_bot_create,
             commands::assist::bots::assist_bot_get,
-            commands::assist::bots::assist_bots_list,
             commands::assist::bots::assist_bot_save_profile,
             commands::assist::bots::assist_bot_set_connection,
             commands::assist::bots::assist_bot_bind_skill,
@@ -1229,7 +1215,6 @@ pub fn run() {
             commands::assist::bots::assist_bot_skill_grants,
             commands::assist::bots::assist_bot_capabilities,
             commands::assist::bots::assist_bot_skill_reads,
-            commands::assist::bots::assist_bot_capability_catalog,
             commands::llm::skills::llm_skills_status,
             commands::llm::skills::llm_skills_reproject,
             commands::llm::skills::llm_skills_accept,
@@ -1241,8 +1226,6 @@ pub fn run() {
             commands::assist::runs::assist_permission_answer,
             commands::assist::runs::assist_run_cancel,
             commands::assist::runs::assist_run_resolve,
-            commands::assist::runs::assist_runtime_caps,
-            commands::assist::runs::assist_budget_in_flight,
             commands::llm::jobs::llm_job_resume,
             commands::llm::jobs::llm_job_mark_done,
             commands::llm::jobs::llm_job_discard,
@@ -1260,9 +1243,6 @@ pub fn run() {
             commands::assist::groups::assist_group_share,
             commands::assist::groups::assist_group_unshare,
             commands::assist::groups::assist_conversation_context,
-            commands::assist::groups::assist_worktree_create,
-            commands::assist::groups::assist_worktree_list,
-            commands::assist::groups::assist_worktree_remove,
             // assist:end
             // missions:start (autonomy: missions, learning, packs)
             commands::assist::missions::assist_mission_list,
@@ -1292,11 +1272,9 @@ pub fn run() {
             commands::assist::learning::assist_learning_observe,
             commands::assist::learning::assist_learning_revoke,
             commands::assist::learning::assist_learning_propose,
-            commands::assist::learning::assist_learning_revise,
             commands::assist::learning::assist_learning_candidate,
             commands::assist::learning::assist_learning_add_case,
             commands::assist::learning::assist_learning_delete_case,
-            commands::assist::learning::assist_learning_record_fixture,
             commands::assist::learning::assist_learning_evaluate,
             commands::assist::learning::assist_learning_eval_status,
             commands::assist::learning::assist_learning_promote,

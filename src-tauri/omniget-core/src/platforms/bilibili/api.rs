@@ -2,7 +2,6 @@ use std::time::Duration;
 
 use reqwest::header::{HeaderMap, HeaderValue, COOKIE, REFERER, USER_AGENT};
 use reqwest::{Client, StatusCode};
-use serde::de::DeserializeOwned;
 use serde_json::Value;
 use thiserror::Error;
 
@@ -300,10 +299,6 @@ pub fn map_api_code(code: i64, message: String) -> BilibiliError {
         62004 => BilibiliError::GeoBlocked,
         _ => BilibiliError::ApiCode { code, message },
     }
-}
-
-pub fn parse_data<T: DeserializeOwned>(value: &Value) -> Result<T> {
-    serde_json::from_value(value.clone()).map_err(BilibiliError::InvalidJson)
 }
 
 fn build_cookie_header_for_account(slug: &str) -> Option<String> {

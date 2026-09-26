@@ -3,9 +3,8 @@
    * Server half of the MCP tab: OmniGet's own endpoint — on/off, address,
    * bearer token, one snippet per client and the tools it exposes.
    *
-   * Same three commands `components/tools/ai/McpTool.svelte` uses (that tool
-   * stays where it is); everything pure moved to `$lib/llm/mcp` so both halves
-   * mask the token the same way.
+   * Everything pure lives in `$lib/llm/mcp` so both halves mask the token the
+   * same way.
    */
   import ServerConnections from "./ServerConnections.svelte";
   import { invoke } from "@tauri-apps/api/core";
@@ -72,7 +71,7 @@
 
   async function copy(text: string) {
     await navigator.clipboard.writeText(text);
-    showToast("success", $t("tools.common.copied") as string);
+    showToast("success", $t("llm.mcp.copied") as string);
   }
 
   let serverOn = $derived(status?.enabled === true);

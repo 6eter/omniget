@@ -150,11 +150,6 @@ impl Intent {
         self.line = normalise_line(&line.into());
         self
     }
-
-    /// True when only the line differs; used by callers that debounce.
-    pub fn same_pose(&self, other: &Intent) -> bool {
-        self.animation == other.animation && self.mood == other.mood
-    }
 }
 
 /// Collapses whitespace, trims, truncates to `MAX_LINE_CHARS` chars.

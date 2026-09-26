@@ -83,14 +83,6 @@ pub fn inject_ua_header(headers: &mut reqwest::header::HeaderMap, opts_ua: Optio
     }
 }
 
-pub fn ua_header_map(opts_ua: Option<&str>) -> Option<reqwest::header::HeaderMap> {
-    let ua = opts_ua?;
-    let value = reqwest::header::HeaderValue::from_str(ua).ok()?;
-    let mut headers = reqwest::header::HeaderMap::new();
-    headers.insert(reqwest::header::USER_AGENT, value);
-    Some(headers)
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

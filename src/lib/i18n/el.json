@@ -495,7 +495,6 @@
     "empty": "No results",
     "navigate": "navigate",
     "select": "select",
-    "close": "close",
     "group_nav": "Navigate",
     "group_action": "Actions",
     "action_paste": "Επικόλληση URL από το πρόχειρο"
@@ -523,13 +522,7 @@
     "adv_title": "Εντολή yt-dlp",
     "success_title": "Προστέθηκε στις Λήψεις",
     "success_first": "Η πρώτη σας λήψη!",
-    "success_open": "Άνοιγμα Λήψεων",
-    "batch_hint": "Πολλοί σύνδεσμοι; Επικολλήστε τους όλους μαζί, έναν ανά γραμμή."
-  },
-  "tools": {
-    "common": {
-      "copied": "Copied"
-    }
+    "success_open": "Άνοιγμα Λήψεων"
   },
   "downloads": {
     "phase_downloading": "Λήψη",
@@ -570,7 +563,6 @@
       "invalid": "Δεν ήταν δυνατή η εκτέλεση της εντολής: {{error}}",
       "engine_custom": "δική σας"
     },
-    "title": "Λήψεις",
     "empty": "Δεν υπάρχουν μεταφορτώσεις σε εξέλιξη",
     "status": {
       "queued": "Στην ουρά",
@@ -596,8 +588,6 @@
     "pause_all": "Παύση όλων",
     "resume_all": "Συνέχεια όλων",
     "reorder_hint": "σύρετε για αναδιάταξη",
-    "history_toggle": "Εναλλαγή ιστορικού λήψεων",
-    "history_toggle_hint": "Δείτε παλαιότερες λήψεις (Ctrl+H)",
     "history_view_link": "Δείτε το ιστορικό λήψεων",
     "history_loading": "Φόρτωση ιστορικού…",
     "history_empty": "Δεν υπάρχουν ολοκληρωμένες λήψεις ακόμη.",
@@ -670,7 +660,6 @@
       "paused_all": "Όλες σε παύση",
       "eta": "Απομένουν περίπου {{eta}}",
       "open": "Προβολή λήψεων",
-      "indeterminate": "Λήψη σε εξέλιξη, άγνωστο συνολικό μέγεθος",
       "complete": "Οι λήψεις ολοκληρώθηκαν",
       "paused": "{{count}} σε παύση",
       "failed": "{{count}} απέτυχαν",
@@ -679,20 +668,12 @@
     }
   },
   "toast": {
-    "download_preparing": "Προετοιμασία λήψης...",
     "download_complete": "Ετοιμο! Το {{name}} ειναι στον φακελο σας",
     "clipboard_url_detected": "Εντοπιστηκε συνδεσμος! Επικολληστε για ληψη",
     "clipboard_empty": "Το πρόχειρο είναι άδειο",
     "auto_download_started": "Αυτόματη λήψη ξεκίνησε",
     "external_url_ready": "Το URL λήφθηκε και είναι έτοιμο για λήψη",
     "external_url_queued": "Η λήψη προστέθηκε από την επέκταση Chrome",
-    "hotkey_queued": "Η λήψη ξεκίνησε από το πρόχειρο",
-    "hotkey_already_queued": "Αυτός ο σύνδεσμος είναι ήδη στην ουρά",
-    "hotkey_not_a_url": "Αντιγράψτε πρώτα έναν σύνδεσμο — δεν υπάρχει διεύθυνση στο πρόχειρο",
-    "hotkey_unsupported": "Κανένα πρόγραμμα λήψης δεν καλύπτει αυτόν τον σύνδεσμο. Επικολλήστε τον στην αρχική οθόνη για να δείτε τις επιλογές.",
-    "hotkey_clipboard_error": "Δεν ήταν δυνατή η ανάγνωση του προχείρου. Αντιγράψτε ξανά τον σύνδεσμο και πατήστε τη συντόμευση.",
-    "channel_new": "{{channel}}: {{count}} νέο/α βίντεο",
-    "channel_new_auto": "{{channel}}: λήψη {{count}} νέου/ων βίντεο",
     "file_copied_to_clipboard": "Το αρχείο αντιγράφηκε στο πρόχειρο",
     "generic_download_complete": "{{name}} — η λήψη ολοκληρώθηκε!"
   },
@@ -774,10 +755,7 @@
       "section_clipboard_hotkeys": "Clipboard & hotkeys",
       "section_clipboard_hotkeys_desc": "Paste detection and global shortcuts.",
       "section_per_platform": "Per-platform options",
-      "section_per_platform_desc": "YouTube, courses, and Bilibili-specific settings.",
-      "download_attachments": "Λήψη συνημμένων",
-      "download_attachments_desc": "Αποθήκευση συνημμένων μαθημάτων μαζί με τα ληφθέντα μαθήματα.",
-      "download_descriptions": "Αποθήκευση περιγραφών",
+      "section_per_platform_desc": "YouTube and Bilibili settings.",
       "embed_metadata": "Ενσωμάτωση μεταδεδομένων",
       "embed_metadata_desc": "Γράψτε πληροφορίες τίτλου και καλλιτέχνη σε αρχεία που έχετε ληφθεί",
       "embed_thumbnail": "Ενσωματώστε τη μικρογραφία ως εξώφυλλο",
@@ -792,13 +770,11 @@
       "organize_by_platform_desc": "Αποθηκεύστε αρχεία σε υποφακέλους με το όνομα της πλατφόρμας",
       "download_subtitles": "Κατεβάστε υπότιτλους",
       "download_subtitles_desc": "Λήψη διαθέσιμων υπότιτλων μαζί με βίντεο (YouTube)",
-      "what_to_also_save": "What to also save",
       "youtube_specific": "YouTube-specific",
       "include_auto_subtitles": "Συμπερίληψη αυτόματων υπότιτλων",
       "include_auto_subtitles_desc": "Λήψη υπότιτλων που δημιουργούνται αυτόματα από το YouTube όταν δεν υπάρχουν χειρωνακτικοί (η ποιότητα ποικίλλει)",
       "caption_locale": "Γλώσσα υπότιτλων",
       "caption_locale_desc": "Γλώσσα στην οποία θα γίνει λήψη των υπότιτλων (όταν είναι διαθέσιμη). Διαφορετικά χρησιμοποιείται ό,τι παρέχει η πηγή.",
-      "caption_locale_auto": "Γλώσσα της εφαρμογής",
       "keep_vtt": "Διατήρηση αρχικών αρχείων .vtt",
       "keep_vtt_desc": "Κρατά το ακατέργαστο WebVTT μαζί με το μετατρεπόμενο SRT. Χρήσιμο για players ή scripts που χρειάζονται την αρχική μορφή.",
       "bilibili_section": "Bilibili",
@@ -852,8 +828,6 @@
       "split_by_chapters_desc": "Όταν το βίντεο έχει δείκτες κεφαλαίων, αποθηκεύεται κάθε κεφάλαιο σε ξεχωριστό αρχείο",
       "live_from_start": "Εγγραφή ζωντανών από την αρχή",
       "live_from_start_desc": "Κατά τη λήψη μιας ζωντανής μετάδοσης σε εξέλιξη, κατέγραψέ τη από την αρχή αντί από την τρέχουσα στιγμή",
-      "presets": "Γρήγορες προεπιλογές",
-      "presets_desc": "Ρύθμιση με ένα κλικ. Πατήστε μια κάρτα για εφαρμογή.",
       "preset_fast": "Γρήγορα",
       "preset_fast_desc": "480p · χωρίς μεταδεδομένα · χωρίς υπότιτλους",
       "preset_quality": "Ποιότητα",
@@ -872,7 +846,7 @@
       "music_hotkey_enabled_desc": "Download clipboard URL as audio with a keyboard shortcut (uses Music Format below)",
       "music_hotkey_binding": "Music hotkey shortcut",
       "music_audio_format": "Music download format",
-      "music_audio_format_desc": "Audio format used by the music hotkey and the Music plugin downloader",
+      "music_audio_format_desc": "Audio format used by the music hotkey",
       "copy_to_clipboard_on_hotkey": "Αντιγράψτε το αρχείο στο πρόχειρο μετά τη λήψη του πλήκτρου πρόσβασης",
       "copy_to_clipboard_on_hotkey_desc": "Αντιγράψτε αυτόματα το ληφθέν αρχείο στο πρόχειρο για εύκολη επικόλληση",
       "filename_template": "Πρότυπο ονόματος αρχείου",
@@ -958,12 +932,10 @@
       "status_missing": "Missing",
       "source_managed": "Managed",
       "download_managed": "Get Managed",
-      "not_found": "δεν βρέθηκε",
       "install": "Εγκατάσταση",
       "update": "Ενημέρωση",
       "install_success": "Το {{name}} {{version}} εγκαταστάθηκε",
       "update_success": "Το {{name}} ενημερώθηκε σε {{version}}",
-      "variant_aria": "Παραλλαγή",
       "more_options": "Περισσότερες επιλογές",
       "pick_custom_file": "Επιλογή αρχείου από τον δίσκο…",
       "show_folder": "Εμφάνιση φακέλου",
@@ -975,7 +947,6 @@
       "rollback_done": "Έγινε επαναφορά σε {{version}}",
       "rollback_failed": "Η επαναφορά απέτυχε: {{msg}}",
       "pick_dialog_title": "Επιλογή αρχείου για {{name}}",
-      "filter_pdfium": "Βιβλιοθήκη PDFium",
       "filter_all_files": "Όλα τα αρχεία",
       "set_file_failed": "Αποτυχία ορισμού αρχείου: {{msg}}",
       "open_folder_failed": "Αποτυχία ανοίγματος φακέλου: {{msg}}",
@@ -1019,24 +990,7 @@
       "username": "Όνομα χρήση",
       "password": "Κωδικός"
     },
-    "ytdlp_flags": {
-      "title": "Παράμετροι yt-dlp",
-      "embed_subs": "Ενσωμάτωση υποτίτλων",
-      "write_thumbnail": "Αποθήκευση μικρογραφίας",
-      "write_description": "Αποθήκευση περιγραφής",
-      "write_comments": "Αποθήκευση σχολίων",
-      "restrict_filenames": "Ονόματα ASCII",
-      "no_overwrites": "Χωρίς αντικατάσταση",
-      "prefer_free_formats": "Ελεύθερες μορφές",
-      "force_ipv4": "Επιβολή IPv4",
-      "geo_bypass": "Παράκαμψη γεωγραφικού αποκλεισμού",
-      "limit_rate": "Όριο ρυθμού",
-      "sleep_interval": "Διάστημα αναμονής",
-      "limit_rate_ph": "π.χ. 1M",
-      "sleep_interval_ph": "π.χ. 5"
-    },
     "advanced": {
-      "title": "Για προχωρημένους",
       "max_concurrent_downloads": "Ταυτόχρονες λήψεις",
       "max_concurrent_downloads_desc": "Μέγιστες ταυτόχρονες λήψεις",
       "max_concurrent_segments": "Ταυτόχρονα τμήματα",
@@ -1071,9 +1025,7 @@
       "cookies_from_browser_placeholder": "ex.: firefox, chrome, edge",
       "user_agent": "Προσαρμοσμένο User-Agent (για προχωρημένους)",
       "user_agent_desc": "Στέλνει προσαρμοσμένο User-Agent στις λήψεις. Άφησέ το κενό για χρήση του προεπιλεγμένου.",
-      "user_agent_placeholder": "Προεπιλεγμένο User-Agent του προγράμματος περιήγησης",
-      "twitter_manual_cookie": "Χειροκίνητο cookie",
-      "twitter_manual_cookie_desc": "Αν μια λήψη αποτύχει, μπορείτε να επικολλήσετε εδώ μια χειροκίνητη κεφαλίδα Cookie και να δοκιμάσετε ξανά. Δεν περιορίζεται στο Twitter/X. Παράδειγμα: sessionid=...; csrftoken=...; auth_token=..."
+      "user_agent_placeholder": "Προεπιλεγμένο User-Agent του προγράμματος περιήγησης"
     },
     "group_general": "General",
     "group_media": "Media",
@@ -1265,32 +1217,17 @@
       "cleared_toast": "Cookies moved to trash",
       "add_account_label": "Πρόσθεσε άλλο λογαριασμό",
       "add_account_success": "Λογαριασμός '{{slug}}' προστέθηκε — {{count}} cookies",
-      "account_primary_tag": "προεπιλογή",
       "bilibili": {
         "login_qr_title": "Σύνδεση στο Bilibili με QR Code",
         "login_qr_subtitle": "Άνοιξε την εφαρμογή Bilibili και σκάναρε τον QR Code.",
         "login_qr_pending": "Αναμονή για σάρωση...",
         "login_qr_scanned": "Σαρώθηκε. Επιβεβαίωσε στο κινητό.",
         "login_qr_expired": "Ο QR Code έληξε. Δημιούργησε νέο.",
-        "login_qr_cancelled": "Η σύνδεση ακυρώθηκε.",
         "login_qr_regenerate": "Νέος κωδικός",
         "login_qr_success": "Συνδέθηκες ως {{uname}}",
-        "login_sms_title": "Σύνδεση με SMS",
-        "login_sms_country": "Κωδικός χώρας",
-        "login_sms_phone": "Τηλέφωνο",
-        "login_sms_send_code": "Αποστολή κωδικού",
-        "login_sms_resend_in": "Επαναποστολή σε {{seconds}}s",
-        "login_sms_code": "Κωδικός επαλήθευσης",
-        "login_sms_submit": "Σύνδεση",
-        "login_sms_captcha_required": "Λύσε πρώτα το captcha",
-        "login_sms_captcha_solve": "Άνοιγμα captcha",
-        "login_sms_sent": "Το SMS στάλθηκε. Πληκτρολόγησε τον κωδικό.",
         "login_close": "Κλείσιμο",
         "login_cancel": "Άκυρο",
         "login_error_generic": "Η σύνδεση απέτυχε. Δοκίμασε ξανά.",
-        "add_account_qr_btn": "Σύνδεση με QR Code",
-        "add_account_sms_btn": "Σύνδεση με SMS",
-        "add_account_manual_btn": "Επικόλληση cookies χειροκίνητα",
         "import_watch_later": "Εισαγωγή 'Παρακολούθηση αργότερα'",
         "import_history": "Εισαγωγή ιστορικού",
         "import_no_account": "Συνδέσου πρώτα στο Bilibili",
@@ -1318,7 +1255,6 @@
     "media_changed": "Αυτός ο σύνδεσμος άλλαξε από την τελευταία λήψη: {{summary}}",
     "rule_applied": "Εφαρμόστηκε ο κανόνας «{{name}}»",
     "preflight_skips": "Παράλειψη {{skipped}} από {{total}}: χωρίς υποστήριξη ή διπλότυπα.",
-    "batch_file_open": "Φόρτωση από αρχείο",
     "batch_file_title": "Επιλέξτε ένα αρχείο .txt με URLs",
     "batch_file_empty": "Δεν βρέθηκαν έγκυρα URLs στο αρχείο",
     "mode_auto": "Αυτόματη",
@@ -1381,7 +1317,6 @@
       "clip": "Κλιπ",
       "short": "Short (Σορτ)",
       "playlist": "Λίστα αναπαραγωγής",
-      "course": "Μάθημα",
       "file": "Αρχείο",
       "unknown": "Μέσα"
     },
@@ -1394,8 +1329,6 @@
     "fmt_speed": "Ταχ.",
     "cookie_account": "Λογαριασμος",
     "cookie_account_cookies": "cookies",
-    "mode_normal": "Κανονικο",
-    "mode_advanced": "Προχωρημενο",
     "adv": {
       "url_label": "URL",
       "url_placeholder": "https://...",
@@ -1489,7 +1422,6 @@
       "overview": "Overview",
       "terms": "όροι",
       "project": "σχέδιο",
-      "roadmap": "πλάνο",
       "changelog": "αρχείο καταγραφής",
       "debug": "πληροφορίες debug"
     },
@@ -1529,13 +1461,6 @@
     "feature_themes": "11 θέματα: Dark, Light, Catppuccin (4 γεύσεις), One Dark Pro, Dracula, NyxVamp (3 παραλλαγές)",
     "feature_i18n": "διαθέσιμο στα Αγγλικά, Πορτογαλικά, Κινέζικα, Ιαπωνικά, Ιταλικά, Γαλλικά και Ελληνικά",
     "feature_tech": "φτιαγμένο με Tauri και Rust. γρήγορο και ελαφρύ",
-    "roadmap_intro": "τι σχεδιάζεται για τις επόμενες εκδόσεις του OmniGet.",
-    "roadmap_platforms_title": "ενσωματώσεις",
-    "roadmap_features_title": "χαρακτηριστικά",
-    "roadmap_community_title": "έχετε καμιά ιδέα?",
-    "roadmap_community_text": "δεχόμαστε ιδέες και προτάσεις! είναι ένας πολύ καλός τρόπος να ζητήσετε μια νέα πλατφόρμα ή δυνατότητα.",
-    "roadmap_community_discord": "βρείτε μας στο discord:",
-    "roadmap_community_issue": "ή ανοίξτε ένα θέμα (issue) στο αποθετήριο:",
     "tagline": "Κατεβάστε οτιδήποτε, από οπουδήποτε.",
     "credit": "Φτιαγμένο με αγάπη από tonho.wtf"
   },
@@ -1545,7 +1470,7 @@
   },
   "onboarding": {
     "welcome_title": "Καλως ηρθατε στο OmniGet!",
-    "welcome_desc": "Θα σας βοηθησω να κατεβασετε οποιοδηποτε βιντεο η μαθημα απο το διαδικτυο. Απλο, γρηγορο και δωρεαν.",
+    "welcome_desc": "Θα σας βοηθησω να κατεβασετε οποιοδηποτε βιντεο απο το διαδικτυο. Απλο, γρηγορο και δωρεαν.",
     "next": "Επόμενο",
     "skip": "Παράλειψη",
     "back": "Πίσω",
@@ -1569,7 +1494,7 @@
     "agents_desc": "OmniGet now has a team of AI agents and a house where they live. Both are in the sidebar.",
     "agents_llm": "Chat, attach a folder and let an agent read, edit and run your code. It asks before it writes.",
     "agents_world": "The house where your agents walk around, work at the bench when a tool runs, and receive visitors.",
-    "more_later": "Plugins for courses and Telegram, the global hotkey and Discord presence live in Settings whenever you want them.",
+    "more_later": "The global hotkey, the browser extension and Discord presence live in Settings whenever you want them.",
     "profile": {
       "title": "Pick a nickname",
       "desc": "It stays on this computer and shows up when you share something. You can skip this.",
@@ -1580,26 +1505,18 @@
     }
   },
   "hints": {
-    "omnibox": "Επικολλήστε τη διεύθυνση URL του βίντεο ή των μέσων που θέλετε να κατεβάσετε εδώ.",
     "hotkey": "Καθολικό πλήκτρο πρόσβασης: κατεβάζει αυτόματα τη διεύθυνση URL που βρίσκεται αυτή τη στιγμή στο πρόχειρό σας.",
     "clipboard": "Εντοπίζει αυτόματα τις διευθύνσεις URL όταν αντιγράφετε έναν σύνδεσμο και στέλνεται στο omnibox."
   },
   "common": {
     "cancel": "Ακύρωση",
     "clear": "Clear",
-    "retry": "Επανάληψη",
     "close": "Κλείσιμο",
     "hint": "Υπόδειξη",
     "error": "Error",
     "loading": "Loading…",
     "unknown_error": "Άγνωστο σφάλμα",
-    "ytdlp_missing": "Το yt-dlp δεν είναι εγκατεστημένο. Εγκαταστήστε το στις Ρυθμίσεις για να ενεργοποιήσετε τις λήψεις.",
-    "go_to_settings": "Πήγαινε στις Ρυθμίσεις",
-    "cookie_error_message": "Η αυτόματη ανίχνευση cookie λειτουργεί μόνο με Firefox. Τα Chrome, Edge και άλλα προγράμματα Chromium μπλοκάρουν την πρόσβαση. Εγκαταστήστε τον Firefox, ή εξάγετε ένα αρχείο cookies.txt και ρυθμίστε το στις Ρυθμίσεις.",
-    "cookie_file_label": "Αρχείο cookie (cookies.txt)",
-    "cookie_file_choose": "Επιλογή αρχείου",
-    "cookie_file_hint": "Εξάγετε τα cookie από το πρόγραμμα περιήγησής σας και επιλέξτε το αρχείο εδώ.",
-    "dismiss": "Dismiss"
+    "cookie_error_message": "Η αυτόματη ανίχνευση cookie λειτουργεί μόνο με Firefox. Τα Chrome, Edge και άλλα προγράμματα Chromium μπλοκάρουν την πρόσβαση. Εγκαταστήστε τον Firefox, ή εξάγετε ένα αρχείο cookies.txt και ρυθμίστε το στις Ρυθμίσεις."
   },
   "platforms": {
     "bilibili": {
@@ -1647,22 +1564,6 @@
         "64k": "64 kbps",
         "unknown": "Άγνωστο"
       },
-      "badge": {
-        "charging_exclusive": "Μόνο για χορηγούς",
-        "preview": "Προεπισκόπηση",
-        "paid_locked": "Επί πληρωμή",
-        "partial_preview": "Δοκιμή",
-        "pgc": "Σειρά",
-        "collab": "Συνεργασία",
-        "expired": "Έληξε"
-      },
-      "phase": {
-        "preview": "Ανάγνωση ποιοτήτων",
-        "connecting": "Σύνδεση CDN",
-        "downloading": "Λήψη",
-        "muxing": "Συγχώνευση",
-        "done": "Έτοιμο"
-      },
       "preview": {
         "loading": "Ανάγνωση διαθέσιμων ποιοτήτων...",
         "auto": "Αυτόματο",
@@ -1671,12 +1572,6 @@
         "audio": "Ήχος",
         "no_account_hint": "Συνδέσου στο Bilibili για 4K, HDR, Hi-Res lossless και Dolby.",
         "premium_hint": "Κάποιες ποιότητες απαιτούν συνδρομή 大会员 (premium) στο Bilibili."
-      },
-      "notice": {
-        "session_expired_title": "Η συνεδρία έληξε",
-        "session_expired_body": "Η συνεδρία σου στο Bilibili έληξε. Συνδέσου ξανά για να συνεχίσεις λήψεις σε premium ποιότητα.",
-        "session_expired_action": "Σύνδεση ξανά",
-        "session_expired_dismiss": "Αργότερα"
       }
     }
   },
@@ -1729,7 +1624,6 @@
     "filter_network": "Δίκτυο",
     "filter_auth": "Ταυτοποίηση",
     "filter_system": "Σύστημα",
-    "filter_convert": "Μετατροπή",
     "filter_errors": "Μόνο σφάλματα",
     "copy_report": "Αντιγραφή αναφοράς",
     "report_copied": "Η αναφορά διαγνωστικών αντιγράφηκε στο πρόχειρο",
@@ -1739,7 +1633,6 @@
     "open_panel_desc": "Opens the live activity log panel in About → Debug."
   },
   "p2p": {
-    "send_file": "Αποστολή αρχείου",
     "send_title": "Αποστολή αρχείου μέσω P2P",
     "send_description": "Στείλτε ένα αρχείο σε άλλον χρήστη OmniGet. Θα δημιουργηθεί ένας κωδικός κοινής χρήσης — ο παραλήπτης τον επικολλά στο omnibox για λήψη.",
     "select_file": "Επιλογή αρχείου",
@@ -1760,22 +1653,6 @@
     "accept_transfer": "Αποδοχή και λήψη",
     "reject_transfer": "Απόρριψη",
     "searching_hint": "Σύνδεση στον διακομιστή αναμετάδοσης..."
-  },
-  "mascot": {
-    "idle": "Επικολλήστε ένα link ή ψάξτε κάτι!|Τι κατεβάζουμε σήμερα;|Έτοιμος όποτε θέλετε!",
-    "detecting": "Χμμ, ας δω...|Αναλύω τον σύνδεσμο...|Μια στιγμή...",
-    "detected": "Το βρήκα! Πάμε να το κατεβάσουμε;|Βρέθηκε! Πάμε;|Όλα έτοιμα!",
-    "preparing": "Ετοιμάζω τα πάντα...|Σχεδόν έτοιμο...|Προετοιμασία λήψης...",
-    "search": "Κοίτα τι βρήκα!|Ρίξε μια ματιά!|Δες αυτά!",
-    "error": "Ωχ, κάτι πήγε στραβά. Δοκιμάζουμε ξανά;|Δεν λειτούργησε. Ξαναπροσπαθούμε;|Χμμ, κάτι χάλασε...",
-    "complete": "Ολοκληρώθηκε!|Η λήψη ολοκληρώθηκε!|Ορίστε!",
-    "amazed": "Wow, your first download! 🎉|There it is — your first one!|Saved! Welcome aboard!",
-    "downloading": "Λήψη σε εξέλιξη...|Δουλεύω πάνω σε αυτό!|Φέρνω τα αρχεία σας...",
-    "stalled": "Χμμ, αργεί λίγο...|Κάνε υπομονή, ακόμα δουλεύει...|Η σύνδεση φαίνεται αργή...",
-    "queue": "Αναμονή στη σειρά...|Υπομονή, σχεδόν...|Η σειρά σας έρχεται!"
-  },
-  "torrent": {
-    "open_file": "Άνοιγμα .torrent"
   },
   "omnidisc": {
     "error": {
@@ -1890,18 +1767,14 @@
     },
     "title": "World",
     "subtitle": "Το σπίτι σου σε αυτόν τον υπολογιστή και μια πόλη που μοιράζεσαι με άλλους.",
-    "start": "Start",
-    "stop": "Stop",
     "loading": "Starting the renderer…",
     "bench_running": "Benchmark running…",
     "error": "Renderer error:",
     "stats": {
-      "backend": "Backend",
       "tier": "Tier",
       "fps": "FPS",
       "cpu": "CPU",
-      "draws": "Draw calls",
-      "sprites": "Sprites"
+      "draws": "Draw calls"
     },
     "settings": {
       "title": "World",
@@ -1949,8 +1822,7 @@
       "recentre": "Recentre",
       "pause": "Pause",
       "resume": "Resume",
-      "open_house": "Open the house",
-      "phase9": "Visits arrive in a later version."
+      "open_house": "Open the house"
     },
     "slot": {
       "title": "Slot",
@@ -2008,7 +1880,6 @@
       "hint": "Το σπίτι σου εκεί έχει διεύθυνση, οι κάτοικοι συνεχίζουν να ζουν όταν η εφαρμογή είναι κλειστή και όλοι βλέπουν τους ίδιους δρόμους.",
       "in": "Στην πόλη {{city}}",
       "inside": "μέσα",
-      "outside": "έξω",
       "address": "Η διεύθυνσή σου",
       "go_home": "Πήγαινε σπίτι",
       "claim": "Διεκδίκησε οικόπεδο",
@@ -2044,7 +1915,6 @@
       "edit_mode": "Επεξεργασία: κάνε κλικ σε αντικείμενο για επιλογή, σε ελεύθερο πλακίδιο για μετακίνηση",
       "edit_placing": "Τοποθέτηση {{asset}}: κάνε κλικ σε ελεύθερο πλακίδιο, Esc για διακοπή",
       "edit_selected": "Κάνε κλικ σε ελεύθερο πλακίδιο για μετακίνηση, R για περιστροφή, Delete για αφαίρεση",
-      "edit_catalogue": "Κατάλογος",
       "edit_undo": "Αναίρεση",
       "edit_redo": "Επανάληψη",
       "edit_remove": "Αφαίρεση",
@@ -2229,7 +2099,6 @@
       "calls": "calls",
       "agents": "Agents",
       "no_agents": "No agent has spoken yet.",
-      "wire": "Wire probe",
       "diagnostics": "Diagnostics",
       "throughput": "Throughput",
       "first_token": "First token",
@@ -2286,12 +2155,10 @@
       "band_critical": "almost out"
     },
     "title": "LLM",
-    "subtitle": "Your agents, their models and what they are allowed to touch.",
     "tab": {
       "chat": "Chat",
       "roster": "Roster",
       "models": "Models & Routing",
-      "observatory": "Observatory",
       "mcp": "MCP",
       "skills": "Skills",
       "accounts": "Accounts",
@@ -2300,8 +2167,6 @@
       "jobs": "Jobs",
       "loops": "Loops"
     },
-    "soon_title": "Coming soon",
-    "soon_body": "This tab is part of a later phase of the LLM section.",
     "demo_banner": "Demo data: the LLM backend is not wired yet.",
     "rail": {
       "title": "Agents",
@@ -2329,7 +2194,6 @@
       "cancelled": "Turn cancelled.",
       "error": "Turn failed",
       "switch_model": "Switch model",
-      "new": "New chat",
       "no_agent": "Pick an agent on the left.",
       "tool_ask": "The agent wants to run a tool",
       "allow": "Allow",
@@ -2366,7 +2230,6 @@
       "new": "New agent",
       "name": "Name",
       "role": "Role",
-      "system_prompt": "System prompt",
       "model_policy": "Model",
       "fixed": "Fixed",
       "route": "Route",
@@ -2403,8 +2266,7 @@
       "title": "Models & Routing",
       "providers": "Providers",
       "no_providers": "No API key saved yet.",
-      "add_key_hint": "Keys live in Tools → AI keys.",
-      "list": "Models",
+      "add_key_hint": "Keys live in LLM → Models & Routing.",
       "load": "Load models",
       "loading": "Loading…",
       "count": "{{count}} models",
@@ -2417,7 +2279,6 @@
       "rule_local_desc": "Tries Ollama or llama-server before anything paid.",
       "rule_quality": "Quality first",
       "rule_quality_desc": "Keeps the head of the chain unless it fails.",
-      "rule_hint": "The rule is a default for new agents; each agent can override it.",
       "openrouter_started": "Finish the sign-in in your browser.",
       "openrouter_ok": "OpenRouter key saved.",
       "openrouter_failed": "OpenRouter sign-in failed: {{error}}",
@@ -2432,31 +2293,7 @@
       "turn_failed": "The turn could not start."
     },
     "local": {
-      "title": "Local models",
-      "servers": "Servers on this machine",
-      "running": "Running",
-      "notRunning": "Not running",
-      "install": "Install",
-      "download": "Download",
-      "start": "Start",
-      "stop": "Stop",
-      "bridgeTitle": "OpenAI-compatible bridge",
-      "bridgeHint": "Lets any app that speaks OpenAI use your agents at omniget/<agent>. Off by default: whoever holds the bridge token spends your tokens.",
       "explanation": "Local model management is not available here yet. Configure an existing local provider in Models & Routing."
-    },
-    "error": {
-      "ERR_LLM_NO_AGENT": "That agent no longer exists.",
-      "ERR_LLM_NO_TURN": "That turn already finished.",
-      "ERR_LLM_NO_ASK": "That tool question was already answered.",
-      "ERR_LLM_ROSTER_DUP": "An agent with this id already exists.",
-      "ERR_LLM_ROSTER_MISSING": "Agent not found.",
-      "ERR_LLM_ROSTER_ID": "The id must use only lowercase letters, digits, - and _.",
-      "ERR_LLM_ROSTER_TEMPLATE": "Unknown template.",
-      "ERR_LLM_LOCAL_BINARY": "Could not install llama-server.",
-      "ERR_LLM_LOCAL_MODEL": "Model not available.",
-      "ERR_LLM_LOCAL_SPAWN": "Could not start llama-server.",
-      "ERR_LLM_LOCAL_HASH": "The downloaded file failed its checksum.",
-      "ERR_LLM_BRIDGE_OFF": "The OpenAI-compatible bridge is off."
     },
     "skills": {
       "title": "Skills",
@@ -2510,17 +2347,6 @@
       "err_path": "The path pointed outside the skills folder.",
       "err_io": "The skills folder could not be read or written.",
       "err_generic": "The skill operation failed.",
-      "err": {
-        "ERR_SKILL_PARSE": "This SKILL.md could not be read: it needs a `---` frontmatter block at the top.",
-        "ERR_SKILL_NAME": "The skill name is invalid: use lowercase letters, digits and hyphens, up to 64 characters.",
-        "ERR_SKILL_DESCRIPTION": "The skill has no description. Add a `description` line to its frontmatter.",
-        "ERR_SKILL_IO": "The skill could not be read or written on disk.",
-        "ERR_SKILL_NOT_FOUND": "No skill by that name is installed.",
-        "ERR_SKILL_ZIP": "This zip was refused: one of its files points outside the destination folder.",
-        "ERR_SKILL_GIT": "The clone failed. Check that git is installed and that the address is right.",
-        "ERR_SKILL_TOO_BIG": "This skill is over the size limit (2000 files or 32 MB).",
-        "ERR_SKILL_PATH": "That path points outside the skill folder."
-      },
       "catalog": {
         "unlicensed": "This catalogue declares no licence. Check the terms with its authors before using it."
       },
@@ -2579,8 +2405,6 @@
       "save": "Αποθήκευση",
       "cancel": "Ακύρωση",
       "copy": "Αντιγραφή",
-      "show": "Εμφάνιση",
-      "hide": "Απόκρυψη",
       "grants_for": "Τι μπορεί να εκτελεστεί στο {{server}}",
       "grants_hint": "Ένα εργαλείο χωρίς άδεια δεν προσφέρεται καθόλου στο μοντέλο. Το «Ερώτηση» σταματά τη σειρά και σας περιμένει.",
       "tool": "Εργαλείο",
@@ -2640,8 +2464,6 @@
       "bridge_off": "η τοπική γέφυρα είναι απενεργοποιημένη στις Ρυθμίσεις → Επέκταση προγράμματος περιήγησης· το τελικό σημείο MCP τη χρειάζεται",
       "endpoint": "Τελικό σημείο",
       "selftest": "Δοκιμή",
-      "token": "Token Bearer",
-      "token_hint": "Το ίδιο token που χρησιμοποιεί η επέκταση του προγράμματος περιήγησης. Αλλάξτε το στις Ρυθμίσεις → Επέκταση προγράμματος περιήγησης.",
       "connect": "Σύνδεση πελάτη",
       "connect_hint": "Αντιγράψτε το απόσπασμα για τον πράκτορά σας. Claude Code: εκτελέστε την εντολή. Οι άλλοι: επικολλήστε το στο αρχείο ρυθμίσεων.",
       "exposed": "{{count}} εκτεθειμένα εργαλεία",
@@ -2657,7 +2479,8 @@
         "unknown_agent": "Αυτός ο πράκτορας δεν είναι πλέον στη λίστα.",
         "generic": "Ο διακομιστής MCP απέτυχε."
       },
-      "import_queue": "Άλλοι {{count}} διακομιστές από αυτή τη ρύθμιση περιμένουν έλεγχο."
+      "import_queue": "Άλλοι {{count}} διακομιστές από αυτή τη ρύθμιση περιμένουν έλεγχο.",
+      "copied": "Copied"
     },
     "accounts": {
       "title": "Accounts & quota",
@@ -2716,7 +2539,6 @@
       "heatmap_more": "more",
       "heatmap_peak": "peak",
       "top_tools": "Top tools",
-      "top_prompts": "Most expensive prompts",
       "sessions_title": "Sessions",
       "turns": "turns",
       "session_live": "live",
@@ -2863,7 +2685,6 @@
       "unknown": "Unavailable"
     },
     "jobs": {
-      "title": "Jobs",
       "lede": "Agent runs that work in the background while you do something else.",
       "new_title": "New job",
       "agent": "Agent",
@@ -2931,7 +2752,6 @@
       "no_matches": "No tasks in this filter."
     },
     "loops": {
-      "title": "Loops",
       "lede": "Run the same prompt round after round until the work checks out.",
       "new_title": "New Loop",
       "agent": "Agent",
@@ -2945,7 +2765,6 @@
       "max_rounds": "Max rounds",
       "max_minutes": "Max minutes",
       "check_command": "Check command",
-      "stop_hint": "The loop stops when the check command exits 0, or when rounds or minutes run out; with none set it stops after 10 rounds.",
       "start": "Start loop",
       "list_title": "Loops",
       "empty": "No loops yet. Start one above.",
@@ -2977,6 +2796,20 @@
       "edge_bottom": "Bottom",
       "edge_left": "Left",
       "drag_hint": "You can also drag the strip: it snaps to the nearest edge.",
+      "appearance": "Εμφάνιση",
+      "size": "Μέγεθος",
+      "size_s": "Μικρό",
+      "size_m": "Μεσαίο",
+      "size_l": "Μεγάλο",
+      "show_percent": "Εμφάνιση ποσοστού",
+      "show_percent_hint": "Το ποσοστό χρήσης, κάτω από κάθε δακτύλιο.",
+      "show_pace": "Εμφάνιση ρυθμού",
+      "show_pace_hint": "Μια ένδειξη σε κάθε δακτύλιο εκεί που θα ήταν η χρήση με σταθερό ρυθμό, και αν είστε μπροστά.",
+      "contrast": "Υψηλή αντίθεση",
+      "contrast_hint": "Συμπαγές φόντο, εντονότερες γραμμές και κείμενο.",
+      "notifications": "Ειδοποιήσεις",
+      "notify_pace": "Προειδοποίηση όταν ο ρυθμός θα εξαντλήσει το όριο",
+      "notify_pace_hint": "Μία φορά ανά περίοδο, όταν με τον τρέχοντα ρυθμό θα εξαντληθεί πριν την επαναφορά.",
       "providers": "What it may read",
       "privacy": "Each reader only opens the login that tool already keeps on this computer, read-only, and asks that provider's own server. Tokens are never logged, stored or shown. Each provider is asked at most every 5 minutes, and never while the strip is closed.",
       "beta": "beta",
@@ -3026,17 +2859,19 @@
           "needs_auth": "Sign in again in the tool itself.",
           "rate_limited": "The provider asked us to wait.",
           "error": "Could not read."
+        },
+        "near_limit": "κοντά στο όριο",
+        "accounts": "Λογαριασμοί",
+        "pace": {
+          "on": "εντός ρυθμού",
+          "under": "{{delta}}% κάτω από τον ρυθμό",
+          "ahead": "{{delta}}% πάνω από τον ρυθμό",
+          "ahead_out": "{{delta}}% πάνω από τον ρυθμό · τελειώνει σε {{time}}"
         }
       }
     },
     "chat": {
       "details": "Agent details"
-    },
-    "nav": {
-      "work": "Work",
-      "configure": "Configure",
-      "monitor": "Monitor",
-      "experimental": "Experimental"
     },
     "arena": {
       "explanation": "Compare the same task across models. This feature is not available yet; use Chat to work with a configured agent."
@@ -3105,7 +2940,6 @@
     }
   },
   "omni": {
-    "avatar_label": "Omni, the assistant mascot",
     "sidebar_profile": "Your profile"
   },
   "pet": {
@@ -3411,7 +3245,6 @@
       "skill_bound": "Η δεξιότητα επιμέλειας ταινιών είναι εγκατεστημένη και συνδεδεμένη με αυτό το bot."
     },
     "bots": {
-      "nav": "Νέο bot",
       "advanced": "Προηγμένες λεπτομέρειες",
       "back": "Πράκτορες",
       "cancel": "Άκυρο",
@@ -4215,7 +4048,6 @@
       "unblock_unknown": "Συνέχεια χωρίς να ξέρω",
       "budget_title": "Προϋπολογισμός",
       "budget_details": "Λεπτομέρειες προϋπολογισμού",
-      "budget_edit_hint": "Για να αυξήσεις τον προϋπολογισμό, φτιάξε νέα αποστολή με μεγαλύτερο όριο ή ακύρωσε και ξαναφτιάξε αυτή.",
       "pool_in_flight": "Κλήσεις σε εξέλιξη",
       "pool_reserved": "Δεσμευμένα",
       "context_title": "Διόρθωση πλαισίου",
@@ -4231,7 +4063,6 @@
       "exit_code": "Κωδικός εξόδου",
       "artifact": "Αρχείο",
       "confidence": "Βεβαιότητα",
-      "verified": "Ελέγχθηκε ξανά.",
       "export": "Εξαγωγή διαγνωστικών",
       "exported": "Τα διαγνωστικά αποθηκεύτηκαν στο {{path}}",
       "picker_failed": "Ο διάλογος αποθήκευσης δεν είναι διαθέσιμος εδώ.",
@@ -4344,7 +4175,6 @@
       "tokens_now": "Δαπανήθηκαν {{spent}} από {{limit}}",
       "minutes": "Νέο χρονικό όριο (λεπτά εργασίας)",
       "minutes_now": "Εργάστηκε {{spent}} από {{limit}} λεπτά",
-      "none": "χωρίς όριο",
       "why_minutes": "Τη σταμάτησε το χρονικό όριο: δώστε περισσότερα λεπτά. Αφήστε ένα πεδίο κενό για να κρατήσει την τιμή του.",
       "keep_blank": "Αφήστε ένα πεδίο κενό για να κρατήσει την τιμή του.",
       "submit": "Αύξηση ορίων",
@@ -4470,5 +4300,55 @@
     "open_settings": "Άνοιγμα ρυθμίσεων cookies",
     "done": "Συνδέθηκα",
     "deny": "Απόρριψη"
+  },
+  "usage_tray": {
+    "menu": {
+      "accounts": "Accounts shown",
+      "no_accounts": "No Claude Code or Codex login found",
+      "icon_shows": "Icon shows",
+      "shows_session": "Session (5 h)",
+      "shows_weekly": "Weekly",
+      "shows_busiest": "Most used account",
+      "percent_text": "Show percentage",
+      "colored": "Loop in colour",
+      "thresholds": "Alert thresholds",
+      "threshold_item": "Orange at {{warn}}%, red at {{critical}}%",
+      "open_claude": "Open Claude Code in this account",
+      "add_account": "Add account…",
+      "open_app": "Open OmniGet",
+      "refresh": "Refresh now",
+      "hide": "Hide this icon",
+      "tooltip": "OmniGet usage",
+      "toggle": "Usage icon in the menu bar",
+      "default_login": "Terminal login",
+      "session": "session",
+      "weekly": "weekly"
+    },
+    "panel": {
+      "title": "Usage",
+      "empty_title": "Which accounts should the icon watch?",
+      "empty_body": "Nothing is read until you pick an account. OmniGet only asks each tool's own server, with the login the tool already keeps.",
+      "no_logins": "No Claude Code or Codex login found. Add one below.",
+      "session": "Session",
+      "weekly": "Weekly",
+      "resets_at": "resets {{when}}",
+      "runs_out": "at this pace, limit at {{when}}",
+      "lasts": "lasts until the reset",
+      "spent_today": "{{amount}} today",
+      "updated": "updated {{when}}",
+      "pending": "reading…",
+      "needs_auth": "login expired: open the tool to sign in again",
+      "rate_limited": "the server asked to wait",
+      "error": "could not read",
+      "refresh": "Refresh",
+      "open_app": "Open OmniGet",
+      "add_account": "Add account",
+      "open_claude": "Open Claude Code",
+      "choose": "Accounts",
+      "now": "now",
+      "in_min": "in {{count}} min",
+      "in_hours": "in {{hours}}h{{minutes}}",
+      "in_days": "in {{count}} days"
+    }
   }
 }

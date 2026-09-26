@@ -471,17 +471,6 @@ impl Brain {
         self
     }
 
-    /// Every object in the house the agent may name in a plan.
-    pub fn with_objects(mut self, objects: ObjectIndex) -> Brain {
-        self.objects.extend(objects);
-        self
-    }
-
-    pub fn with_schedule(self, schedule: Schedule) -> Brain {
-        self.lock().schedule = schedule;
-        self
-    }
-
     fn lock(&self) -> std::sync::MutexGuard<'_, BrainState> {
         self.state.lock().unwrap_or_else(|e| e.into_inner())
     }

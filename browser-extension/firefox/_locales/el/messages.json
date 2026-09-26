@@ -156,9 +156,6 @@
   "popup_get_app": {
     "message": "Λήψη OmniGet"
   },
-  "popup_lbl_course": {
-    "message": "Αποστολή μαθήματος στο OmniGet"
-  },
   "popup_lbl_playlist": {
     "message": "Αποστολή λίστας στο OmniGet"
   },

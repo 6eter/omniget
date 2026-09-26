@@ -12,7 +12,7 @@ use omniget_core::core::assist::bots::{
 use omniget_core::core::assist::db;
 use omniget_core::core::llm::agent::{AgentDef, AgentRole};
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::Value;
 use tauri::State;
 
 use crate::AppState;
@@ -171,12 +171,6 @@ pub async fn assist_bot_get(state: State<'_, AppState>, bot_id: String) -> Resul
     to_value(view(&state, &bot_id)?)
 }
 
-#[tauri::command]
-pub async fn assist_bots_list() -> Result<Value, String> {
-    let db = db::global()?;
-    to_value(profile::list(&db)?)
-}
-
 /// Saves purpose, instructions, capabilities and memory policy. The id comes
 /// from the argument, never from the payload's body alone.
 #[tauri::command]
@@ -298,20 +292,10 @@ pub async fn assist_bot_skill_reads(
     )?)
 }
 
-/// The capability list with its tools, for the "Create bot" form.
-#[tauri::command]
-pub async fn assist_bot_capability_catalog() -> Result<Value, String> {
-    Ok(Value::Array(
-        Capability::ALL
-            .iter()
-            .map(|c| json!({ "id": c.id(), "tools": c.tool_names() }))
-            .collect(),
-    ))
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
+    use serde_json::json;
 
     #[test]
     fn new_bot_payload_parses_with_defaults() {

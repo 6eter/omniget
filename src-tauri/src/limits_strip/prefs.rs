@@ -73,6 +73,48 @@ pub struct StripPrefs {
     /// Percentages, ascending.
     pub thresholds: Vec<u8>,
     pub notify_reset: bool,
+    /// Warn once per period when a window runs out before it resets at the
+    /// current pace (`super::pace`).
+    pub notify_pace: bool,
+    /// How the strip looks; see [`Look`].
+    pub size: Size,
+    /// The percentage under each ring, so the numbers read without a click.
+    pub show_percent: bool,
+    /// The "on pace" tick on each ring and the pace line on the card.
+    pub show_pace: bool,
+    /// Solid backdrop, stronger strokes and text: for bright wallpapers and
+    /// low vision.
+    pub contrast: bool,
+}
+
+/// Strip scale. Small fits a crowded menu bar, large reads from afar.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum Size {
+    S,
+    #[default]
+    M,
+    L,
+}
+
+impl Size {
+    pub fn scale(self) -> f64 {
+        match self {
+            Size::S => 0.85,
+            Size::M => 1.0,
+            Size::L => 1.25,
+        }
+    }
+}
+
+/// What the strip page needs to draw itself, sent with every snapshot.
+#[derive(Clone, Copy, Debug, Default, PartialEq, Serialize)]
+pub struct Look {
+    pub size: Size,
+    pub scale: f64,
+    pub show_percent: bool,
+    pub show_pace: bool,
+    pub contrast: bool,
 }
 
 impl Default for StripPrefs {
@@ -85,11 +127,26 @@ impl Default for StripPrefs {
             notify_thresholds: true,
             thresholds: vec![80, 95],
             notify_reset: true,
+            notify_pace: true,
+            size: Size::M,
+            show_percent: true,
+            show_pace: true,
+            contrast: false,
         }
     }
 }
 
 impl StripPrefs {
+    pub fn look(&self) -> Look {
+        Look {
+            size: self.size,
+            scale: self.size.scale(),
+            show_percent: self.show_percent,
+            show_pace: self.show_pace,
+            contrast: self.contrast,
+        }
+    }
+
     pub fn along_of(&self, edge: Edge) -> f64 {
         self.along
             .get(&edge)
@@ -115,12 +172,13 @@ impl StripPrefs {
     /// Adds the providers the list does not know yet at the end, so nothing
     /// the user placed by hand is overtaken by a newcomer. `known` pairs each
     /// id with its default: only what stays on this machine starts ticked.
-    pub fn adopt(&mut self, known: &[(&str, bool)]) -> bool {
+    pub fn adopt<S: AsRef<str>>(&mut self, known: &[(S, bool)]) -> bool {
         let mut changed = false;
         for (id, on) in known {
+            let id = id.as_ref();
             if self.provider(id).is_none() {
                 self.providers.push(ProviderPref {
-                    id: (*id).to_string(),
+                    id: id.to_string(),
                     enabled: *on,
                     muted: false,
                 });
@@ -129,7 +187,7 @@ impl StripPrefs {
         }
         let before = self.providers.len();
         self.providers
-            .retain(|p| known.iter().any(|(id, _)| *id == p.id));
+            .retain(|p| known.iter().any(|(id, _)| id.as_ref() == p.id));
         changed || self.providers.len() != before
     }
 

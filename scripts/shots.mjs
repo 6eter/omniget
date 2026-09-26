@@ -161,7 +161,6 @@ const QUEUE = [
 const DEPS = [
   { name: "yt-dlp", installed: true, version: "2026.07.10" },
   { name: "ffmpeg", installed: true, version: "7.1" },
-  { name: "pdfium", installed: false, version: null },
 ];
 
 const FIXTURES = { SETTINGS, HISTORY, QUEUE, DEPS };

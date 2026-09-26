@@ -11,8 +11,9 @@ pub mod lmstudio;
 pub mod ollama;
 pub mod opencode;
 
-use super::UsageProvider;
-use std::path::PathBuf;
+use super::{AccountTag, UsageProvider};
+use omniget_core::core::llm::cli_runtime::accounts::{AccountStore, CliAccount, CliKind};
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
 use std::time::Duration;
 
@@ -20,11 +21,70 @@ use std::time::Duration;
 /// engine fills it from the telemetry the app already keeps.
 pub const OMNIGET_ID: &str = "omniget";
 
-/// Every reader, in the order a fresh install lists them.
+/// Every reader, in the order a fresh install lists them, with one Claude and
+/// one Codex ring per login saved in `/llm` → Accounts. Reads `accounts.json`
+/// and each Claude profile's `.claude.json` (for the e-mail): no credential.
 pub fn all() -> Vec<Arc<dyn UsageProvider>> {
-    vec![
-        Arc::new(claude::Claude),
-        Arc::new(codex::Codex),
+    let accounts = AccountStore::default_store()
+        .map(|s| (*s.list()).clone())
+        .unwrap_or_default();
+    let out = all_with(&accounts);
+    remember(&out);
+    out
+}
+
+/// How long [`cached`] trusts the last [`all`]. The engine refreshes it every
+/// other tick while it runs, so this only matters when it does not.
+const CACHE_TTL: Duration = Duration::from_secs(15);
+
+fn cache() -> &'static std::sync::Mutex<Option<(std::time::Instant, Vec<Arc<dyn UsageProvider>>)>> {
+    static CACHE: std::sync::OnceLock<
+        std::sync::Mutex<Option<(std::time::Instant, Vec<Arc<dyn UsageProvider>>)>>,
+    > = std::sync::OnceLock::new();
+    CACHE.get_or_init(|| std::sync::Mutex::new(None))
+}
+
+fn remember(readers: &[Arc<dyn UsageProvider>]) {
+    if let Ok(mut g) = cache().lock() {
+        *g = Some((std::time::Instant::now(), readers.to_vec()));
+    }
+}
+
+/// [`all`] without touching the disk when a fresh list is at hand. For the
+/// hot paths: the usage icon's menu and panel, the strip's placement and its
+/// settings. Menus and window moves run on the main thread; reading
+/// `accounts.json` and every profile there is what made the app stutter.
+pub fn cached() -> Vec<Arc<dyn UsageProvider>> {
+    if let Ok(g) = cache().lock() {
+        if let Some((at, list)) = g.as_ref() {
+            if at.elapsed() < CACHE_TTL {
+                return list.clone();
+            }
+        }
+    }
+    all()
+}
+
+/// [`all`] for a given account list.
+pub fn all_with(accounts: &[CliAccount]) -> Vec<Arc<dyn UsageProvider>> {
+    let mut out: Vec<Arc<dyn UsageProvider>> = Vec::new();
+    for p in profiles(
+        CliKind::Claude,
+        accounts,
+        claude::config_dir().as_deref(),
+        &claude::email_of,
+    ) {
+        out.push(Arc::new(claude::Claude::new(p)));
+    }
+    for p in profiles(
+        CliKind::Codex,
+        accounts,
+        codex::codex_home().as_deref(),
+        &|_| None,
+    ) {
+        out.push(Arc::new(codex::Codex::new(p)));
+    }
+    let rest: [Arc<dyn UsageProvider>; 7] = [
         Arc::new(cursor::Cursor),
         Arc::new(copilot::Copilot),
         Arc::new(grok::Grok),
@@ -32,7 +92,93 @@ pub fn all() -> Vec<Arc<dyn UsageProvider>> {
         Arc::new(opencode::OpenCode),
         Arc::new(ollama::Ollama),
         Arc::new(lmstudio::LmStudio),
-    ]
+    ];
+    out.extend(rest);
+    out
+}
+
+/// One login of a CLI that can hold several.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct Profile {
+    /// `claude` / `codex` for the default profile, `<cli>:<account-id>` else.
+    pub id: String,
+    /// `None` = the CLI's own default (`$CLAUDE_CONFIG_DIR` / `~/.claude`,
+    /// `$CODEX_HOME` / `~/.codex`); otherwise the account's config dir exactly
+    /// as `accounts.json` stores it.
+    pub dir: Option<PathBuf>,
+    pub tag: AccountTag,
+}
+
+fn same_dir(a: &Path, b: &Path) -> bool {
+    let norm = |p: &Path| {
+        let s = p.to_string_lossy();
+        let t = s.trim_end_matches(['/', '\\']);
+        std::fs::canonicalize(t).unwrap_or_else(|_| PathBuf::from(t))
+    };
+    norm(a) == norm(b)
+}
+
+/// The rings of one CLI: the default profile first (it keeps the plain id, so
+/// existing prefs still apply), then one per enabled account with a config dir
+/// of its own. Two entries with the same login (same e-mail, or the same
+/// directory and so the same credential) collapse into the first one, so the
+/// provider is never asked twice for one account.
+pub fn profiles(
+    cli: CliKind,
+    accounts: &[CliAccount],
+    default_dir: Option<&Path>,
+    email_of: &dyn Fn(Option<&Path>) -> Option<String>,
+) -> Vec<Profile> {
+    let base = cli.as_str();
+    let mine: Vec<&CliAccount> = accounts.iter().filter(|a| a.cli == cli).collect();
+    let is_default = |a: &CliAccount| {
+        a.config_dir.as_os_str().is_empty()
+            || default_dir
+                .map(|d| same_dir(&a.config_dir, d))
+                .unwrap_or(false)
+    };
+    // The account that stands for the default profile, enabled ones first.
+    let default_label = mine
+        .iter()
+        .filter(|a| is_default(a))
+        .min_by_key(|a| a.disabled)
+        .map(|a| a.label.clone());
+    let mut out = vec![Profile {
+        id: base.to_string(),
+        dir: None,
+        tag: AccountTag {
+            label: default_label,
+            email: email_of(None),
+        },
+    }];
+    for a in mine.iter().filter(|a| !a.disabled && !is_default(a)) {
+        out.push(Profile {
+            id: format!("{base}:{}", a.id),
+            dir: Some(a.config_dir.clone()),
+            tag: AccountTag {
+                label: Some(a.label.clone()),
+                email: email_of(Some(&a.config_dir)),
+            },
+        });
+    }
+    let mut kept: Vec<Profile> = Vec::new();
+    for p in out {
+        let twin = kept.iter().any(|k| {
+            let same_email = match (&k.tag.email, &p.tag.email) {
+                (Some(a), Some(b)) => a.eq_ignore_ascii_case(b),
+                _ => false,
+            };
+            let same_dir = match (&k.dir, &p.dir) {
+                (Some(a), Some(b)) => same_dir(a, b),
+                _ => false,
+            };
+            same_email || same_dir
+        });
+        if !twin {
+            kept.push(p);
+        }
+    }
+    kept
 }
 
 /// A client for the runtimes on this machine: loopback only, no proxy, and a
@@ -178,9 +324,88 @@ pub fn vscdb_value(conn: &rusqlite::Connection, key: &str) -> Option<String> {
 mod tests {
     use super::*;
 
+    fn acc(id: &str, cli: CliKind, dir: &str, label: &str, disabled: bool) -> CliAccount {
+        CliAccount {
+            id: id.into(),
+            cli,
+            config_dir: PathBuf::from(dir),
+            label: label.into(),
+            disabled,
+            sandbox: Default::default(),
+        }
+    }
+
+    fn emails(dir: Option<&Path>) -> Option<String> {
+        match dir.map(|d| d.to_string_lossy().into_owned()).as_deref() {
+            None => Some("me@x.com".into()),
+            Some("/p/acc-1") => Some("other@x.com".into()),
+            Some("/p/twin") => Some("ME@x.com".into()),
+            _ => None,
+        }
+    }
+
+    #[test]
+    fn one_claude_ring_per_login_with_stable_ids() {
+        let accounts = [
+            acc("acc-1", CliKind::Claude, "/p/acc-1", "Max pessoal", false),
+            acc("meu", CliKind::Claude, "", "Meu Claude", false),
+            acc("off", CliKind::Claude, "/p/off", "Off", true),
+            acc("cx", CliKind::Codex, "/p/cx", "Codex work", false),
+        ];
+        let got = profiles(
+            CliKind::Claude,
+            &accounts,
+            Some(Path::new("/h/.claude")),
+            &emails,
+        );
+        let ids: Vec<_> = got.iter().map(|p| p.id.as_str()).collect();
+        assert_eq!(ids, ["claude", "claude:acc-1"]);
+        assert_eq!(got[0].dir, None);
+        assert_eq!(got[0].tag.label.as_deref(), Some("Meu Claude"));
+        assert_eq!(got[0].tag.email.as_deref(), Some("me@x.com"));
+        assert_eq!(got[1].dir.as_deref(), Some(Path::new("/p/acc-1")));
+        assert_eq!(got[1].tag.label.as_deref(), Some("Max pessoal"));
+        assert_eq!(got[1].tag.email.as_deref(), Some("other@x.com"));
+        // With no account at all the default profile still has its ring.
+        let alone = profiles(CliKind::Claude, &[], None, &|_| None);
+        assert_eq!(alone.len(), 1);
+        assert_eq!(alone[0].id, "claude");
+        assert_eq!(alone[0].tag, AccountTag::default());
+        let cx = profiles(CliKind::Codex, &accounts, None, &|_| None);
+        let ids: Vec<_> = cx.iter().map(|p| p.id.as_str()).collect();
+        assert_eq!(ids, ["codex", "codex:cx"]);
+    }
+
+    #[test]
+    fn two_accounts_on_one_login_read_once() {
+        let accounts = [
+            // Same e-mail as the default profile, other case.
+            acc("twin", CliKind::Claude, "/p/twin", "Twin", false),
+            // The default dir spelled out: the default profile itself.
+            acc("spelled", CliKind::Claude, "/h/.claude/", "Spelled", false),
+            // Same directory twice: same credential.
+            acc("a", CliKind::Claude, "/p/same", "A", false),
+            acc("b", CliKind::Claude, "/p/same/", "B", false),
+        ];
+        let got = profiles(
+            CliKind::Claude,
+            &accounts,
+            Some(Path::new("/h/.claude")),
+            &emails,
+        );
+        let ids: Vec<_> = got.iter().map(|p| p.id.as_str()).collect();
+        assert_eq!(ids, ["claude", "claude:a"]);
+        assert_eq!(got[0].tag.label.as_deref(), Some("Spelled"));
+    }
+
     #[test]
     fn provider_ids_are_unique() {
-        let mut ids: Vec<_> = all().iter().map(|p| p.id()).collect();
+        let accounts = [
+            acc("acc-1", CliKind::Claude, "/p/acc-1", "Max pessoal", false),
+            acc("cx", CliKind::Codex, "/p/cx", "Codex work", false),
+        ];
+        let readers = all_with(&accounts);
+        let mut ids: Vec<_> = readers.iter().map(|p| p.id()).collect();
         let n = ids.len();
         ids.sort_unstable();
         ids.dedup();
@@ -190,7 +415,7 @@ mod tests {
 
     #[test]
     fn only_loopback_runtimes_are_local_and_none_polls_too_fast() {
-        for p in all() {
+        for p in all_with(&[]) {
             assert_eq!(
                 p.local(),
                 matches!(p.id(), "ollama" | "lmstudio"),

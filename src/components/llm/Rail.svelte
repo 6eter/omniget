@@ -1,11 +1,9 @@
 <script lang="ts">
   /**
    * Left rail: the roster grouped by role, with the agents that have no
-   * conversation yet under "Unassigned", and a footer with the Marketplace
-   * link and the local profile.
+   * conversation yet under "Unassigned", and a footer with the local profile.
    *
-   * The list is windowed on fixed row heights (header 28px, item 56px), the
-   * same idea as `components/omnidisc/VirtualList.svelte` but without the
+   * The list is windowed on fixed row heights (header 28px, item 56px) with no
    * measuring pass: every row here has a known height, so the visible range is
    * arithmetic and 50 agents cost the same as 5. No observer, no timer.
    */

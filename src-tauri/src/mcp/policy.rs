@@ -476,15 +476,3 @@ mod persistence_tests {
         std::fs::remove_dir_all(dir).unwrap();
     }
 }
-
-pub fn operation_count(p: &Principal, op: &str, id: u64) -> Result<u64, String> {
-    let db = db()?;
-    db.execute_batch("CREATE TABLE IF NOT EXISTS retry_counts(principal TEXT, operation TEXT, download INTEGER, count INTEGER, PRIMARY KEY(principal,operation,download));").map_err(|e|e.to_string())?;
-    db.execute("INSERT INTO retry_counts VALUES(?1,?2,?3,1) ON CONFLICT(principal,operation,download) DO UPDATE SET count=count+1",params![p.id,op,id]).map_err(|e|e.to_string())?;
-    db.query_row(
-        "SELECT count FROM retry_counts WHERE principal=?1 AND operation=?2 AND download=?3",
-        params![p.id, op, id],
-        |r| r.get(0),
-    )
-    .map_err(|e| e.to_string())
-}

@@ -495,7 +495,6 @@
     "empty": "No results",
     "navigate": "navigate",
     "select": "select",
-    "close": "close",
     "group_nav": "Navigate",
     "group_action": "Actions",
     "action_paste": "クリップボードから URL を貼り付け"
@@ -523,13 +522,7 @@
     "adv_title": "yt-dlp コマンド",
     "success_title": "ダウンロードに追加しました",
     "success_first": "はじめてのダウンロード！",
-    "success_open": "ダウンロードを開く",
-    "batch_hint": "リンクが複数ありますか？1 行に 1 つずつ、まとめて貼り付けられます。"
-  },
-  "tools": {
-    "common": {
-      "copied": "Copied"
-    }
+    "success_open": "ダウンロードを開く"
   },
   "downloads": {
     "phase_downloading": "ダウンロード中",
@@ -570,7 +563,6 @@
       "invalid": "コマンドを実行できませんでした: {{error}}",
       "engine_custom": "カスタム"
     },
-    "title": "ダウンロード",
     "empty": "ダウンロード中のファイルはありません",
     "status": {
       "queued": "待機中",
@@ -596,8 +588,6 @@
     "pause_all": "すべて一時停止",
     "resume_all": "すべて再開",
     "reorder_hint": "ドラッグして並べ替え",
-    "history_toggle": "履歴の表示切り替え",
-    "history_toggle_hint": "過去のダウンロードを見る (Ctrl+H)",
     "history_view_link": "ダウンロード履歴を見る",
     "history_loading": "履歴を読み込み中…",
     "history_empty": "完了したダウンロードはまだありません。",
@@ -670,7 +660,6 @@
       "paused_all": "すべて一時停止中",
       "eta": "残り約 {{eta}}",
       "open": "ダウンロードを表示",
-      "indeterminate": "ダウンロード中、合計サイズ不明",
       "complete": "ダウンロード完了",
       "paused": "{{count}} 件一時停止中",
       "failed": "{{count}} 件失敗",
@@ -679,20 +668,12 @@
     }
   },
   "toast": {
-    "download_preparing": "ダウンロードを準備中...",
     "download_complete": "完了！{{name}} はフォルダに保存されました",
     "clipboard_url_detected": "リンクを検出！貼り付けてダウンロード",
     "clipboard_empty": "クリップボードが空です",
     "auto_download_started": "自動ダウンロードを開始しました",
     "external_url_ready": "URLを受信し、ダウンロードの準備ができました",
     "external_url_queued": "Chrome拡張機能からダウンロードを追加しました",
-    "hotkey_queued": "クリップボードのリンクをダウンロードに追加しました",
-    "hotkey_already_queued": "そのリンクはすでにキューにあります",
-    "hotkey_not_a_url": "先にリンクをコピーしてください。クリップボードにURLがありません",
-    "hotkey_unsupported": "そのリンクに対応するダウンローダーがありません。ホーム画面に貼り付けて選択肢を確認してください。",
-    "hotkey_clipboard_error": "クリップボードを読み取れませんでした。リンクをコピーし直してショートカットを押してください。",
-    "channel_new": "{{channel}}：新着動画 {{count}} 件",
-    "channel_new_auto": "{{channel}}：新着動画 {{count}} 件をダウンロード中",
     "file_copied_to_clipboard": "ファイルをクリップボードにコピーしました",
     "generic_download_complete": "{{name}} — ダウンロード完了！"
   },
@@ -774,10 +755,7 @@
       "section_clipboard_hotkeys": "Clipboard & hotkeys",
       "section_clipboard_hotkeys_desc": "Paste detection and global shortcuts.",
       "section_per_platform": "Per-platform options",
-      "section_per_platform_desc": "YouTube, courses, and Bilibili-specific settings.",
-      "download_attachments": "添付ファイルをダウンロード",
-      "download_attachments_desc": "コースの添付ファイルをダウンロードしたレッスンと一緒に保存します。",
-      "download_descriptions": "説明を保存",
+      "section_per_platform_desc": "YouTube and Bilibili settings.",
       "embed_metadata": "メタデータを埋め込む",
       "embed_metadata_desc": "タイトルやアーティスト情報をダウンロードファイルに書き込みます",
       "embed_thumbnail": "サムネイルをカバーとして埋め込む",
@@ -792,13 +770,11 @@
       "organize_by_platform_desc": "プラットフォーム名のサブフォルダにファイルを保存します",
       "download_subtitles": "字幕をダウンロード",
       "download_subtitles_desc": "動画と一緒に利用可能な字幕をダウンロードします（YouTube）",
-      "what_to_also_save": "What to also save",
       "youtube_specific": "YouTube-specific",
       "include_auto_subtitles": "自動生成字幕を含める",
       "include_auto_subtitles_desc": "手動字幕がない場合、YouTubeが自動生成した字幕もダウンロードします（品質は可変）",
       "caption_locale": "字幕の言語",
       "caption_locale_desc": "字幕をダウンロードする言語（利用可能な場合）。なければソースが提供する言語にフォールバックします。",
-      "caption_locale_auto": "アプリの言語に合わせる",
       "keep_vtt": "元の .vtt ファイルを残す",
       "keep_vtt_desc": "変換後の SRT と並んで生の WebVTT を保持します。元のフォーマットを必要とするプレーヤーやスクリプトで便利です。",
       "bilibili_section": "Bilibili",
@@ -852,8 +828,6 @@
       "split_by_chapters_desc": "動画にチャプターマーカーがある場合、各チャプターを別ファイルとして保存します",
       "live_from_start": "ライブを最初から録画",
       "live_from_start_desc": "進行中のライブ配信をダウンロードする際、現在の時点ではなく最初から取得します",
-      "presets": "クイックプリセット",
-      "presets_desc": "よく使う設定をワンクリックで適用。カードをタップしてください。",
       "preset_fast": "高速",
       "preset_fast_desc": "480p · メタデータなし · 字幕なし",
       "preset_quality": "高画質",
@@ -872,7 +846,7 @@
       "music_hotkey_enabled_desc": "Download clipboard URL as audio with a keyboard shortcut (uses Music Format below)",
       "music_hotkey_binding": "Music hotkey shortcut",
       "music_audio_format": "Music download format",
-      "music_audio_format_desc": "Audio format used by the music hotkey and the Music plugin downloader",
+      "music_audio_format_desc": "Audio format used by the music hotkey",
       "copy_to_clipboard_on_hotkey": "ホットキーダウンロード後にファイルをクリップボードにコピー",
       "copy_to_clipboard_on_hotkey_desc": "ダウンロードしたファイルを自動的にクリップボードにコピーして貼り付けやすくします",
       "filename_template": "ファイル名テンプレート",
@@ -958,12 +932,10 @@
       "status_missing": "Missing",
       "source_managed": "Managed",
       "download_managed": "Get Managed",
-      "not_found": "見つかりません",
       "install": "インストール",
       "update": "更新",
       "install_success": "{{name}} {{version}} をインストールしました",
       "update_success": "{{name}} を {{version}} に更新しました",
-      "variant_aria": "バリアント",
       "more_options": "その他のオプション",
       "pick_custom_file": "ディスクからファイルを選択…",
       "show_folder": "フォルダーを表示",
@@ -975,7 +947,6 @@
       "rollback_done": "{{version}} に戻しました",
       "rollback_failed": "戻せませんでした: {{msg}}",
       "pick_dialog_title": "{{name}} のファイルを選択",
-      "filter_pdfium": "PDFium ライブラリ",
       "filter_all_files": "すべてのファイル",
       "set_file_failed": "ファイルの設定に失敗しました: {{msg}}",
       "open_folder_failed": "フォルダーを開けませんでした: {{msg}}",
@@ -1019,24 +990,7 @@
       "username": "ユーザー名",
       "password": "パスワード"
     },
-    "ytdlp_flags": {
-      "title": "yt-dlp フラグ",
-      "embed_subs": "字幕を埋め込む",
-      "write_thumbnail": "サムネイルを保存",
-      "write_description": "説明を保存",
-      "write_comments": "コメントを保存",
-      "restrict_filenames": "ASCII ファイル名",
-      "no_overwrites": "上書きしない",
-      "prefer_free_formats": "フリー形式を優先",
-      "force_ipv4": "IPv4 を強制",
-      "geo_bypass": "地域制限を回避",
-      "limit_rate": "レート制限",
-      "sleep_interval": "待機間隔",
-      "limit_rate_ph": "例: 1M",
-      "sleep_interval_ph": "例: 5"
-    },
     "advanced": {
-      "title": "詳細設定",
       "max_concurrent_downloads": "同時ダウンロード数",
       "max_concurrent_downloads_desc": "最大同時ダウンロード数",
       "max_concurrent_segments": "同時セグメント数",
@@ -1071,9 +1025,7 @@
       "cookies_from_browser_placeholder": "ex.: firefox, chrome, edge",
       "user_agent": "カスタム User-Agent（上級者向け）",
       "user_agent_desc": "ダウンロードにカスタム User-Agent を送信します。空欄で既定値を使用。",
-      "user_agent_placeholder": "ブラウザの既定 User-Agent",
-      "twitter_manual_cookie": "手動Cookie",
-      "twitter_manual_cookie_desc": "ダウンロードに失敗した場合、ここに手動のCookieヘッダーを貼り付けて再試行できます。Twitter/Xに限定されません。例: sessionid=...; csrftoken=...; auth_token=..."
+      "user_agent_placeholder": "ブラウザの既定 User-Agent"
     },
     "group_general": "General",
     "group_media": "Media",
@@ -1265,32 +1217,17 @@
       "cleared_toast": "Cookies moved to trash",
       "add_account_label": "別のアカウントを追加",
       "add_account_success": "アカウント '{{slug}}' を追加 — {{count}} cookies",
-      "account_primary_tag": "デフォルト",
       "bilibili": {
         "login_qr_title": "QRコードでBilibiliにサインイン",
         "login_qr_subtitle": "Bilibiliアプリを開いて下のQRコードをスキャンしてください。",
         "login_qr_pending": "スキャンを待っています...",
         "login_qr_scanned": "スキャンされました。スマホで確認してください。",
         "login_qr_expired": "QRコードの有効期限が切れました。再生成してください。",
-        "login_qr_cancelled": "サインインがキャンセルされました。",
         "login_qr_regenerate": "新しいコードを生成",
         "login_qr_success": "{{uname}} としてサインインしました",
-        "login_sms_title": "SMSでサインイン",
-        "login_sms_country": "国コード",
-        "login_sms_phone": "電話番号",
-        "login_sms_send_code": "コードを送信",
-        "login_sms_resend_in": "{{seconds}}秒で再送可能",
-        "login_sms_code": "認証コード",
-        "login_sms_submit": "サインイン",
-        "login_sms_captcha_required": "先にCAPTCHAを解決してください",
-        "login_sms_captcha_solve": "CAPTCHAを開く",
-        "login_sms_sent": "SMSを送信しました。受信したコードを入力してください。",
         "login_close": "閉じる",
         "login_cancel": "キャンセル",
         "login_error_generic": "サインインに失敗しました。再試行してください。",
-        "add_account_qr_btn": "QRコードでサインイン",
-        "add_account_sms_btn": "SMSでサインイン",
-        "add_account_manual_btn": "Cookieを手動で貼り付け",
         "import_watch_later": "「後で見る」をインポート",
         "import_history": "履歴をインポート",
         "import_no_account": "先にBilibiliにサインインしてください",
@@ -1318,7 +1255,6 @@
     "media_changed": "このリンクは前回のダウンロードから変わっています: {{summary}}",
     "rule_applied": "ルール「{{name}}」を適用しました",
     "preflight_skips": "{{total}} 件中 {{skipped}} 件をスキップします: 非対応または重複。",
-    "batch_file_open": "ファイルから読み込む",
     "batch_file_title": "URL を含む .txt ファイルを選択",
     "batch_file_empty": "ファイル内に有効な URL が見つかりません",
     "mode_auto": "自動",
@@ -1381,7 +1317,6 @@
       "clip": "クリップ",
       "short": "ショート",
       "playlist": "プレイリスト",
-      "course": "コース",
       "file": "ファイル",
       "unknown": "メディア"
     },
@@ -1394,8 +1329,6 @@
     "fmt_speed": "速度",
     "cookie_account": "アカウント",
     "cookie_account_cookies": "クッキー",
-    "mode_normal": "ノーマル",
-    "mode_advanced": "アドバンスド",
     "adv": {
       "url_label": "URL",
       "url_placeholder": "https://...",
@@ -1489,7 +1422,6 @@
       "overview": "Overview",
       "terms": "利用規約",
       "project": "プロジェクト",
-      "roadmap": "ロードマップ",
       "changelog": "更新履歴",
       "debug": "デバッグ情報"
     },
@@ -1529,13 +1461,6 @@
     "feature_themes": "11テーマ：Dark、Light、Catppuccin（4種）、One Dark Pro、Dracula、NyxVamp（3種）",
     "feature_i18n": "英語、ポルトガル語、中国語、日本語、イタリア語、フランス語に対応",
     "feature_tech": "Tauri + Rustで構築。高速かつ軽量",
-    "roadmap_intro": "OmniGetの次期バージョンで予定されている機能です。",
-    "roadmap_platforms_title": "統合",
-    "roadmap_features_title": "機能",
-    "roadmap_community_title": "アイデアがありますか？",
-    "roadmap_community_text": "アイデアやご提案を受け付けています！新しいプラットフォームや機能をリクエストするのに最適です。",
-    "roadmap_community_discord": "Discordでお気軽にどうぞ：",
-    "roadmap_community_issue": "またはリポジトリでIssueを作成してください：",
     "tagline": "どこからでも、何でもダウンロード。",
     "credit": "tonho.wtf が愛を込めて作りました"
   },
@@ -1545,7 +1470,7 @@
   },
   "onboarding": {
     "welcome_title": "OmniGet へようこそ！",
-    "welcome_desc": "インターネットからあらゆる動画やコースをダウンロードするお手伝いをします。シンプル、高速、無料。",
+    "welcome_desc": "インターネットからあらゆる動画をダウンロードするお手伝いをします。シンプル、高速、無料。",
     "next": "次へ",
     "skip": "スキップ",
     "back": "戻る",
@@ -1569,7 +1494,7 @@
     "agents_desc": "OmniGet now has a team of AI agents and a house where they live. Both are in the sidebar.",
     "agents_llm": "Chat, attach a folder and let an agent read, edit and run your code. It asks before it writes.",
     "agents_world": "The house where your agents walk around, work at the bench when a tool runs, and receive visitors.",
-    "more_later": "Plugins for courses and Telegram, the global hotkey and Discord presence live in Settings whenever you want them.",
+    "more_later": "The global hotkey, the browser extension and Discord presence live in Settings whenever you want them.",
     "profile": {
       "title": "Pick a nickname",
       "desc": "It stays on this computer and shows up when you share something. You can skip this.",
@@ -1580,26 +1505,18 @@
     }
   },
   "hints": {
-    "omnibox": "ダウンロードしたい動画やメディアのURLをここに貼り付けてください。",
     "hotkey": "グローバルホットキー：クリップボードにあるURLを自動的にダウンロードします。",
     "clipboard": "リンクをコピーするとURLを自動検出し、オムニボックスに入力します。"
   },
   "common": {
     "cancel": "キャンセル",
     "clear": "Clear",
-    "retry": "再試行",
     "close": "閉じる",
     "hint": "ヒント",
     "error": "エラー",
     "loading": "Loading…",
     "unknown_error": "不明なエラー",
-    "ytdlp_missing": "yt-dlpがインストールされていません。ダウンロードを有効にするには設定からインストールしてください。",
-    "go_to_settings": "設定へ移動",
-    "cookie_error_message": "自動Cookie検出はFirefoxでのみ動作します。Chrome、Edgeなどはアクセスをブロックします。Firefoxをインストールしてログインするか、cookies.txtファイルを設定 > ダウンロード > Cookieファイルで設定してください。",
-    "cookie_file_label": "Cookie ファイル (cookies.txt)",
-    "cookie_file_choose": "ファイルを選択",
-    "cookie_file_hint": "ブラウザ拡張機能でCookieをエクスポートし、ここでファイルを選択してください。",
-    "dismiss": "Dismiss"
+    "cookie_error_message": "自動Cookie検出はFirefoxでのみ動作します。Chrome、Edgeなどはアクセスをブロックします。Firefoxをインストールしてログインするか、cookies.txtファイルを設定 > ダウンロード > Cookieファイルで設定してください。"
   },
   "platforms": {
     "bilibili": {
@@ -1647,22 +1564,6 @@
         "64k": "64 kbps",
         "unknown": "不明"
       },
-      "badge": {
-        "charging_exclusive": "スポンサー限定",
-        "preview": "予告",
-        "paid_locked": "有料",
-        "partial_preview": "試聴",
-        "pgc": "シリーズ",
-        "collab": "コラボ",
-        "expired": "期限切れ"
-      },
-      "phase": {
-        "preview": "画質読み込み中",
-        "connecting": "CDN接続中",
-        "downloading": "ダウンロード中",
-        "muxing": "結合中",
-        "done": "完了"
-      },
       "preview": {
         "loading": "利用可能な画質を読み込み中...",
         "auto": "自動",
@@ -1671,12 +1572,6 @@
         "audio": "音声",
         "no_account_hint": "Bilibiliにサインインして4K、HDR、Hi-Resロスレス、Dolbyを利用。",
         "premium_hint": "ここの一部の画質には大会員（プレミアム）が必要です。"
-      },
-      "notice": {
-        "session_expired_title": "セッション期限切れ",
-        "session_expired_body": "Bilibiliのセッションが期限切れです。プレミアム画質のダウンロードを続けるには再ログインしてください。",
-        "session_expired_action": "再ログイン",
-        "session_expired_dismiss": "後で"
       }
     }
   },
@@ -1729,7 +1624,6 @@
     "filter_network": "ネットワーク",
     "filter_auth": "認証",
     "filter_system": "システム",
-    "filter_convert": "変換",
     "filter_errors": "エラーのみ",
     "copy_report": "レポートをコピー",
     "report_copied": "診断レポートをクリップボードにコピーしました",
@@ -1739,7 +1633,6 @@
     "open_panel_desc": "Opens the live activity log panel in About → Debug."
   },
   "p2p": {
-    "send_file": "ファイルを送信",
     "send_title": "P2Pでファイルを送信",
     "send_description": "他のOmniGetユーザーにファイルを送信します。共有コードが生成されます — 受信側がオムニボックスに貼り付けてダウンロードします。",
     "select_file": "ファイルを選択",
@@ -1760,22 +1653,6 @@
     "accept_transfer": "承諾してダウンロード",
     "reject_transfer": "拒否",
     "searching_hint": "リレーサーバーに接続中..."
-  },
-  "mascot": {
-    "idle": "リンクを貼るか検索してみよう！|今日は何をダウンロードする？|いつでも準備OK！",
-    "detecting": "うーん、ちょっと確認中...|リンクを分析中...|ちょっと待ってね...",
-    "detected": "見つけた！ダウンロードする？|発見！行こう？|準備完了！",
-    "preparing": "準備してるよ...|もう少し...|ダウンロードの準備中...",
-    "search": "こんなの見つけたよ！|見てみて！|チェックしてみて！",
-    "error": "おっと、何かうまくいかなかった。もう一回やってみる？|うまくいかなかった。もう一度？|うーん、何か壊れちゃった...",
-    "complete": "完了！|ダウンロード完了！|できたよ！",
-    "amazed": "Wow, your first download! 🎉|There it is — your first one!|Saved! Welcome aboard!",
-    "downloading": "ダウンロード中...|がんばってます！|ファイルを取得中...",
-    "stalled": "うーん、ちょっと遅いかも...|もう少し待ってね...|接続が遅いみたい...",
-    "queue": "順番待ち中...|もうちょっとだよ...|もうすぐだよ！"
-  },
-  "torrent": {
-    "open_file": ".torrentを開く"
   },
   "omnidisc": {
     "error": {
@@ -1890,18 +1767,14 @@
     },
     "title": "World",
     "subtitle": "このコンピューターにあるあなたの家と、ほかの人と共有する街。",
-    "start": "Start",
-    "stop": "Stop",
     "loading": "Starting the renderer…",
     "bench_running": "Benchmark running…",
     "error": "Renderer error:",
     "stats": {
-      "backend": "Backend",
       "tier": "Tier",
       "fps": "FPS",
       "cpu": "CPU",
-      "draws": "Draw calls",
-      "sprites": "Sprites"
+      "draws": "Draw calls"
     },
     "settings": {
       "title": "World",
@@ -1949,8 +1822,7 @@
       "recentre": "Recentre",
       "pause": "Pause",
       "resume": "Resume",
-      "open_house": "Open the house",
-      "phase9": "Visits arrive in a later version."
+      "open_house": "Open the house"
     },
     "slot": {
       "title": "Slot",
@@ -2008,7 +1880,6 @@
       "hint": "そこではあなたの家に住所があり、アプリを閉じている間も住人は暮らし続け、みんなが同じ通りを見ています。",
       "in": "{{city}} にいます",
       "inside": "屋内",
-      "outside": "屋外",
       "address": "あなたの住所",
       "go_home": "家に帰る",
       "claim": "区画を手に入れる",
@@ -2044,7 +1915,6 @@
       "edit_mode": "編集中：オブジェクトをクリックして選択、空いているマスをクリックして移動",
       "edit_placing": "{{asset}} を配置中：空いているマスをクリック、Esc で終了",
       "edit_selected": "空いているマスをクリックで移動、R で回転、Delete で削除",
-      "edit_catalogue": "カタログ",
       "edit_undo": "元に戻す",
       "edit_redo": "やり直す",
       "edit_remove": "削除",
@@ -2229,7 +2099,6 @@
       "calls": "calls",
       "agents": "Agents",
       "no_agents": "No agent has spoken yet.",
-      "wire": "Wire probe",
       "diagnostics": "Diagnostics",
       "throughput": "Throughput",
       "first_token": "First token",
@@ -2286,12 +2155,10 @@
       "band_critical": "almost out"
     },
     "title": "LLM",
-    "subtitle": "Your agents, their models and what they are allowed to touch.",
     "tab": {
       "chat": "Chat",
       "roster": "Roster",
       "models": "Models & Routing",
-      "observatory": "Observatory",
       "mcp": "MCP",
       "skills": "Skills",
       "accounts": "Accounts",
@@ -2300,8 +2167,6 @@
       "jobs": "Jobs",
       "loops": "Loops"
     },
-    "soon_title": "Coming soon",
-    "soon_body": "This tab is part of a later phase of the LLM section.",
     "demo_banner": "Demo data: the LLM backend is not wired yet.",
     "rail": {
       "title": "Agents",
@@ -2329,7 +2194,6 @@
       "cancelled": "Turn cancelled.",
       "error": "Turn failed",
       "switch_model": "Switch model",
-      "new": "New chat",
       "no_agent": "Pick an agent on the left.",
       "tool_ask": "The agent wants to run a tool",
       "allow": "Allow",
@@ -2366,7 +2230,6 @@
       "new": "New agent",
       "name": "Name",
       "role": "Role",
-      "system_prompt": "System prompt",
       "model_policy": "Model",
       "fixed": "Fixed",
       "route": "Route",
@@ -2403,8 +2266,7 @@
       "title": "Models & Routing",
       "providers": "Providers",
       "no_providers": "No API key saved yet.",
-      "add_key_hint": "Keys live in Tools → AI keys.",
-      "list": "Models",
+      "add_key_hint": "Keys live in LLM → Models & Routing.",
       "load": "Load models",
       "loading": "Loading…",
       "count": "{{count}} models",
@@ -2417,7 +2279,6 @@
       "rule_local_desc": "Tries Ollama or llama-server before anything paid.",
       "rule_quality": "Quality first",
       "rule_quality_desc": "Keeps the head of the chain unless it fails.",
-      "rule_hint": "The rule is a default for new agents; each agent can override it.",
       "openrouter_started": "Finish the sign-in in your browser.",
       "openrouter_ok": "OpenRouter key saved.",
       "openrouter_failed": "OpenRouter sign-in failed: {{error}}",
@@ -2432,31 +2293,7 @@
       "turn_failed": "The turn could not start."
     },
     "local": {
-      "title": "Local models",
-      "servers": "Servers on this machine",
-      "running": "Running",
-      "notRunning": "Not running",
-      "install": "Install",
-      "download": "Download",
-      "start": "Start",
-      "stop": "Stop",
-      "bridgeTitle": "OpenAI-compatible bridge",
-      "bridgeHint": "Lets any app that speaks OpenAI use your agents at omniget/<agent>. Off by default: whoever holds the bridge token spends your tokens.",
       "explanation": "Local model management is not available here yet. Configure an existing local provider in Models & Routing."
-    },
-    "error": {
-      "ERR_LLM_NO_AGENT": "That agent no longer exists.",
-      "ERR_LLM_NO_TURN": "That turn already finished.",
-      "ERR_LLM_NO_ASK": "That tool question was already answered.",
-      "ERR_LLM_ROSTER_DUP": "An agent with this id already exists.",
-      "ERR_LLM_ROSTER_MISSING": "Agent not found.",
-      "ERR_LLM_ROSTER_ID": "The id must use only lowercase letters, digits, - and _.",
-      "ERR_LLM_ROSTER_TEMPLATE": "Unknown template.",
-      "ERR_LLM_LOCAL_BINARY": "Could not install llama-server.",
-      "ERR_LLM_LOCAL_MODEL": "Model not available.",
-      "ERR_LLM_LOCAL_SPAWN": "Could not start llama-server.",
-      "ERR_LLM_LOCAL_HASH": "The downloaded file failed its checksum.",
-      "ERR_LLM_BRIDGE_OFF": "The OpenAI-compatible bridge is off."
     },
     "skills": {
       "title": "Skills",
@@ -2510,17 +2347,6 @@
       "err_path": "The path pointed outside the skills folder.",
       "err_io": "The skills folder could not be read or written.",
       "err_generic": "The skill operation failed.",
-      "err": {
-        "ERR_SKILL_PARSE": "This SKILL.md could not be read: it needs a `---` frontmatter block at the top.",
-        "ERR_SKILL_NAME": "The skill name is invalid: use lowercase letters, digits and hyphens, up to 64 characters.",
-        "ERR_SKILL_DESCRIPTION": "The skill has no description. Add a `description` line to its frontmatter.",
-        "ERR_SKILL_IO": "The skill could not be read or written on disk.",
-        "ERR_SKILL_NOT_FOUND": "No skill by that name is installed.",
-        "ERR_SKILL_ZIP": "This zip was refused: one of its files points outside the destination folder.",
-        "ERR_SKILL_GIT": "The clone failed. Check that git is installed and that the address is right.",
-        "ERR_SKILL_TOO_BIG": "This skill is over the size limit (2000 files or 32 MB).",
-        "ERR_SKILL_PATH": "That path points outside the skill folder."
-      },
       "catalog": {
         "unlicensed": "This catalogue declares no licence. Check the terms with its authors before using it."
       },
@@ -2579,8 +2405,6 @@
       "save": "保存",
       "cancel": "キャンセル",
       "copy": "コピー",
-      "show": "表示",
-      "hide": "隠す",
       "grants_for": "{{server}} で実行できるもの",
       "grants_hint": "権限のないツールはモデルに提示されません。「確認」はターンを止めてあなたの応答を待ちます。",
       "tool": "ツール",
@@ -2640,8 +2464,6 @@
       "bridge_off": "ローカルブリッジが 設定 → ブラウザー拡張機能 で無効になっています。MCP エンドポイントにはこれが必要です",
       "endpoint": "エンドポイント",
       "selftest": "テスト",
-      "token": "Bearer トークン",
-      "token_hint": "ブラウザー拡張機能と同じトークンです。設定 → ブラウザー拡張機能 で再発行できます。",
       "connect": "クライアントを接続",
       "connect_hint": "エージェント用のスニペットをコピーしてください。Claude Code: コマンドを実行。その他: 設定ファイルに貼り付け。",
       "exposed": "{{count}} 個のツールを公開中",
@@ -2657,7 +2479,8 @@
         "unknown_agent": "そのエージェントはもう一覧にいません。",
         "generic": "MCP サーバーでエラーが発生しました。"
       },
-      "import_queue": "その設定から、あと {{count}} 個のサーバーが確認待ちです。"
+      "import_queue": "その設定から、あと {{count}} 個のサーバーが確認待ちです。",
+      "copied": "Copied"
     },
     "accounts": {
       "title": "Accounts & quota",
@@ -2716,7 +2539,6 @@
       "heatmap_more": "more",
       "heatmap_peak": "peak",
       "top_tools": "Top tools",
-      "top_prompts": "Most expensive prompts",
       "sessions_title": "Sessions",
       "turns": "turns",
       "session_live": "live",
@@ -2863,7 +2685,6 @@
       "unknown": "Unavailable"
     },
     "jobs": {
-      "title": "Jobs",
       "lede": "Agent runs that work in the background while you do something else.",
       "new_title": "New job",
       "agent": "Agent",
@@ -2931,7 +2752,6 @@
       "no_matches": "No tasks in this filter."
     },
     "loops": {
-      "title": "Loops",
       "lede": "Run the same prompt round after round until the work checks out.",
       "new_title": "New Loop",
       "agent": "Agent",
@@ -2945,7 +2765,6 @@
       "max_rounds": "Max rounds",
       "max_minutes": "Max minutes",
       "check_command": "Check command",
-      "stop_hint": "The loop stops when the check command exits 0, or when rounds or minutes run out; with none set it stops after 10 rounds.",
       "start": "Start loop",
       "list_title": "Loops",
       "empty": "No loops yet. Start one above.",
@@ -2977,6 +2796,20 @@
       "edge_bottom": "Bottom",
       "edge_left": "Left",
       "drag_hint": "You can also drag the strip: it snaps to the nearest edge.",
+      "appearance": "外観",
+      "size": "サイズ",
+      "size_s": "小",
+      "size_m": "中",
+      "size_l": "大",
+      "show_percent": "パーセントを表示",
+      "show_percent_hint": "各リングの下に使用率を表示します。",
+      "show_pace": "ペースを表示",
+      "show_pace_hint": "均等に使った場合の位置を各リングに目盛りで示し、それより速いかを表示します。",
+      "contrast": "ハイコントラスト",
+      "contrast_hint": "不透明な背景と、より濃い線と文字。",
+      "notifications": "通知",
+      "notify_pace": "このペースで上限に達しそうなら警告",
+      "notify_pace_hint": "リセット前に現在のペースで使い切りそうなとき、期間ごとに1回通知します。",
       "providers": "What it may read",
       "privacy": "Each reader only opens the login that tool already keeps on this computer, read-only, and asks that provider's own server. Tokens are never logged, stored or shown. Each provider is asked at most every 5 minutes, and never while the strip is closed.",
       "beta": "beta",
@@ -3026,17 +2859,19 @@
           "needs_auth": "Sign in again in the tool itself.",
           "rate_limited": "The provider asked us to wait.",
           "error": "Could not read."
+        },
+        "near_limit": "上限間近",
+        "accounts": "アカウント",
+        "pace": {
+          "on": "ペース通り",
+          "under": "ペースより{{delta}}%少ない",
+          "ahead": "ペースより{{delta}}%多い",
+          "ahead_out": "ペースより{{delta}}%多い · あと{{time}}で上限"
         }
       }
     },
     "chat": {
       "details": "Agent details"
-    },
-    "nav": {
-      "work": "Work",
-      "configure": "Configure",
-      "monitor": "Monitor",
-      "experimental": "Experimental"
     },
     "arena": {
       "explanation": "Compare the same task across models. This feature is not available yet; use Chat to work with a configured agent."
@@ -3105,7 +2940,6 @@
     }
   },
   "omni": {
-    "avatar_label": "Omni, the assistant mascot",
     "sidebar_profile": "Your profile"
   },
   "pet": {
@@ -3411,7 +3245,6 @@
       "skill_bound": "映画キュレーションのスキルはインストール済みで、このボットにリンクされています。"
     },
     "bots": {
-      "nav": "ボットを作成",
       "advanced": "詳細情報",
       "back": "エージェント",
       "cancel": "キャンセル",
@@ -4215,7 +4048,6 @@
       "unblock_unknown": "不明のまま続行",
       "budget_title": "予算",
       "budget_details": "予算の詳細",
-      "budget_edit_hint": "予算を増やすには、上限を大きくした新しいミッションを作成するか、キャンセルして作り直してください。",
       "pool_in_flight": "処理中の呼び出し",
       "pool_reserved": "予約済み",
       "context_title": "コンテキストを修正",
@@ -4231,7 +4063,6 @@
       "exit_code": "終了コード",
       "artifact": "ファイル",
       "confidence": "確信度",
-      "verified": "再確認しました。",
       "export": "診断情報をエクスポート",
       "exported": "診断情報を {{path}} に保存しました",
       "picker_failed": "ここでは保存ダイアログを利用できません。",
@@ -4344,7 +4175,6 @@
       "tokens_now": "{{limit}} のうち {{spent}} を使用",
       "minutes": "新しい時間上限（作業分数）",
       "minutes_now": "{{limit}} 分のうち {{spent}} 分作業",
-      "none": "上限なし",
       "why_minutes": "時間上限で止まりました。分数を増やしてください。空欄の項目は今の値のままです。",
       "keep_blank": "空欄の項目は今の値のままです。",
       "submit": "上限を引き上げる",
@@ -4470,5 +4300,55 @@
     "open_settings": "Cookie 設定を開く",
     "done": "サインインしました",
     "deny": "拒否"
+  },
+  "usage_tray": {
+    "menu": {
+      "accounts": "Accounts shown",
+      "no_accounts": "No Claude Code or Codex login found",
+      "icon_shows": "Icon shows",
+      "shows_session": "Session (5 h)",
+      "shows_weekly": "Weekly",
+      "shows_busiest": "Most used account",
+      "percent_text": "Show percentage",
+      "colored": "Loop in colour",
+      "thresholds": "Alert thresholds",
+      "threshold_item": "Orange at {{warn}}%, red at {{critical}}%",
+      "open_claude": "Open Claude Code in this account",
+      "add_account": "Add account…",
+      "open_app": "Open OmniGet",
+      "refresh": "Refresh now",
+      "hide": "Hide this icon",
+      "tooltip": "OmniGet usage",
+      "toggle": "Usage icon in the menu bar",
+      "default_login": "Terminal login",
+      "session": "session",
+      "weekly": "weekly"
+    },
+    "panel": {
+      "title": "Usage",
+      "empty_title": "Which accounts should the icon watch?",
+      "empty_body": "Nothing is read until you pick an account. OmniGet only asks each tool's own server, with the login the tool already keeps.",
+      "no_logins": "No Claude Code or Codex login found. Add one below.",
+      "session": "Session",
+      "weekly": "Weekly",
+      "resets_at": "resets {{when}}",
+      "runs_out": "at this pace, limit at {{when}}",
+      "lasts": "lasts until the reset",
+      "spent_today": "{{amount}} today",
+      "updated": "updated {{when}}",
+      "pending": "reading…",
+      "needs_auth": "login expired: open the tool to sign in again",
+      "rate_limited": "the server asked to wait",
+      "error": "could not read",
+      "refresh": "Refresh",
+      "open_app": "Open OmniGet",
+      "add_account": "Add account",
+      "open_claude": "Open Claude Code",
+      "choose": "Accounts",
+      "now": "now",
+      "in_min": "in {{count}} min",
+      "in_hours": "in {{hours}}h{{minutes}}",
+      "in_days": "in {{count}} days"
+    }
   }
 }

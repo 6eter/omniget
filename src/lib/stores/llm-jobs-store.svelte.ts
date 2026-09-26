@@ -255,7 +255,6 @@ let runs = $state<RunView[]>([]);
 let permissions = $state<PermissionRequest[]>([]);
 /** Bumped on every `assist://run`, so an open detail can refresh. */
 let runTick = $state(0);
-let lastRunUpdate = $state<RunUpdate | null>(null);
 let runsReload: ReturnType<typeof setTimeout> | null = null;
 
 export function getRuns(): RunView[] {
@@ -266,9 +265,6 @@ export function getPermissions(): PermissionRequest[] {
 }
 export function getRunTick(): number {
   return runTick;
-}
-export function getLastRunUpdate(): RunUpdate | null {
-  return lastRunUpdate;
 }
 
 export async function reloadRuns(): Promise<void> {
@@ -476,7 +472,6 @@ export function initJobsStore(): void {
   }).catch(() => {});
   void reloadRuns();
   void listen<RunUpdate>("assist://run", (ev) => {
-    lastRunUpdate = ev.payload;
     runTick += 1;
     const i = runs.findIndex((r) => r.id === ev.payload.run_id);
     if (i >= 0) {

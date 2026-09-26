@@ -241,14 +241,11 @@ test("Twitch: settings page is unknown", () => {
   assertUnsupported("https://www.twitch.tv/settings", "twitch", "unknown");
 });
 
-// ── Hotmart ──────────────────────────────────────────────────────────────
+// ── Course sites ─────────────────────────────────────────────────────────
 
-test("Hotmart: course page", () => {
-  assertSupported("https://app.hotmart.com/club/abc/lesson/xyz", "hotmart", "course");
-});
-
-test("Hotmart: generic page is unknown", () => {
-  assertUnsupported("https://app.hotmart.com/dashboard", "hotmart", "unknown");
+test("Course sites are left to the generic flow", () => {
+  assertNull("https://app.hotmart.com/club/abc/lesson/xyz");
+  assertNull("https://www.udemy.com/course/my-course/");
 });
 
 // ── Pinterest ────────────────────────────────────────────────────────────
@@ -315,16 +312,6 @@ test("Vimeo: numeric video ID", () => {
 
 test("Vimeo: non-numeric path is unknown", () => {
   assertUnsupported("https://vimeo.com/channels", "vimeo", "unknown");
-});
-
-// ── Udemy ────────────────────────────────────────────────────────────────
-
-test("Udemy: course page", () => {
-  assertSupported("https://www.udemy.com/course/my-course/", "udemy", "course");
-});
-
-test("Udemy: homepage is unknown", () => {
-  assertUnsupported("https://www.udemy.com/", "udemy", "unknown");
 });
 
 // ── Bilibili ─────────────────────────────────────────────────────────────

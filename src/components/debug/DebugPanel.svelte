@@ -12,7 +12,7 @@
   } from "$lib/stores/debug-store.svelte";
   import { showToast } from "$lib/stores/toast-store.svelte";
 
-  type FilterMode = "all" | "download" | "network" | "auth" | "system" | "convert" | "errors";
+  type FilterMode = "all" | "download" | "network" | "auth" | "system" | "errors";
 
   let filter = $state<FilterMode>("all");
   let listEl: HTMLDivElement | undefined = $state();
@@ -107,7 +107,6 @@
         <option value="network">{$t("debug.filter_network")}</option>
         <option value="auth">{$t("debug.filter_auth")}</option>
         <option value="system">{$t("debug.filter_system")}</option>
-        <option value="convert">{$t("debug.filter_convert")}</option>
         <option value="errors">{$t("debug.filter_errors")}</option>
       </select>
 

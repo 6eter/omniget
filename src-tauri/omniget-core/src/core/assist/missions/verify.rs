@@ -18,7 +18,7 @@
 use std::path::{Component, Path};
 
 use serde::{Deserialize, Serialize};
-use serde_json::{json, Value};
+use serde_json::Value;
 
 use super::{Acceptance, Criterion, CriterionKind, MissionReceipt, Origin, Severity};
 use crate::core::assist::db::AssistDb;
@@ -1176,14 +1176,10 @@ pub fn next_round_prompt_for(objective: &str, v: &Verdict, criteria: &[Criterion
     lines.join("\n")
 }
 
-/// JSON for the UI of one outcome (kept small).
-pub fn outcome_json(o: &CheckOutcome) -> Value {
-    json!({ "status": o.status, "digest": o.digest, "exit_code": o.exit_code, "evidence": super::clip(&o.evidence, 2000) })
-}
-
 #[cfg(all(test, unix))]
 mod revision_tests {
     use super::*;
+    use serde_json::json;
     use std::path::PathBuf;
     fn workspace() -> PathBuf {
         let p = std::env::temp_dir()

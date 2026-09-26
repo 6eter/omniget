@@ -27,6 +27,7 @@ pub mod activity;
 pub mod alerts;
 pub mod commands;
 pub mod engine;
+pub mod pace;
 pub mod placement;
 pub mod prefs;
 pub mod providers;
@@ -174,12 +175,37 @@ impl ReadError {
     }
 }
 
+/// Who a ring belongs to: the account name the user gave it in the app and
+/// the e-mail the tool itself shows. Neither is a credential.
+#[derive(Debug, Clone, Default, PartialEq, Eq, Serialize, Deserialize)]
+pub struct AccountTag {
+    pub label: Option<String>,
+    pub email: Option<String>,
+}
+
 /// One assistant. `detect` is cheap and offline (does the credential or the
 /// state file exist on this OS?); `read` may go to the provider's own endpoint.
 #[async_trait::async_trait]
 pub trait UsageProvider: Send + Sync {
-    fn id(&self) -> &'static str;
+    /// Stable ring id and prefs key. One per reader, except the CLIs with
+    /// several logins: `claude` / `codex` for the default profile and
+    /// `claude:<account-id>` / `codex:<account-id>` for the app's accounts.
+    fn id(&self) -> &str;
     fn label(&self) -> &'static str;
+    /// Which login this ring reads, when the tool can hold several.
+    fn account(&self) -> Option<&AccountTag> {
+        None
+    }
+    /// The label with the account name, for notifications.
+    fn display_label(&self) -> String {
+        match self
+            .account()
+            .and_then(|a| a.label.as_deref().or(a.email.as_deref()))
+        {
+            Some(who) => format!("{} · {who}", self.label()),
+            None => self.label().to_string(),
+        }
+    }
     /// A runtime on this machine (loopback only), not a metered account.
     fn local(&self) -> bool {
         false

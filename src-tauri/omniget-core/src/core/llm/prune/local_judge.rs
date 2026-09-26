@@ -44,13 +44,6 @@ impl LocalJudge {
         }
     }
 
-    /// The Ollama embedder, when the user picked it in Settings. Same maths;
-    /// only the vectors' origin changes.
-    pub fn with_source(mut self, source: EmbedSource) -> Self {
-        self.source = source;
-        self
-    }
-
     /// What the goal vector is built from: the recent user messages plus the
     /// newest assistant text, which together are "what is being done now".
     fn goal_text(goal: &GoalContext) -> String {

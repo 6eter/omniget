@@ -22,8 +22,6 @@ pub mod rpc;
 pub mod rules;
 pub mod settings;
 pub mod smart_speed;
-pub mod subtitle_ws;
-pub mod torrent_playback;
 pub mod video_ops;
 pub mod world;
 pub mod world_bench;

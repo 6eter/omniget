@@ -8,7 +8,10 @@ use std::time::{SystemTime, UNIX_EPOCH};
 
 use tauri::{
     image::Image,
-    menu::{MenuBuilder, MenuItem, MenuItemBuilder, Submenu, SubmenuBuilder},
+    menu::{
+        CheckMenuItem, CheckMenuItemBuilder, MenuBuilder, MenuItem, MenuItemBuilder, Submenu,
+        SubmenuBuilder,
+    },
     tray::TrayIconBuilder,
     AppHandle, Emitter, Manager, Wry,
 };
@@ -27,6 +30,21 @@ static LAST_SPEED_BPS: AtomicU64 = AtomicU64::new(0);
 const SPEED_TOOLTIP_MIN_INTERVAL_MS: u64 = 2000;
 static BADGE_CACHE: OnceLock<Mutex<BadgeCache>> = OnceLock::new();
 static QUIT_ITEM: OnceLock<MenuItem<Wry>> = OnceLock::new();
+/// "Usage icon in the menu bar": shows or hides the second status item
+/// (`crate::usage_tray`, id `usage-tray`). Its label is pushed by that module.
+static USAGE_TOGGLE: OnceLock<CheckMenuItem<Wry>> = OnceLock::new();
+
+pub fn set_usage_toggle(on: bool) {
+    if let Some(item) = USAGE_TOGGLE.get() {
+        let _ = item.set_checked(on);
+    }
+}
+
+pub fn set_usage_toggle_text(text: &str) {
+    if let Some(item) = USAGE_TOGGLE.get() {
+        let _ = item.set_text(text);
+    }
+}
 
 /// Tray menus are native — `$t` is unreachable here. The frontend resolves the
 /// labels with `$t` and pushes them via `sync_tray_strings`; the compiled-in
@@ -117,6 +135,13 @@ pub fn setup(app: &AppHandle) -> tauri::Result<()> {
     DOWNLOADS_ITEM.set(downloads_item.clone()).ok();
     let quit_item = MenuItemBuilder::with_id("quit", strings.quit.clone()).build(app)?;
     QUIT_ITEM.set(quit_item.clone()).ok();
+    let usage_toggle = CheckMenuItemBuilder::with_id(
+        format!("{}toggle", crate::usage_tray::MENU_PREFIX),
+        "Usage icon in the menu bar",
+    )
+    .checked(false)
+    .build(app)?;
+    USAGE_TOGGLE.set(usage_toggle.clone()).ok();
 
     // Empty, hidden until the frontend pushes localized channel labels via
     // sync_channels_tray (the tray menu is native — $t is not reachable here).
@@ -129,6 +154,7 @@ pub fn setup(app: &AppHandle) -> tauri::Result<()> {
         .separator()
         .item(&downloads_item)
         .item(&channels_submenu)
+        .item(&usage_toggle)
         .separator()
         .item(&quit_item)
         .build()?;
@@ -150,6 +176,11 @@ pub fn setup(app: &AppHandle) -> tauri::Result<()> {
             "open" => show_window(app),
             "quit" => {
                 request_quit(app);
+            }
+            // This handler sees every menu event of the app, the usage icon's
+            // included: those carry their own prefix and go to their module.
+            other if other.starts_with(crate::usage_tray::MENU_PREFIX) => {
+                crate::usage_tray::on_menu(app, other);
             }
             other => {
                 if let Some(channel_id) = other.strip_prefix("chk:") {

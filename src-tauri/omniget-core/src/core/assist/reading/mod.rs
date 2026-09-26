@@ -7,14 +7,10 @@
 //! `assist::memory` through the bot's memory tools. This module keeps only
 //! what belongs to the journey.
 //!
-//! Reader integration: the Study plugin (0.3.6, proprietary, no sources on
-//! this machine) answers `plugin_command("study", "study:read:library:list",
-//! { filters: { search, pageSize } })` with `{ items: Book[], total }` where
-//! `Book = { id, title, author, format, page_count, last_location,
-//! reading_pct, last_opened_at, ... }` — checked against the plugin's
-//! `read_books` table on 2026-09-24. The UI uses it, on the user's click, to
-//! prefill a journey (external id `study:book:<id>`) and to record progress
-//! as a percentage with origin `reader`. Manual entry works on its own.
+//! Progress is entered by hand. Journeys created earlier may still carry an
+//! external id of the form `study:book:<id>` and progress with origin
+//! `reader`, from the Study plugin integration that was removed with the
+//! plugin system; they are kept as plain data.
 
 pub mod rules;
 pub mod skill;

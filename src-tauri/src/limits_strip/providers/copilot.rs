@@ -147,7 +147,7 @@ pub fn parse_usage(v: &serde_json::Value) -> Option<Vec<LimitWindow>> {
 
 #[async_trait::async_trait]
 impl UsageProvider for Copilot {
-    fn id(&self) -> &'static str {
+    fn id(&self) -> &str {
         "copilot"
     }
     fn label(&self) -> &'static str {

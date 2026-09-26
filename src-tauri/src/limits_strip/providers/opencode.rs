@@ -58,7 +58,7 @@ pub fn parse_usage(v: &serde_json::Value) -> Vec<LimitWindow> {
 
 #[async_trait::async_trait]
 impl UsageProvider for OpenCode {
-    fn id(&self) -> &'static str {
+    fn id(&self) -> &str {
         "opencode"
     }
     fn label(&self) -> &'static str {

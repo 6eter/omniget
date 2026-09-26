@@ -575,8 +575,6 @@ const TRACKED_DOMAIN_SUFFIXES = [
   ".vimeo.com",
   ".bilibili.com",
   ".pinterest.com",
-  ".hotmart.com",
-  ".udemy.com",
   ".rocketseat.com.br",
   ".bsky.app",
   ".bsky.social",
@@ -596,8 +594,6 @@ function platformForDomain(domain) {
   if (d.endsWith(".vimeo.com")) return "vimeo";
   if (d.endsWith(".bilibili.com")) return "bilibili";
   if (d.endsWith(".pinterest.com")) return "pinterest";
-  if (d.endsWith(".hotmart.com")) return "hotmart";
-  if (d.endsWith(".udemy.com")) return "udemy";
   if (d.endsWith(".rocketseat.com.br") || d === "rocketseat.com.br") return "rocketseat";
   if (d.endsWith(".bsky.app") || d.endsWith(".bsky.social")) return "bluesky";
   if (d.endsWith(".telegram.org")) return "telegram";
@@ -696,8 +692,6 @@ async function scanAllPlatformsForCookies() {
     "bilibili",
     "soundcloud",
     "pinterest",
-    "hotmart",
-    "udemy",
     "rocketseat",
     "bluesky",
     "telegram",

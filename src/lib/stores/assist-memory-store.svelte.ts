@@ -117,15 +117,6 @@ export function memoryErrorKey(err: unknown): string {
   }
 }
 
-/** Short conversation reference for the "why?" line (never the content). */
-export function sourceConversation(item: MemoryItem): string | null {
-  return item.source.conversation ?? null;
-}
-
-export function isFromUser(item: MemoryItem): boolean {
-  return item.source.author === "user";
-}
-
 /** The bot id of a `bot:<id>` author, if any. */
 export function authorBot(item: MemoryItem): string | null {
   return item.source.author.startsWith("bot:") ? item.source.author.slice(4) : null;

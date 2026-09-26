@@ -495,7 +495,6 @@
     "empty": "No results",
     "navigate": "navigate",
     "select": "select",
-    "close": "close",
     "group_nav": "Navigate",
     "group_action": "Actions",
     "action_paste": "從剪貼簿貼上 URL"
@@ -523,13 +522,7 @@
     "adv_title": "yt-dlp 指令",
     "success_title": "已加入下載",
     "success_first": "你的第一個下載！",
-    "success_open": "開啟下載",
-    "batch_hint": "有多個連結？一次全部貼上，每行一個。"
-  },
-  "tools": {
-    "common": {
-      "copied": "Copied"
-    }
+    "success_open": "開啟下載"
   },
   "downloads": {
     "phase_downloading": "下載中",
@@ -570,7 +563,6 @@
       "invalid": "無法執行命令：{{error}}",
       "engine_custom": "自訂"
     },
-    "title": "下載",
     "empty": "目前沒有進行中的下載",
     "status": {
       "queued": "已排入佇列",
@@ -596,8 +588,6 @@
     "pause_all": "全部暫停",
     "resume_all": "全部繼續",
     "reorder_hint": "拖曳以重新排序",
-    "history_toggle": "切換下載紀錄",
-    "history_toggle_hint": "查看過往下載 (Ctrl+H)",
     "history_view_link": "查看下載紀錄",
     "history_loading": "載入紀錄中…",
     "history_empty": "尚無完成的下載。",
@@ -670,7 +660,6 @@
       "paused_all": "全部已暫停",
       "eta": "約剩 {{eta}}",
       "open": "檢視下載",
-      "indeterminate": "正在下載，總大小未知",
       "complete": "下載完成",
       "paused": "{{count}} 個已暫停",
       "failed": "{{count}} 個失敗",
@@ -679,20 +668,12 @@
     }
   },
   "toast": {
-    "download_preparing": "正在準備下載...",
     "download_complete": "下載完成: {{name}}",
     "clipboard_url_detected": "在剪貼簿中偵測到 URL",
     "clipboard_empty": "剪貼簿是空的",
     "auto_download_started": "已啟動自動下載",
     "external_url_ready": "已收到 URL，可以开始下载",
     "external_url_queued": "已从 Chrome 扩展添加下载",
-    "hotkey_queued": "已從剪貼簿開始下載",
-    "hotkey_already_queued": "該連結已在佇列中",
-    "hotkey_not_a_url": "請先複製一個連結——剪貼簿裡沒有網址",
-    "hotkey_unsupported": "沒有下載器支援該連結。請在首頁貼上以查看可用選項。",
-    "hotkey_clipboard_error": "無法讀取剪貼簿。請重新複製連結後再按快速鍵。",
-    "channel_new": "{{channel}}：{{count}} 個新影片",
-    "channel_new_auto": "{{channel}}：正在下載 {{count}} 個新影片",
     "file_copied_to_clipboard": "檔案已複製到剪貼簿",
     "generic_download_complete": "{{name}} — 下載完成！"
   },
@@ -774,10 +755,7 @@
       "section_clipboard_hotkeys": "Clipboard & hotkeys",
       "section_clipboard_hotkeys_desc": "Paste detection and global shortcuts.",
       "section_per_platform": "Per-platform options",
-      "section_per_platform_desc": "YouTube, courses, and Bilibili-specific settings.",
-      "download_attachments": "下載附件",
-      "download_attachments_desc": "將課程附件與下載的課程一起儲存。",
-      "download_descriptions": "儲存描述",
+      "section_per_platform_desc": "YouTube and Bilibili settings.",
       "embed_metadata": "嵌入中繼資料",
       "embed_metadata_desc": "將標題與藝術家資訊寫入下載的檔案",
       "embed_thumbnail": "將縮圖嵌入為封面",
@@ -792,13 +770,11 @@
       "organize_by_platform_desc": "依平台名稱將檔案儲存在子資料夾中",
       "download_subtitles": "下載字幕",
       "download_subtitles_desc": "下載影片時同時取得可用字幕 (YouTube)",
-      "what_to_also_save": "What to also save",
       "youtube_specific": "YouTube-specific",
       "include_auto_subtitles": "包含自動產生的字幕",
       "include_auto_subtitles_desc": "沒有手動字幕時，也下載 YouTube 自動產生的字幕（品質不一）",
       "caption_locale": "字幕語言",
       "caption_locale_desc": "下載字幕的語言（若有）。否則回退到來源提供的語言。",
-      "caption_locale_auto": "跟隨應用語言",
       "keep_vtt": "保留原始 .vtt 檔案",
       "keep_vtt_desc": "在轉換後的 SRT 旁保留原始 WebVTT 檔案。適合需要原格式的播放器或腳本。",
       "bilibili_section": "Bilibili",
@@ -852,8 +828,6 @@
       "split_by_chapters_desc": "當影片含有章節標記時，將每個章節儲存為獨立檔案",
       "live_from_start": "從頭錄製直播",
       "live_from_start_desc": "下載進行中的直播時，從開頭開始擷取，而非從目前時刻",
-      "presets": "快速預設",
-      "presets_desc": "一鍵套用常用設定。點擊卡片即可套用。",
       "preset_fast": "快速",
       "preset_fast_desc": "480p · 無中繼資料 · 無字幕",
       "preset_quality": "高品質",
@@ -872,7 +846,7 @@
       "music_hotkey_enabled_desc": "Download clipboard URL as audio with a keyboard shortcut (uses Music Format below)",
       "music_hotkey_binding": "Music hotkey shortcut",
       "music_audio_format": "Music download format",
-      "music_audio_format_desc": "Audio format used by the music hotkey and the Music plugin downloader",
+      "music_audio_format_desc": "Audio format used by the music hotkey",
       "copy_to_clipboard_on_hotkey": "使用快捷鍵下載後複製檔案到剪貼簿",
       "copy_to_clipboard_on_hotkey_desc": "下載完成後自動將檔案複製到剪貼簿，方便貼上",
       "filename_template": "檔名範本",
@@ -958,12 +932,10 @@
       "status_missing": "Missing",
       "source_managed": "Managed",
       "download_managed": "Get Managed",
-      "not_found": "找不到",
       "install": "安裝",
       "update": "更新",
       "install_success": "{{name}} {{version}} 已安裝",
       "update_success": "{{name}} 已更新至 {{version}}",
-      "variant_aria": "變體",
       "more_options": "更多選項",
       "pick_custom_file": "從磁碟選擇檔案…",
       "show_folder": "顯示資料夾",
@@ -975,7 +947,6 @@
       "rollback_done": "已回復到 {{version}}",
       "rollback_failed": "回復失敗：{{msg}}",
       "pick_dialog_title": "為 {{name}} 選擇檔案",
-      "filter_pdfium": "PDFium 函式庫",
       "filter_all_files": "所有檔案",
       "set_file_failed": "設定檔案失敗：{{msg}}",
       "open_folder_failed": "開啟資料夾失敗：{{msg}}",
@@ -1019,24 +990,7 @@
       "username": "使用者名稱",
       "password": "密碼"
     },
-    "ytdlp_flags": {
-      "title": "yt-dlp 命令參數",
-      "embed_subs": "嵌入字幕",
-      "write_thumbnail": "儲存縮圖",
-      "write_description": "儲存描述",
-      "write_comments": "儲存留言",
-      "restrict_filenames": "ASCII 檔名",
-      "no_overwrites": "不覆寫",
-      "prefer_free_formats": "優先自由格式",
-      "force_ipv4": "強制 IPv4",
-      "geo_bypass": "繞過地區限制",
-      "limit_rate": "限制速率",
-      "sleep_interval": "等待間隔",
-      "limit_rate_ph": "例如 1M",
-      "sleep_interval_ph": "例如 5"
-    },
     "advanced": {
-      "title": "進階",
       "max_concurrent_downloads": "同時下載數",
       "max_concurrent_downloads_desc": "可同時進行的下載數量上限",
       "max_concurrent_segments": "同時區段數",
@@ -1071,9 +1025,7 @@
       "cookies_from_browser_placeholder": "ex.: firefox, chrome, edge",
       "user_agent": "自訂 User-Agent（進階）",
       "user_agent_desc": "為下載傳送自訂 User-Agent。留空則使用預設值。",
-      "user_agent_placeholder": "瀏覽器預設 User-Agent",
-      "twitter_manual_cookie": "手動 Cookie",
-      "twitter_manual_cookie_desc": "如果下載失敗，您可以在此貼上手動的 Cookie 標頭並重試。不限於 Twitter/X。範例：sessionid=...; csrftoken=...; auth_token=..."
+      "user_agent_placeholder": "瀏覽器預設 User-Agent"
     },
     "group_general": "General",
     "group_media": "Media",
@@ -1265,32 +1217,17 @@
       "cleared_toast": "Cookies moved to trash",
       "add_account_label": "新增其他帳戶",
       "add_account_success": "帳戶 '{{slug}}' 已新增 — {{count}} cookies",
-      "account_primary_tag": "預設",
       "bilibili": {
         "login_qr_title": "用 QR Code 登入 Bilibili",
         "login_qr_subtitle": "開啟哔哩哔哩 App 掃描下方 QR Code。",
         "login_qr_pending": "等待掃描中...",
         "login_qr_scanned": "已掃描，請在手機上確認。",
         "login_qr_expired": "QR Code 已過期，請重新產生。",
-        "login_qr_cancelled": "登入已取消。",
         "login_qr_regenerate": "重新產生",
         "login_qr_success": "已登入為 {{uname}}",
-        "login_sms_title": "簡訊登入",
-        "login_sms_country": "國碼",
-        "login_sms_phone": "手機號碼",
-        "login_sms_send_code": "傳送驗證碼",
-        "login_sms_resend_in": "{{seconds}} 秒後重發",
-        "login_sms_code": "驗證碼",
-        "login_sms_submit": "登入",
-        "login_sms_captcha_required": "請先完成驗證",
-        "login_sms_captcha_solve": "開啟驗證",
-        "login_sms_sent": "簡訊已傳送,請輸入收到的驗證碼。",
         "login_close": "關閉",
         "login_cancel": "取消",
         "login_error_generic": "登入失敗,請重試。",
-        "add_account_qr_btn": "掃碼登入",
-        "add_account_sms_btn": "簡訊登入",
-        "add_account_manual_btn": "手動貼上 Cookies",
         "import_watch_later": "匯入「稍後再看」",
         "import_history": "匯入歷史紀錄",
         "import_no_account": "請先登入 Bilibili",
@@ -1318,7 +1255,6 @@
     "media_changed": "這個連結自上次下載後有變化：{{summary}}",
     "rule_applied": "已套用規則「{{name}}」",
     "preflight_skips": "略過 {{total}} 個中的 {{skipped}} 個：不支援或重複。",
-    "batch_file_open": "從檔案載入",
     "batch_file_title": "選擇包含 URL 的 .txt 檔案",
     "batch_file_empty": "檔案中找不到有效的 URL",
     "mode_auto": "自動",
@@ -1381,7 +1317,6 @@
       "clip": "片段",
       "short": "Short",
       "playlist": "播放清單",
-      "course": "課程",
       "file": "檔案",
       "unknown": "媒體"
     },
@@ -1394,8 +1329,6 @@
     "fmt_speed": "速率",
     "cookie_account": "帳號",
     "cookie_account_cookies": "cookies",
-    "mode_normal": "標準",
-    "mode_advanced": "進階",
     "adv": {
       "url_label": "URL",
       "url_placeholder": "https://...",
@@ -1489,7 +1422,6 @@
       "overview": "Overview",
       "terms": "使用條款",
       "project": "專案",
-      "roadmap": "開發計畫",
       "changelog": "更新紀錄",
       "debug": "除錯資訊"
     },
@@ -1529,13 +1461,6 @@
     "feature_themes": "11 個主題：Dark、Light、Catppuccin（4 種風味）、One Dark Pro、Dracula、NyxVamp（3 種變體）",
     "feature_i18n": "提供英文、葡萄牙文、中文、日文、義大利文、法文",
     "feature_tech": "使用 Tauri + Rust 建構，快速且輕量",
-    "roadmap_intro": "以下是 OmniGet 未來版本的開發計畫。",
-    "roadmap_platforms_title": "整合",
-    "roadmap_features_title": "功能",
-    "roadmap_community_title": "有想法嗎？",
-    "roadmap_community_text": "我們正在收集想法與建議！這是提出新平台或功能需求的好方式。",
-    "roadmap_community_discord": "可透過 Discord 聯絡：",
-    "roadmap_community_issue": "或在專案儲存庫建立 Issue：",
     "tagline": "隨時隨地，下載一切。",
     "credit": "由 tonho.wtf 用心打造"
   },
@@ -1569,7 +1494,7 @@
     "agents_desc": "OmniGet now has a team of AI agents and a house where they live. Both are in the sidebar.",
     "agents_llm": "Chat, attach a folder and let an agent read, edit and run your code. It asks before it writes.",
     "agents_world": "The house where your agents walk around, work at the bench when a tool runs, and receive visitors.",
-    "more_later": "Plugins for courses and Telegram, the global hotkey and Discord presence live in Settings whenever you want them.",
+    "more_later": "The global hotkey, the browser extension and Discord presence live in Settings whenever you want them.",
     "profile": {
       "title": "Pick a nickname",
       "desc": "It stays on this computer and shows up when you share something. You can skip this.",
@@ -1580,26 +1505,18 @@
     }
   },
   "hints": {
-    "omnibox": "在此貼上您要下載的影片或媒體 URL。",
     "hotkey": "全域快捷鍵: 會自動下載目前剪貼簿中的 URL。",
     "clipboard": "當您複製連結時會自動偵測 URL，並填入輸入欄位。"
   },
   "common": {
     "cancel": "取消",
     "clear": "Clear",
-    "retry": "重試",
     "close": "關閉",
     "hint": "提示",
     "error": "錯誤",
     "loading": "Loading…",
     "unknown_error": "未知錯誤",
-    "ytdlp_missing": "未安裝 yt-dlp。請在 [設定] 中安裝以啟用下載功能。",
-    "go_to_settings": "前往 [設定]",
-    "cookie_error_message": "自动 Cookie 检测仅适用于 Firefox。Chrome、Edge 等基于 Chromium 的浏览器会阻止 Cookie 访问。解决方法：安装 Firefox 并登录您的账户，或从浏览器导出 cookies.txt 文件并在设置 > 下载 > Cookie 文件中配置。",
-    "cookie_file_label": "Cookie 文件 (cookies.txt)",
-    "cookie_file_choose": "选择文件",
-    "cookie_file_hint": "使用浏览器扩展（如 'Get cookies.txt LOCALLY'）导出 Cookie，然后在此选择文件。Chrome/Edge 用户需要此功能进行需要登录的下载。",
-    "dismiss": "Dismiss"
+    "cookie_error_message": "自动 Cookie 检测仅适用于 Firefox。Chrome、Edge 等基于 Chromium 的浏览器会阻止 Cookie 访问。解决方法：安装 Firefox 并登录您的账户，或从浏览器导出 cookies.txt 文件并在设置 > 下载 > Cookie 文件中配置。"
   },
   "platforms": {
     "bilibili": {
@@ -1647,22 +1564,6 @@
         "64k": "64 kbps",
         "unknown": "未知"
       },
-      "badge": {
-        "charging_exclusive": "充電專屬",
-        "preview": "預告",
-        "paid_locked": "付費",
-        "partial_preview": "試看",
-        "pgc": "番劇",
-        "collab": "聯合",
-        "expired": "已過期"
-      },
-      "phase": {
-        "preview": "解析畫質",
-        "connecting": "連線 CDN",
-        "downloading": "下載中",
-        "muxing": "封裝中",
-        "done": "完成"
-      },
       "preview": {
         "loading": "正在讀取可用畫質...",
         "auto": "自動",
@@ -1671,12 +1572,6 @@
         "audio": "音訊",
         "no_account_hint": "登入 Bilibili 解鎖 4K、HDR、Hi-Res 無損與杜比。",
         "premium_hint": "此處部分畫質需要大會員訂閱。"
-      },
-      "notice": {
-        "session_expired_title": "工作階段已過期",
-        "session_expired_body": "Bilibili 工作階段已過期。請重新登入以繼續下載高品質內容。",
-        "session_expired_action": "重新登入",
-        "session_expired_dismiss": "稍後"
       }
     }
   },
@@ -1729,7 +1624,6 @@
     "filter_network": "網路",
     "filter_auth": "驗證",
     "filter_system": "系統",
-    "filter_convert": "轉換",
     "filter_errors": "僅顯示錯誤",
     "copy_report": "複製報告",
     "report_copied": "診斷報告已複製到剪貼簿",
@@ -1739,7 +1633,6 @@
     "open_panel_desc": "Opens the live activity log panel in About → Debug."
   },
   "p2p": {
-    "send_file": "傳送檔案",
     "send_title": "透過 P2P 傳送檔案",
     "send_description": "將任何檔案傳送給另一位 OmniGet 使用者。系統會產生分享碼 — 接收者只需貼到輸入欄位即可下載。",
     "select_file": "選取檔案",
@@ -1760,22 +1653,6 @@
     "accept_transfer": "接受並下載",
     "reject_transfer": "拒絕",
     "searching_hint": "正在連接中繼伺服器..."
-  },
-  "mascot": {
-    "idle": "粘贴链接或搜索试试！|今天下载什么呢？|随时准备好了！",
-    "detecting": "嗯，让我看看...|正在分析链接...|稍等一下...",
-    "detected": "找到了！要开始下载吗？|发现了！走起？|一切就绪！",
-    "preparing": "正在准备中...|快好了...|正在整理你的下载...",
-    "search": "看看我找到了什么！|来看看吧！|看看这些！",
-    "error": "哎呀，出了点问题。再试一次？|没成功，再来一次？|嗯，出了点故障...",
-    "complete": "搞定了！|下载完成！|给你搞定了！",
-    "amazed": "Wow, your first download! 🎉|There it is — your first one!|Saved! Welcome aboard!",
-    "downloading": "正在下载...|努力中！|正在获取文件...",
-    "stalled": "嗯，有点慢...|稍等，还在下...|网速好像有点慢...",
-    "queue": "排队等待中...|耐心点，快了...|马上就轮到你了！"
-  },
-  "torrent": {
-    "open_file": "打开 .torrent"
   },
   "omnidisc": {
     "error": {
@@ -1890,18 +1767,14 @@
     },
     "title": "World",
     "subtitle": "你在這台電腦上的家，以及一座與他人共享的城市。",
-    "start": "Start",
-    "stop": "Stop",
     "loading": "Starting the renderer…",
     "bench_running": "Benchmark running…",
     "error": "Renderer error:",
     "stats": {
-      "backend": "Backend",
       "tier": "Tier",
       "fps": "FPS",
       "cpu": "CPU",
-      "draws": "Draw calls",
-      "sprites": "Sprites"
+      "draws": "Draw calls"
     },
     "settings": {
       "title": "World",
@@ -1949,8 +1822,7 @@
       "recentre": "Recentre",
       "pause": "Pause",
       "resume": "Resume",
-      "open_house": "Open the house",
-      "phase9": "Visits arrive in a later version."
+      "open_house": "Open the house"
     },
     "slot": {
       "title": "Slot",
@@ -2008,7 +1880,6 @@
       "hint": "你在那裡的房子有門牌地址，應用程式關閉時居民照樣生活，所有人看到的是同樣的街道。",
       "in": "在 {{city}}",
       "inside": "室內",
-      "outside": "室外",
       "address": "你的地址",
       "go_home": "回家",
       "claim": "認領地塊",
@@ -2044,7 +1915,6 @@
       "edit_mode": "編輯中：點選物品以選取，點選空格子以移動",
       "edit_placing": "正在放置 {{asset}}：點選空格子，按 Esc 停止",
       "edit_selected": "點選空格子移動，R 旋轉，Delete 移除",
-      "edit_catalogue": "目錄",
       "edit_undo": "復原",
       "edit_redo": "重做",
       "edit_remove": "移除",
@@ -2229,7 +2099,6 @@
       "calls": "calls",
       "agents": "Agents",
       "no_agents": "No agent has spoken yet.",
-      "wire": "Wire probe",
       "diagnostics": "Diagnostics",
       "throughput": "Throughput",
       "first_token": "First token",
@@ -2286,12 +2155,10 @@
       "band_critical": "almost out"
     },
     "title": "LLM",
-    "subtitle": "Your agents, their models and what they are allowed to touch.",
     "tab": {
       "chat": "Chat",
       "roster": "Roster",
       "models": "Models & Routing",
-      "observatory": "Observatory",
       "mcp": "MCP",
       "skills": "Skills",
       "accounts": "Accounts",
@@ -2300,8 +2167,6 @@
       "jobs": "Jobs",
       "loops": "Loops"
     },
-    "soon_title": "Coming soon",
-    "soon_body": "This tab is part of a later phase of the LLM section.",
     "demo_banner": "Demo data: the LLM backend is not wired yet.",
     "rail": {
       "title": "Agents",
@@ -2329,7 +2194,6 @@
       "cancelled": "Turn cancelled.",
       "error": "Turn failed",
       "switch_model": "Switch model",
-      "new": "New chat",
       "no_agent": "Pick an agent on the left.",
       "tool_ask": "The agent wants to run a tool",
       "allow": "Allow",
@@ -2366,7 +2230,6 @@
       "new": "New agent",
       "name": "Name",
       "role": "Role",
-      "system_prompt": "System prompt",
       "model_policy": "Model",
       "fixed": "Fixed",
       "route": "Route",
@@ -2403,8 +2266,7 @@
       "title": "Models & Routing",
       "providers": "Providers",
       "no_providers": "No API key saved yet.",
-      "add_key_hint": "Keys live in Tools → AI keys.",
-      "list": "Models",
+      "add_key_hint": "Keys live in LLM → Models & Routing.",
       "load": "Load models",
       "loading": "Loading…",
       "count": "{{count}} models",
@@ -2417,7 +2279,6 @@
       "rule_local_desc": "Tries Ollama or llama-server before anything paid.",
       "rule_quality": "Quality first",
       "rule_quality_desc": "Keeps the head of the chain unless it fails.",
-      "rule_hint": "The rule is a default for new agents; each agent can override it.",
       "openrouter_started": "Finish the sign-in in your browser.",
       "openrouter_ok": "OpenRouter key saved.",
       "openrouter_failed": "OpenRouter sign-in failed: {{error}}",
@@ -2432,31 +2293,7 @@
       "turn_failed": "The turn could not start."
     },
     "local": {
-      "title": "Local models",
-      "servers": "Servers on this machine",
-      "running": "Running",
-      "notRunning": "Not running",
-      "install": "Install",
-      "download": "Download",
-      "start": "Start",
-      "stop": "Stop",
-      "bridgeTitle": "OpenAI-compatible bridge",
-      "bridgeHint": "Lets any app that speaks OpenAI use your agents at omniget/<agent>. Off by default: whoever holds the bridge token spends your tokens.",
       "explanation": "Local model management is not available here yet. Configure an existing local provider in Models & Routing."
-    },
-    "error": {
-      "ERR_LLM_NO_AGENT": "That agent no longer exists.",
-      "ERR_LLM_NO_TURN": "That turn already finished.",
-      "ERR_LLM_NO_ASK": "That tool question was already answered.",
-      "ERR_LLM_ROSTER_DUP": "An agent with this id already exists.",
-      "ERR_LLM_ROSTER_MISSING": "Agent not found.",
-      "ERR_LLM_ROSTER_ID": "The id must use only lowercase letters, digits, - and _.",
-      "ERR_LLM_ROSTER_TEMPLATE": "Unknown template.",
-      "ERR_LLM_LOCAL_BINARY": "Could not install llama-server.",
-      "ERR_LLM_LOCAL_MODEL": "Model not available.",
-      "ERR_LLM_LOCAL_SPAWN": "Could not start llama-server.",
-      "ERR_LLM_LOCAL_HASH": "The downloaded file failed its checksum.",
-      "ERR_LLM_BRIDGE_OFF": "The OpenAI-compatible bridge is off."
     },
     "skills": {
       "title": "Skills",
@@ -2510,17 +2347,6 @@
       "err_path": "The path pointed outside the skills folder.",
       "err_io": "The skills folder could not be read or written.",
       "err_generic": "The skill operation failed.",
-      "err": {
-        "ERR_SKILL_PARSE": "This SKILL.md could not be read: it needs a `---` frontmatter block at the top.",
-        "ERR_SKILL_NAME": "The skill name is invalid: use lowercase letters, digits and hyphens, up to 64 characters.",
-        "ERR_SKILL_DESCRIPTION": "The skill has no description. Add a `description` line to its frontmatter.",
-        "ERR_SKILL_IO": "The skill could not be read or written on disk.",
-        "ERR_SKILL_NOT_FOUND": "No skill by that name is installed.",
-        "ERR_SKILL_ZIP": "This zip was refused: one of its files points outside the destination folder.",
-        "ERR_SKILL_GIT": "The clone failed. Check that git is installed and that the address is right.",
-        "ERR_SKILL_TOO_BIG": "This skill is over the size limit (2000 files or 32 MB).",
-        "ERR_SKILL_PATH": "That path points outside the skill folder."
-      },
       "catalog": {
         "unlicensed": "This catalogue declares no licence. Check the terms with its authors before using it."
       },
@@ -2579,8 +2405,6 @@
       "save": "儲存",
       "cancel": "取消",
       "copy": "複製",
-      "show": "顯示",
-      "hide": "隱藏",
       "grants_for": "{{server}} 上可以執行什麼",
       "grants_hint": "沒有權限的工具根本不會提供給模型。「詢問」會暫停本輪並等待你。",
       "tool": "工具",
@@ -2640,8 +2464,6 @@
       "bridge_off": "本機橋接已在 設定 → 瀏覽器擴充功能 中停用；MCP 端點需要它",
       "endpoint": "端點",
       "selftest": "測試",
-      "token": "Bearer 權杖",
-      "token_hint": "與瀏覽器擴充功能使用的權杖相同。可在 設定 → 瀏覽器擴充功能 中更換。",
       "connect": "連線用戶端",
       "connect_hint": "複製適用於你的代理程式的片段。Claude Code：執行指令。其他：貼到設定檔中。",
       "exposed": "已公開 {{count}} 個工具",
@@ -2657,7 +2479,8 @@
         "unknown_agent": "該代理程式已不在名單中。",
         "generic": "MCP 伺服器發生錯誤。"
       },
-      "import_queue": "該設定中還有 {{count}} 個伺服器等待檢查。"
+      "import_queue": "該設定中還有 {{count}} 個伺服器等待檢查。",
+      "copied": "Copied"
     },
     "accounts": {
       "title": "Accounts & quota",
@@ -2716,7 +2539,6 @@
       "heatmap_more": "more",
       "heatmap_peak": "peak",
       "top_tools": "Top tools",
-      "top_prompts": "Most expensive prompts",
       "sessions_title": "Sessions",
       "turns": "turns",
       "session_live": "live",
@@ -2863,7 +2685,6 @@
       "unknown": "Unavailable"
     },
     "jobs": {
-      "title": "Jobs",
       "lede": "Agent runs that work in the background while you do something else.",
       "new_title": "New job",
       "agent": "Agent",
@@ -2931,7 +2752,6 @@
       "no_matches": "No tasks in this filter."
     },
     "loops": {
-      "title": "Loops",
       "lede": "Run the same prompt round after round until the work checks out.",
       "new_title": "New Loop",
       "agent": "Agent",
@@ -2945,7 +2765,6 @@
       "max_rounds": "Max rounds",
       "max_minutes": "Max minutes",
       "check_command": "Check command",
-      "stop_hint": "The loop stops when the check command exits 0, or when rounds or minutes run out; with none set it stops after 10 rounds.",
       "start": "Start loop",
       "list_title": "Loops",
       "empty": "No loops yet. Start one above.",
@@ -2977,6 +2796,20 @@
       "edge_bottom": "Bottom",
       "edge_left": "Left",
       "drag_hint": "You can also drag the strip: it snaps to the nearest edge.",
+      "appearance": "外觀",
+      "size": "大小",
+      "size_s": "小",
+      "size_m": "中",
+      "size_l": "大",
+      "show_percent": "顯示百分比",
+      "show_percent_hint": "在每個圓環下方顯示已用比例。",
+      "show_pace": "顯示節奏",
+      "show_pace_hint": "在圓環上標出平均使用時應到達的位置，並顯示你是否超前。",
+      "contrast": "高對比",
+      "contrast_hint": "不透明背景，更粗的線條與更深的文字。",
+      "notifications": "通知",
+      "notify_pace": "依目前節奏將用盡時提醒",
+      "notify_pace_hint": "每個週期一次：依目前節奏會在重置前用盡時提醒。",
       "providers": "What it may read",
       "privacy": "Each reader only opens the login that tool already keeps on this computer, read-only, and asks that provider's own server. Tokens are never logged, stored or shown. Each provider is asked at most every 5 minutes, and never while the strip is closed.",
       "beta": "beta",
@@ -3026,17 +2859,19 @@
           "needs_auth": "Sign in again in the tool itself.",
           "rate_limited": "The provider asked us to wait.",
           "error": "Could not read."
+        },
+        "near_limit": "接近上限",
+        "accounts": "帳號",
+        "pace": {
+          "on": "節奏正常",
+          "under": "比節奏慢 {{delta}}%",
+          "ahead": "比節奏快 {{delta}}%",
+          "ahead_out": "比節奏快 {{delta}}% · {{time}}後用盡"
         }
       }
     },
     "chat": {
       "details": "Agent details"
-    },
-    "nav": {
-      "work": "Work",
-      "configure": "Configure",
-      "monitor": "Monitor",
-      "experimental": "Experimental"
     },
     "arena": {
       "explanation": "Compare the same task across models. This feature is not available yet; use Chat to work with a configured agent."
@@ -3105,7 +2940,6 @@
     }
   },
   "omni": {
-    "avatar_label": "Omni, the assistant mascot",
     "sidebar_profile": "Your profile"
   },
   "pet": {
@@ -3411,7 +3245,6 @@
       "skill_bound": "選片技能已安裝，並已連結到這個機器人。"
     },
     "bots": {
-      "nav": "建立機器人",
       "advanced": "進階詳細資料",
       "back": "代理",
       "cancel": "取消",
@@ -4215,7 +4048,6 @@
       "unblock_unknown": "在不確定的情況下繼續",
       "budget_title": "預算",
       "budget_details": "預算詳細資料",
-      "budget_edit_hint": "若要提高預算，請建立一個上限更高的新任務，或取消後重新建立這個任務。",
       "pool_in_flight": "進行中的呼叫",
       "pool_reserved": "已預留",
       "context_title": "修正上下文",
@@ -4231,7 +4063,6 @@
       "exit_code": "結束代碼",
       "artifact": "檔案",
       "confidence": "信心度",
-      "verified": "已重新檢查。",
       "export": "匯出診斷資料",
       "exported": "診斷資料已儲存至 {{path}}",
       "picker_failed": "此處無法使用儲存對話框。",
@@ -4344,7 +4175,6 @@
       "tokens_now": "已用 {{spent}} / {{limit}}",
       "minutes": "新的時間上限（工作分鐘數）",
       "minutes_now": "已工作 {{spent}} / {{limit}} 分鐘",
-      "none": "無上限",
       "why_minutes": "時間上限讓它停下了：給它更多分鐘。留空的欄位保持原值。",
       "keep_blank": "留空的欄位保持原值。",
       "submit": "提高上限",
@@ -4470,5 +4300,55 @@
     "open_settings": "開啟 Cookie 設定",
     "done": "我已登入",
     "deny": "拒絕"
+  },
+  "usage_tray": {
+    "menu": {
+      "accounts": "Accounts shown",
+      "no_accounts": "No Claude Code or Codex login found",
+      "icon_shows": "Icon shows",
+      "shows_session": "Session (5 h)",
+      "shows_weekly": "Weekly",
+      "shows_busiest": "Most used account",
+      "percent_text": "Show percentage",
+      "colored": "Loop in colour",
+      "thresholds": "Alert thresholds",
+      "threshold_item": "Orange at {{warn}}%, red at {{critical}}%",
+      "open_claude": "Open Claude Code in this account",
+      "add_account": "Add account…",
+      "open_app": "Open OmniGet",
+      "refresh": "Refresh now",
+      "hide": "Hide this icon",
+      "tooltip": "OmniGet usage",
+      "toggle": "Usage icon in the menu bar",
+      "default_login": "Terminal login",
+      "session": "session",
+      "weekly": "weekly"
+    },
+    "panel": {
+      "title": "Usage",
+      "empty_title": "Which accounts should the icon watch?",
+      "empty_body": "Nothing is read until you pick an account. OmniGet only asks each tool's own server, with the login the tool already keeps.",
+      "no_logins": "No Claude Code or Codex login found. Add one below.",
+      "session": "Session",
+      "weekly": "Weekly",
+      "resets_at": "resets {{when}}",
+      "runs_out": "at this pace, limit at {{when}}",
+      "lasts": "lasts until the reset",
+      "spent_today": "{{amount}} today",
+      "updated": "updated {{when}}",
+      "pending": "reading…",
+      "needs_auth": "login expired: open the tool to sign in again",
+      "rate_limited": "the server asked to wait",
+      "error": "could not read",
+      "refresh": "Refresh",
+      "open_app": "Open OmniGet",
+      "add_account": "Add account",
+      "open_claude": "Open Claude Code",
+      "choose": "Accounts",
+      "now": "now",
+      "in_min": "in {{count}} min",
+      "in_hours": "in {{hours}}h{{minutes}}",
+      "in_days": "in {{count}} days"
+    }
   }
 }

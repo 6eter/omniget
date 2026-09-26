@@ -41,7 +41,6 @@ const AUTH_TIMEOUT: std::time::Duration = std::time::Duration::from_secs(600);
 const COOKIE_TICK: std::time::Duration = std::time::Duration::from_secs(1);
 const HINT_GRACE: std::time::Duration = std::time::Duration::from_secs(30);
 
-#[tauri::command]
 pub async fn open_auth_webview(
     app: AppHandle,
     request: AuthWebviewRequest,

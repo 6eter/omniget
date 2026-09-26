@@ -8,7 +8,6 @@ export type Lane = (typeof LANES)[number];
 
 /** Champion classes as the client tags them in `roles`. */
 export const CHAMPION_CLASSES = ["fighter", "mage", "assassin", "marksman", "support", "tank"] as const;
-export type ChampionClass = (typeof CHAMPION_CLASSES)[number];
 
 /**
  * Draws a lane, never the one just drawn when there is a choice, so hitting

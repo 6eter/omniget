@@ -84,6 +84,11 @@ pub struct ReportOptions {
     /// Count subagent turns (`isSidechain`) as their own messages.
     pub include_sidechains: bool,
     pub limits: BTreeMap<String, PlanLimits>,
+    /// Estimate the 5 h and weekly windows from the history. They look back a
+    /// week, so the report then reads a week of logs even for `days: 1`; a
+    /// caller that only wants spend (the usage icon) turns this off and reads
+    /// just the last `days`.
+    pub estimate_windows: bool,
     /// Epoch ms; injected so the tests do not depend on the clock.
     pub now_ms: i64,
 }
@@ -96,6 +101,7 @@ impl Default for ReportOptions {
             include_app_ledger: true,
             include_sidechains: true,
             limits: BTreeMap::new(),
+            estimate_windows: true,
             now_ms: chrono::Utc::now().timestamp_millis(),
         }
     }
@@ -329,14 +335,34 @@ pub async fn report(
 ) -> CliUsageReport {
     let roots = super::scan::default_roots(accounts);
     let state_path = super::state_path();
-    let mut state = state_path
-        .as_ref()
-        .map(|p| ScanState::load(p))
-        .unwrap_or_default();
-    // The entries of past scans are not kept in memory, so a report always
-    // reads the whole history: the offsets only skip files that did not move
-    // when the caller asks for an incremental refresh.
-    let outcome = super::scan::scan_roots(&roots, &mut state);
+    // The entries of past scans are not kept in memory, so a report reads the
+    // whole history from byte 0. Resuming from the saved offsets (as this did
+    // until 2026-09-26) dropped every file that had not grown since the last
+    // scan: a week of use showed as the last two sessions. The offsets are
+    // still saved for the incremental readers that share the state file.
+    // Only the logs written inside the report's reach are read. The estimated
+    // 5 h and weekly windows look back a week, so the reach is never shorter
+    // than that, plus a day of slack for a session that spans midnight.
+    let reach_days = if opts.estimate_windows {
+        opts.days.max(8) as u64
+    } else {
+        opts.days.max(1) as u64 + 1
+    };
+    let modified_since = std::time::SystemTime::UNIX_EPOCH
+        + std::time::Duration::from_millis(opts.now_ms.max(0) as u64)
+        - std::time::Duration::from_secs(reach_days * 86_400);
+    // Parsing is plain file IO and JSON: off the async runtime, so the app's
+    // commands never queue behind it.
+    let scanned = tokio::task::spawn_blocking(move || {
+        let mut state = ScanState::default();
+        let outcome = super::scan::scan_roots_since(&roots, &mut state, Some(modified_since));
+        (state, outcome)
+    })
+    .await;
+    let (state, outcome) = match scanned {
+        Ok(done) => done,
+        Err(_) => (ScanState::default(), Default::default()),
+    };
     if let Some(p) = &state_path {
         let _ = state.save(p);
     }
@@ -351,7 +377,11 @@ pub async fn report(
             prices.insert(model, p);
         }
     }
-    let estimated = super::windows::estimated_windows(&outcome.entries, opts.now_ms, &opts.limits);
+    let estimated = if opts.estimate_windows {
+        super::windows::estimated_windows(&outcome.entries, opts.now_ms, &opts.limits)
+    } else {
+        Vec::new()
+    };
     let mut real = super::windows::windows_from_samples(&outcome.limits, opts.now_ms);
     if let Some(text) = super::capacity_path().and_then(|p| std::fs::read_to_string(p).ok()) {
         real.extend(super::windows::real_windows(

@@ -56,8 +56,6 @@ export type ProbeParam = (typeof PROBE_PARAMS)[number];
 export const MAX_PROBE_REQUESTS = 8;
 export const MAX_OUTPUT_TOKENS = 200;
 
-export const VERDICT_ORDER: Verdict[] = ["proven", "sent", "ignored", "unsupported"];
-
 // ---------------------------------------------------------------- pure helpers
 
 /** i18n key for a verdict badge. */

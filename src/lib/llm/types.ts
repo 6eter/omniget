@@ -30,21 +30,6 @@ export interface Message {
   parts: ContentPart[];
 }
 
-export interface ToolSpec {
-  name: string;
-  description: string;
-  input_schema: unknown;
-}
-
-export interface GenParams {
-  temperature?: number | null;
-  top_p?: number | null;
-  max_tokens?: number | null;
-  reasoning_effort?: string | null;
-  stop?: string[];
-  extra?: Record<string, unknown>;
-}
-
 export interface Usage {
   input_tokens: number;
   output_tokens: number;
@@ -201,14 +186,6 @@ export interface ChatMessage {
   modelLabel?: string;
   error?: LlmError | null;
   finish?: FinishReason | null;
-}
-
-/** `projectless` = personal (no folder, no project tools); `project` = one folder. */
-export type ContextKind = "projectless" | "project";
-
-export interface ConversationContext {
-  kind: ContextKind;
-  path: string | null;
 }
 
 export interface Conversation {

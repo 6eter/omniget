@@ -506,39 +506,6 @@ impl TaskBook {
             },
         });
     }
-
-    /// Recent trace lines of one agent, newest last.
-    pub fn trace_of(&self, ent: EntId, n: usize) -> Vec<TraceEntry> {
-        let mut v: Vec<TraceEntry> = self
-            .trace
-            .iter()
-            .filter(|e| e.agent == ent)
-            .cloned()
-            .collect();
-        if v.len() > n {
-            v.drain(..v.len() - n);
-        }
-        v
-    }
-
-    /// Counts per state, for metrics.
-    pub fn census(&self) -> BTreeMap<&'static str, usize> {
-        let mut m = BTreeMap::new();
-        for t in self.tasks.values() {
-            let k = match t.state {
-                TaskState::Queued => "queued",
-                TaskState::Travelling => "travelling",
-                TaskState::Executing => "executing",
-                TaskState::AwaitingEffect => "awaiting_effect",
-                TaskState::Blocked => "blocked",
-                TaskState::Completed => "completed",
-                TaskState::Cancelled => "cancelled",
-                TaskState::Failed => "failed",
-            };
-            *m.entry(k).or_insert(0) += 1;
-        }
-        m
-    }
 }
 
 /// Energy after one need period, by what the agent is doing.

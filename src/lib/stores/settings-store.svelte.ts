@@ -13,7 +13,6 @@ export type AppSettings = {
     always_ask_path: boolean;
     video_quality: string;
     skip_existing: boolean;
-    download_attachments: boolean;
     download_descriptions: boolean;
     embed_metadata: boolean;
     embed_thumbnail: boolean;

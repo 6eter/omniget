@@ -61,11 +61,6 @@ pub async fn keys(client: &ApiClient) -> Result<WbiKeys> {
     Ok(fresh)
 }
 
-pub async fn invalidate_cache() {
-    let mut guard = KEYS_CACHE.write().await;
-    *guard = None;
-}
-
 async fn fetch_keys(client: &ApiClient) -> Result<WbiKeys> {
     let raw = client.get_json(NAV_URL).await?;
     let data = match check_api_response(&raw) {

@@ -217,67 +217,6 @@ pub fn catalog() -> Vec<GgufModel> {
         .collect()
 }
 
-/// Downloads one catalogue model into `<app_data>/models/llm/`.
-/// Verifies the pinned sha256 when there is one (fail-closed); otherwise
-/// records the hash it computed in `sha256.json` beside the file.
-pub async fn download_model(id: &str, progress: ProgressFn) -> Result<PathBuf, String> {
-    let model = catalog()
-        .into_iter()
-        .find(|m| m.id == id)
-        .ok_or_else(|| format!("{ERR_LOCAL_MODEL}: unknown model {id}"))?;
-    let dir = models_dir().ok_or_else(|| format!("{ERR_LOCAL_MODEL}: no data directory"))?;
-    std::fs::create_dir_all(&dir).map_err(|e| format!("{ERR_LOCAL_MODEL}: {e}"))?;
-    let dest = dir.join(&model.file);
-    let client = crate::core::tools::client().map_err(|e| format!("{ERR_LOCAL_MODEL}: {e}"))?;
-    crate::core::tools::download_to(
-        &client,
-        &model.url,
-        &dest,
-        &progress,
-        &format!("llm-model:{id}"),
-    )
-    .await
-    .map_err(|e| format!("{ERR_LOCAL_MODEL}: {e}"))?;
-
-    let bytes = tokio::fs::read(&dest)
-        .await
-        .map_err(|e| format!("{ERR_LOCAL_MODEL}: {e}"))?;
-    let hash = crate::core::dependencies::integrity::sha256_hex(&bytes);
-    match model.sha256.as_deref() {
-        Some(expected) if !expected.eq_ignore_ascii_case(&hash) => {
-            let _ = tokio::fs::remove_file(&dest).await;
-            return Err(format!(
-                "{ERR_LOCAL_HASH}: {} has sha256 {hash}, expected {expected}",
-                model.file
-            ));
-        }
-        Some(_) => {}
-        None => {
-            tracing::warn!(
-                "[llm] {} has no pinned sha256 in the catalogue; recorded {hash}",
-                model.file
-            );
-            record_hash(&dir, &model.file, &hash);
-        }
-    }
-    Ok(dest)
-}
-
-fn record_hash(dir: &Path, file: &str, hash: &str) {
-    let path = dir.join("sha256.json");
-    let mut map: serde_json::Map<String, serde_json::Value> = std::fs::read_to_string(&path)
-        .ok()
-        .and_then(|t| serde_json::from_str(&t).ok())
-        .unwrap_or_default();
-    map.insert(
-        file.to_string(),
-        serde_json::Value::String(hash.to_string()),
-    );
-    if let Ok(text) = serde_json::to_string_pretty(&map) {
-        let _ = std::fs::write(path, text);
-    }
-}
-
 // ── Detection ─────────────────────────────────────────────────────────
 
 /// Model ids out of an OpenAI `/v1/models` body. Pure; no network.

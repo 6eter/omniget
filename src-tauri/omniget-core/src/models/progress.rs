@@ -40,13 +40,6 @@ impl StreamInfo {
             .filter(|v| *v != "none")
             .map(|v| v.split('.').next().unwrap_or(v).to_string())
     }
-
-    pub fn short_acodec(&self) -> Option<String> {
-        self.acodec
-            .as_deref()
-            .filter(|a| *a != "none")
-            .map(|a| a.split('.').next().unwrap_or(a).to_string())
-    }
 }
 
 #[derive(Debug, Clone, Default)]

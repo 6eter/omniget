@@ -579,10 +579,6 @@ export function getUsageError(): string {
   return usageError;
 }
 
-export function isAccountsDemo(): boolean {
-  return demo;
-}
-
 export function isBusy(): boolean {
   return busy;
 }

@@ -6,6 +6,7 @@
    */
   import { t } from "$lib/i18n";
   import { mcpErrorKey, type McpServerRow, type McpTestResult } from "$lib/llm/mcp";
+  import AgentOrb from "../AgentOrb.svelte";
 
   let {
     rows,
@@ -69,6 +70,7 @@
             disabled={testingId !== null}
             onclick={() => ontest(row.config.id)}
           >
+            {#if testingId === row.config.id}<AgentOrb activity="connecting" />{/if}
             {testingId === row.config.id ? $t("llm.mcp.testing") : $t("llm.mcp.test")}
           </button>
           <button type="button" class="button" onclick={() => ongrants(row)}>

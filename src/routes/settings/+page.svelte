@@ -63,11 +63,11 @@
     }
   }
 
-  async function handleInstallDep(name: string, variant: string | null = null) {
+  async function handleInstallDep(name: string) {
     const wasInstalled = deps.find((d) => d.name === name)?.installed ?? false;
     installingDep = name;
     try {
-      const version = await invoke<string>("install_dependency", { name, variant, force: wasInstalled });
+      const version = await invoke<string>("install_dependency", { name, force: wasInstalled });
       await loadDeps();
       await refreshYtdlpStatus();
       showToast(

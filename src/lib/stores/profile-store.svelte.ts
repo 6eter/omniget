@@ -174,10 +174,6 @@ export function isProfileAvailable(): boolean {
   return available;
 }
 
-export function clearProfileError(): void {
-  errorKey = null;
-}
-
 /** Loads once per session unless `force` is set. Never throws. */
 export function loadProfile(force = false): Promise<void> {
   if (inFlight) return inFlight;

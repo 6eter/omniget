@@ -35,7 +35,7 @@ pub fn parse_ps(v: &serde_json::Value) -> Vec<LocalModel> {
 
 #[async_trait::async_trait]
 impl UsageProvider for Ollama {
-    fn id(&self) -> &'static str {
+    fn id(&self) -> &str {
         "ollama"
     }
     fn label(&self) -> &'static str {

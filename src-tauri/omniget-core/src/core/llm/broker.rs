@@ -216,11 +216,6 @@ impl ToolBroker {
         self.register(prefix.to_string(), specs, executor)
     }
 
-    /// Drop a source registered with [`Self::register_source`].
-    pub fn unregister_source(&self, prefix: &str) -> usize {
-        self.unregister(prefix)
-    }
-
     /// Drop one MCP server (disabled, removed, or failed to connect). Returns
     /// how many specs went away.
     pub fn unregister_mcp(&self, server: &str) -> usize {
@@ -737,11 +732,6 @@ impl ToolBroker {
             }
         }
         allowed
-    }
-
-    /// The code the coordinator reports when an `Ask` expires.
-    pub fn timeout_error(name: &str) -> LlmError {
-        LlmError::new(ERR_TOOL_TIMEOUT, format!("nobody answered for `{name}`"))
     }
 }
 

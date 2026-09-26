@@ -16,7 +16,6 @@ import { chunkId } from '$lib/world/render/camera';
 import { CHUNK_TILES, type ChunkId, type ChunkTile } from '$lib/world/render/types';
 
 export const OMNI_ATLAS_URL = '/world/omni/atlas.json';
-export const CASA_ATLAS_URL = '/world/tiles/casa-v1/atlas.json';
 /** Visual theme only: the same tile keys and collision metadata as casa-v1. */
 export const CRAFT_ATLAS_URL = '/world/tiles/craft-v1/atlas.json';
 /** The workshop's town art (ground, houses, props, crops), for the city. */

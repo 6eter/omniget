@@ -15,14 +15,6 @@ pub struct CdnPreferences {
     pub prefer_alternatives: bool,
 }
 
-pub async fn resolve_best_url(
-    client: &ApiClient,
-    primary: &str,
-    backups: &[String],
-) -> Result<ResolvedStream> {
-    resolve_best_url_with_cdn(client, primary, backups, &CdnPreferences::default()).await
-}
-
 pub async fn resolve_best_url_with_cdn(
     client: &ApiClient,
     primary: &str,

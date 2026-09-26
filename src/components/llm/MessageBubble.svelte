@@ -10,6 +10,8 @@
   import { agentTint, type AgentDef, type ChatMessage, type ToolCallView } from "$lib/llm/types";
   import { tintToCss } from "$lib/stores/profile-store.svelte";
   import { getAgent } from "$lib/stores/llm-store.svelte";
+  import type { OrbState } from "thinking-orbs/engine";
+  import AgentOrb from "./AgentOrb.svelte";
 
   let {
     message,
@@ -38,6 +40,17 @@
     return isAssistant ? renderSafeMarkdownSync(message.text, cache, () => (version += 1)) : "";
   });
   let toolCalls = $derived<ToolCallView[]>(message.toolCalls ?? []);
+  // While the turn streams, the orb says what the agent is doing right now.
+  let runningTool = $derived(toolCalls.filter((c) => !c.done).pop());
+  let orbState = $derived<OrbState>(
+    runningTool ? toolOrb(runningTool.name) : message.text ? "composing" : "breathing",
+  );
+
+  function toolOrb(tool: string): OrbState {
+    if (/search|fetch|grep|glob|browse|web/i.test(tool)) return "searching";
+    if (/bash|shell|exec|run|python|code/i.test(tool)) return "solving";
+    return "working";
+  }
   let name = $derived(
     isSystem ? $t("assist.groups.app_note") : authorKind === "user" ? $t("llm.conv.you") : authorName,
   );
@@ -49,6 +62,9 @@
       <span class="dot" style:background={tintToCss(agentTint(author))} aria-hidden="true"></span>
     {/if}
     <span class="who">{name}</span>
+    {#if streaming && isAssistant && !isSystem}
+      <AgentOrb activity={orbState} />
+    {/if}
     {#if message.modelLabel}
       <span class="model">{message.modelLabel}</span>
     {/if}

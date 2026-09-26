@@ -259,7 +259,7 @@ function stringMap(value: unknown): Record<string, string> {
   return out;
 }
 
-// ── Server half (extracted from components/tools/ai/McpTool.svelte) ──────
+// ── Server half ──────────────────────────────────────────────────────────
 
 /** `abcd…wxyz`, or dots when the token is too short to keep a shape. */
 export function maskToken(token: string): string {

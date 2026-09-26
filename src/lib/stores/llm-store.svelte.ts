@@ -85,7 +85,6 @@ export function setFrameScheduler(next: FrameScheduler | null): void {
 // ── State ───────────────────────────────────────────────────────────────
 
 let agents = $state<AgentDef[]>([]);
-let rosterLoading = $state(false);
 let rosterAvailable = $state(true);
 let demoRoster = $state(false);
 let conversations = $state<Conversation[]>([]);
@@ -142,10 +141,6 @@ export function getAgent(id: string | null | undefined): AgentDef | null {
   return agents.find((a) => a.id === id) ?? null;
 }
 
-export function isRosterLoading(): boolean {
-  return rosterLoading;
-}
-
 /** False once a command answered `ERR_STUB`. */
 export function isRosterAvailable(): boolean {
   return rosterAvailable;
@@ -177,7 +172,6 @@ export function llmErrorKey(err: unknown): string {
 export function loadRoster(force = false): Promise<void> {
   if (rosterInFlight) return rosterInFlight;
   if (rosterLoadedOnce && !force) return Promise.resolve();
-  rosterLoading = true;
   errorKey = null;
   rosterInFlight = invoke<AgentDef[] | null>("llm_roster_list")
     .then((list) => {
@@ -199,7 +193,6 @@ export function loadRoster(force = false): Promise<void> {
       if (!isUnavailable(err)) errorKey = llmErrorKey(err);
     })
     .finally(() => {
-      rosterLoading = false;
       rosterLoadedOnce = true;
       rosterInFlight = null;
       if (!activeConversationId && agents.length > 0) selectAgent(agents[0].id);
@@ -781,7 +774,6 @@ export function resetLlmStore(): void {
   stopTurn();
   startingRequestId = null;
   agents = [];
-  rosterLoading = false;
   rosterAvailable = true;
   demoRoster = false;
   conversations = [];

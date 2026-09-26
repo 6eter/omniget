@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // Sobe o app com `OMNIGET_WORLD_BENCH=<cenario>`, captura a linha
-// `[world-bench] {json}` e compara com `docs/bench/world-baseline.json`.
+// `[world-bench] {json}` e compara com `scripts/bench/world-baseline.json`.
 //
 // Irmao de `scripts/smoke-test.mjs`. A diferenca e a pergunta: o smoke pergunta
 // "abre?", este pergunta "abre, desenha, e quanto custa?". O app faz o trabalho
@@ -316,7 +316,7 @@ export function formatTable(comparison) {
   if (comparison.baselineEmpty) {
     lines.push(
       "> **baseline vazio: sem comparacao.** Os numeros abaixo foram medidos mas nao",
-      "> confrontados com nada. Quem preenche `docs/bench/world-baseline.json` e o",
+      "> confrontados com nada. Quem preenche `scripts/bench/world-baseline.json` e o",
       "> orquestrador, ao fechar a fase.",
       "",
     );
@@ -367,7 +367,7 @@ const HELP = `world-bench — bench de pior caso do mundo (Fase 6)
 
   --scenario <nome>   ${Object.keys(SCENARIOS).join(" | ")}  (padrao: llvmpipe)
   --bin <caminho>     binario do app (padrao: src-tauri/target/debug/omniget)
-  --baseline <arq>    padrao: docs/bench/world-baseline.json
+  --baseline <arq>    padrao: scripts/bench/world-baseline.json
   --out <arq>         grava o JSON do resultado
   --summary <arq>     grava a tabela markdown (use $GITHUB_STEP_SUMMARY)
   --timeout <ms>      teto do app (padrao: 120000; tambem vira OMNIGET_WORLD_BENCH_TIMEOUT_MS)
@@ -437,7 +437,7 @@ async function main() {
   }
 
   const timeoutMs = Number(typeof args.timeout === "string" ? args.timeout : 120_000);
-  const baselinePath = resolve(typeof args.baseline === "string" ? args.baseline : "docs/bench/world-baseline.json");
+  const baselinePath = resolve(typeof args.baseline === "string" ? args.baseline : "scripts/bench/world-baseline.json");
 
   // Perfil limpo, no molde do `smoke-test.mjs`. Nao e higiene: as configuracoes
   // reais do dono mudam o que o bench mede. A deteccao de area de transferencia

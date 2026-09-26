@@ -1,0 +1,10 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "usage-panel",
+  "description": "Capability for the menu bar usage panel (the popover of the usage icon: undecorated, hides on blur). It listens on `usage-tray://view`; everything else goes through the usage_tray_* commands. `core:event:default` is spelled out because the event listener is gated by capabilities.",
+  "windows": ["usage-panel"],
+  "permissions": [
+    "core:default",
+    "core:event:default"
+  ]
+}

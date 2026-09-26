@@ -667,7 +667,7 @@ mod tests {
             format!("https://user:{S}@host.test/file.mp4"),
             format!("https://host.test/cb#access_token={S}"),
             format!("https://host.test/x?{S}"),
-            format!("https://cdn.test/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.c2lnbmF0dXJl/i.m3u8"),
+            "https://cdn.test/eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIn0.c2lnbmF0dXJl/i.m3u8".to_string(),
             format!("host.test/x?igsh={S}"),
         ] {
             let once = redact_url(&input);

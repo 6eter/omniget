@@ -18,7 +18,7 @@
 //! the same `snapshot().fingerprint()`; `tests/checkpoint.rs` proves the round
 //! trip on the crate's own fixtures.
 
-use std::collections::{BTreeMap, VecDeque};
+use std::collections::VecDeque;
 
 use serde::{Deserialize, Serialize};
 
@@ -193,8 +193,3 @@ impl World {
         Ok(w)
     }
 }
-
-// Silence an unused-import lint when the compiler decides `BTreeMap` is not
-// needed by a future edit; it documents that mailbox queues are id-ordered.
-#[allow(dead_code)]
-type IdOrdered<T> = BTreeMap<EntId, T>;

@@ -33,7 +33,7 @@
     "message": "Текущая страница не является поддерживаемой медиа-страницей для расширения OmniGet."
   },
   "error_invalid_url_detail": {
-    "message": "Попробуйте снова с прямой страницы видео, рилса, поста, плейлиста или курса."
+    "message": "Попробуйте снова с прямой страницы видео, рилса, поста или плейлиста."
   },
   "error_launch_failed_title": {
     "message": "Не удалось запустить OmniGet из браузера"
@@ -155,9 +155,6 @@
   },
   "popup_get_app": {
     "message": "Скачать OmniGet"
-  },
-  "popup_lbl_course": {
-    "message": "Отправить курс в OmniGet"
   },
   "popup_lbl_playlist": {
     "message": "Отправить плейлист в OmniGet"

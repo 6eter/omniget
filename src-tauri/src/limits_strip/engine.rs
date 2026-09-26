@@ -13,7 +13,7 @@
 
 use super::activity::{Activity, Tracker, EXTERNAL_WINDOW_SECS};
 use super::alerts::{self, Alert};
-use super::prefs::{Edge, StripPrefs};
+use super::prefs::{Edge, Look, StripPrefs};
 use super::providers::{self, OMNIGET_ID};
 use super::{now_ms, LimitWindow, ReadError, Reading, UsageProvider, EVENT_CHIME, EVENT_STATE};
 use serde::Serialize;
@@ -39,6 +39,9 @@ pub struct Ring {
     pub label: String,
     pub local: bool,
     pub beta: bool,
+    /// Which login this ring reads (account name and e-mail), when the tool
+    /// can hold several.
+    pub account: Option<super::AccountTag>,
     /// `pending`, `ok`, `absent`, `needs_auth`, `rate_limited`, `error`.
     pub status: &'static str,
     pub message: Option<String>,
@@ -52,6 +55,8 @@ pub struct Ring {
 pub struct Snapshot {
     pub open: bool,
     pub edge: Edge,
+    /// Size, labels, pace tick and contrast, from the prefs.
+    pub look: Look,
     pub rings: Vec<Ring>,
 }
 
@@ -140,16 +145,36 @@ struct Held {
     status: Option<&'static str>,
     message: Option<String>,
     reading: Option<Reading>,
+    /// `(window id, resets_at)` of the pace warnings already raised: one per
+    /// window period.
+    paced: Vec<(String, i64)>,
 }
 
 #[derive(Default)]
 struct Inner {
     prefs: StripPrefs,
+    /// The readers as of the last look at `accounts.json`.
+    readers: Vec<Arc<dyn UsageProvider>>,
     slots: HashMap<String, Slot>,
     held: HashMap<String, Held>,
     tracker: Tracker,
     cancel: Option<CancellationToken>,
     last_emitted: Option<Snapshot>,
+    /// The menu bar usage icon (`crate::usage_tray`): while it is on, the task
+    /// stays alive without the strip window and also reads the rings it lists.
+    tray_on: bool,
+    tray_ids: Vec<String>,
+    last_tray: Option<Snapshot>,
+}
+
+/// Whether a ring is read: the strip has it on, or the usage icon lists it.
+fn reads(g: &Inner, id: &str) -> bool {
+    g.prefs.is_on(id) || (g.tray_on && id != OMNIGET_ID && g.tray_ids.iter().any(|t| t == id))
+}
+
+/// The task has someone to serve: the strip window, or the usage icon.
+fn alive(app: &AppHandle) -> bool {
+    window_open(app) || inner().tray_on
 }
 
 fn inner() -> MutexGuard<'static, Inner> {
@@ -166,20 +191,39 @@ fn window_open(app: &AppHandle) -> bool {
 }
 
 /// Ids and defaults for `StripPrefs::adopt`: only what never leaves this
-/// machine starts ticked.
-pub fn known() -> Vec<(&'static str, bool)> {
-    let mut out = vec![(OMNIGET_ID, true)];
-    out.extend(providers::all().iter().map(|p| (p.id(), p.local())));
+/// machine starts ticked, and a newly saved account (`claude:<id>`) starts
+/// like the ring of its CLI (`claude`) is set now.
+pub fn known(readers: &[Arc<dyn UsageProvider>], prefs: &StripPrefs) -> Vec<(String, bool)> {
+    let mut out = vec![(OMNIGET_ID.to_string(), true)];
+    out.extend(readers.iter().map(|p| {
+        let id = p.id();
+        let on = match id.split_once(':') {
+            Some((base, _)) => prefs.provider(base).map(|b| b.enabled).unwrap_or(false),
+            None => p.local(),
+        };
+        (id.to_string(), on)
+    }));
     out
 }
 
 fn build_snapshot(inner: &Inner, open: bool, now: i64) -> Snapshot {
-    let readers = providers::all();
+    build_snapshot_for(inner, open, now, false)
+}
+
+/// `for_tray`: the rings the usage icon lists instead of the strip's.
+fn build_snapshot_for(inner: &Inner, open: bool, now: i64, for_tray: bool) -> Snapshot {
+    let readers = &inner.readers;
     let rings = inner
         .prefs
         .providers
         .iter()
-        .filter(|p| inner.prefs.is_on(&p.id))
+        .filter(|p| {
+            if for_tray {
+                inner.tray_on && inner.tray_ids.iter().any(|t| *t == p.id)
+            } else {
+                inner.prefs.is_on(&p.id)
+            }
+        })
         .filter_map(|p| {
             let reader = readers.iter().find(|r| r.id() == p.id);
             if reader.is_none() && p.id != OMNIGET_ID {
@@ -192,6 +236,7 @@ fn build_snapshot(inner: &Inner, open: bool, now: i64) -> Snapshot {
                 label: reader.map(|r| r.label()).unwrap_or("OmniGet").to_string(),
                 local: reader.map(|r| r.local()).unwrap_or(true),
                 beta: reader.map(|r| r.beta()).unwrap_or(false),
+                account: reader.and_then(|r| r.account().cloned()),
                 status: held.status.unwrap_or("pending"),
                 message: held.message,
                 reading: held.reading,
@@ -204,6 +249,7 @@ fn build_snapshot(inner: &Inner, open: bool, now: i64) -> Snapshot {
     Snapshot {
         open,
         edge: inner.prefs.edge,
+        look: inner.prefs.look(),
         rings,
     }
 }
@@ -213,16 +259,58 @@ pub fn snapshot(app: &AppHandle) -> Snapshot {
 }
 
 fn emit_if_changed(app: &AppHandle) {
-    let snap = {
+    let open = window_open(app);
+    let (strip, tray) = {
         let mut g = inner();
-        let snap = build_snapshot(&g, window_open(app), now_ms());
-        if g.last_emitted.as_ref() == Some(&snap) {
-            return;
-        }
-        g.last_emitted = Some(snap.clone());
-        snap
+        let now = now_ms();
+        let snap = build_snapshot(&g, open, now);
+        let strip = (g.last_emitted.as_ref() != Some(&snap)).then(|| {
+            g.last_emitted = Some(snap.clone());
+            snap
+        });
+        let tray = if g.tray_on {
+            let snap = build_snapshot_for(&g, open, now, true);
+            (g.last_tray.as_ref() != Some(&snap)).then(|| {
+                g.last_tray = Some(snap.clone());
+                snap
+            })
+        } else {
+            None
+        };
+        (strip, tray)
     };
-    let _ = app.emit(EVENT_STATE, &snap);
+    if let Some(snap) = strip {
+        let _ = app.emit(EVENT_STATE, &snap);
+    }
+    if let Some(snap) = tray {
+        crate::usage_tray::on_state(app, &snap);
+    }
+}
+
+/// The rings the usage icon lists, for its panel and its first paint.
+pub fn tray_snapshot(app: &AppHandle) -> Snapshot {
+    build_snapshot_for(&inner(), window_open(app), now_ms(), true)
+}
+
+/// Turns the usage icon's demand on or off and says which rings it wants.
+/// On, the task starts (or keeps running) even with the strip closed; off,
+/// the rings only it wanted are forgotten, and the task stops when the strip
+/// is closed too.
+pub fn set_tray(app: &AppHandle, on: bool, ids: Vec<String>) {
+    {
+        let mut g = inner();
+        g.tray_on = on;
+        g.tray_ids = ids;
+        g.last_tray = None;
+        forget_off(&mut g);
+    }
+    if on {
+        start(app);
+        wake();
+    } else if !window_open(app) {
+        stop();
+    }
+    emit_if_changed(app);
 }
 
 /// The engine's copy of the prefs. Readings of anything that is now off are
@@ -230,19 +318,36 @@ fn emit_if_changed(app: &AppHandle) {
 pub fn set_prefs(app: &AppHandle, prefs: StripPrefs) {
     {
         let mut g = inner();
-        let off: Vec<String> = g
-            .held
-            .keys()
-            .filter(|id| !prefs.is_on(id))
-            .cloned()
-            .collect();
-        for id in off {
-            g.held.remove(&id);
-            g.slots.remove(&id);
-        }
         g.prefs = prefs;
+        forget_off(&mut g);
     }
     emit_if_changed(app);
+}
+
+fn forget_off(g: &mut Inner) {
+    let off: Vec<String> = g
+        .held
+        .keys()
+        .chain(g.slots.keys())
+        .filter(|id| !reads(g, id))
+        .cloned()
+        .collect();
+    for id in off {
+        g.held.remove(&id);
+        g.slots.remove(&id);
+    }
+}
+
+/// Takes a fresh reader list (an account was added or removed in the app)
+/// and lists newcomers in the prefs. Returns whether the prefs changed.
+fn take_readers(g: &mut Inner, readers: Vec<Arc<dyn UsageProvider>>) -> bool {
+    let known = known(&readers, &g.prefs);
+    g.readers = readers;
+    let changed = g.prefs.adopt(&known);
+    if changed {
+        forget_off(g);
+    }
+    changed
 }
 
 /// Pulls the next read of one provider (or of all) forward. Returns the ids
@@ -255,7 +360,7 @@ pub fn refresh(provider_id: Option<&str>) -> Vec<String> {
         .providers
         .iter()
         .filter(|p| provider_id.map(|id| id == p.id).unwrap_or(true))
-        .filter(|p| g.prefs.is_on(&p.id) && p.id != OMNIGET_ID)
+        .filter(|p| reads(&g, &p.id) && p.id != OMNIGET_ID)
         .map(|p| p.id.clone())
         .collect();
     let mut out = Vec::new();
@@ -313,7 +418,7 @@ fn apply(
     let mut chime = None;
     {
         let mut g = inner();
-        if !g.prefs.is_on(id) {
+        if !reads(&g, id) {
             // Switched off while the read was in the air: the answer is dropped.
             g.slots.remove(id);
             g.held.remove(id);
@@ -342,19 +447,46 @@ fn apply(
         let next = match outcome {
             None => Held {
                 status: Some("absent"),
-                message: None,
-                reading: None,
+                ..Default::default()
             },
             Some(Ok(reading)) => {
+                let mut raised = alerts::between(
+                    held.reading.as_ref(),
+                    &reading,
+                    &g.prefs.sane_thresholds(),
+                    now,
+                );
+                // Periods that ended are dropped; the new ones warned about
+                // join, whether or not the user wants to hear it, so turning
+                // the switch on later does not replay an old forecast.
+                let mut paced: Vec<(String, i64)> = held
+                    .paced
+                    .iter()
+                    .filter(|(_, r)| *r > now)
+                    .cloned()
+                    .collect();
+                // No forecast on a first reading: opening the strip halfway
+                // through a heavy session is not news.
+                if held.reading.is_some() {
+                    for a in alerts::pace(&reading, &paced, now) {
+                        if let alerts::Alert::Pace { window, .. } = &a {
+                            if let Some(r) = reading
+                                .windows
+                                .iter()
+                                .find(|w| &w.id == window)
+                                .and_then(|w| w.resets_at)
+                            {
+                                paced.push((window.clone(), r));
+                            }
+                        }
+                        raised.push(a);
+                    }
+                }
                 let found = alerts::wanted(
-                    alerts::between(
-                        held.reading.as_ref(),
-                        &reading,
-                        &g.prefs.sane_thresholds(),
-                        now,
-                    ),
+                    raised,
                     g.prefs.notify_thresholds,
                     g.prefs.notify_reset,
+                    g.prefs.notify_pace,
                 );
                 if !found.is_empty() && !g.prefs.is_muted(id) {
                     chime = Some(found);
@@ -363,6 +495,7 @@ fn apply(
                     status: Some("ok"),
                     message: None,
                     reading: Some(reading),
+                    paced,
                 }
             }
             // The last good reading stays on the card next to the error.
@@ -370,14 +503,14 @@ fn apply(
                 status: Some(e.code()),
                 message: Some(e.message()),
                 reading: held.reading,
+                paced: held.paced,
             },
         };
         g.held.insert(id.to_string(), next);
     }
     if let Some(found) = chime {
         use tauri_plugin_notification::NotificationExt;
-        for alert in &found {
-            let (title, body) = alerts::notification(reader.label(), alert);
+        if let Some((title, body)) = alerts::summary(&reader.display_label(), &found) {
             let _ = app.notification().builder().title(title).body(body).show();
         }
         let _ = app.emit(
@@ -404,12 +537,21 @@ fn spawn_read(app: AppHandle, reader: Arc<dyn UsageProvider>) {
 
 /// Starts the task if it is not running. Called once the window exists.
 pub fn start(app: &AppHandle) {
+    if inner().cancel.is_some() {
+        return;
+    }
+    // Disk first, lock after: `start` can run on the main thread (the usage
+    // icon's menu, app setup), and every other caller of `inner()` would wait
+    // behind a file read.
+    let readers = providers::cached();
+    let prefs = super::prefs::load();
     let cancel = {
         let mut g = inner();
         if g.cancel.is_some() {
             return;
         }
-        g.prefs = super::commands::load_adopted();
+        g.prefs = prefs;
+        take_readers(&mut g, readers);
         let token = CancellationToken::new();
         g.cancel = Some(token.clone());
         token
@@ -418,11 +560,25 @@ pub fn start(app: &AppHandle) {
     tauri::async_runtime::spawn(async move {
         let llm = app.try_state::<crate::AppState>().map(|s| s.llm.clone());
         let mut bus = llm.as_ref().map(|m| m.bus().subscribe());
-        let readers = providers::all();
         let mut tick: u64 = 0;
         loop {
-            if cancel.is_cancelled() || !window_open(&app) {
+            if cancel.is_cancelled() || !alive(&app) {
                 break;
+            }
+            if tick > 0 && tick % EXTERNAL_EVERY == 0 {
+                // Accounts created or removed in the app show up (or leave)
+                // here, without a restart.
+                if let Ok(fresh) = tokio::task::spawn_blocking(providers::all).await {
+                    let (changed, prefs) = {
+                        let mut g = inner();
+                        let changed = take_readers(&mut g, fresh);
+                        (changed, g.prefs.clone())
+                    };
+                    if changed {
+                        let _ = app.emit(super::EVENT_PREFS, &prefs);
+                        super::commands::reflow(&app);
+                    }
+                }
             }
             let now = now_ms();
             let mut events = Vec::new();
@@ -484,8 +640,8 @@ pub fn start(app: &AppHandle) {
                             OMNIGET_ID.to_string(),
                             Held {
                                 status: Some("ok"),
-                                message: None,
                                 reading: Some(reading),
+                                ..Default::default()
                             },
                         );
                     }
@@ -493,15 +649,35 @@ pub fn start(app: &AppHandle) {
                         g.held.remove(OMNIGET_ID);
                     }
                 }
-                let ids = due(&g.prefs, &g.slots, true, now);
+                let mut ids = due(&g.prefs, &g.slots, window_open(&app), now);
+                if g.tray_on {
+                    // The usage icon's rings the strip does not read itself.
+                    for id in &g.tray_ids {
+                        let free = g
+                            .slots
+                            .get(id)
+                            .map(|s| !s.in_flight && s.next_at <= now)
+                            .unwrap_or(true);
+                        if free && id != OMNIGET_ID && !ids.contains(id) {
+                            ids.push(id.clone());
+                        }
+                    }
+                }
                 for id in &ids {
                     g.slots.entry(id.clone()).or_default().in_flight = true;
                 }
                 ids
             };
+            let readers = inner().readers.clone();
             for id in to_read {
-                if let Some(reader) = readers.iter().find(|r| r.id() == id) {
-                    spawn_read(app.clone(), reader.clone());
+                match readers.iter().find(|r| r.id() == id) {
+                    Some(reader) => spawn_read(app.clone(), reader.clone()),
+                    // Listed in the prefs but gone from the accounts.
+                    None => {
+                        if let Some(slot) = inner().slots.get_mut(&id) {
+                            slot.in_flight = false;
+                        }
+                    }
                 }
             }
             emit_if_changed(&app);
@@ -530,6 +706,13 @@ static WAKE: tokio::sync::Notify = tokio::sync::Notify::const_new();
 /// Stops the task and forgets every reading: a closed strip holds nothing.
 pub fn stop() {
     let mut g = inner();
+    if g.tray_on {
+        // The usage icon still wants its rings: the task keeps running and
+        // only what the strip alone read is forgotten.
+        g.last_emitted = None;
+        forget_off(&mut g);
+        return;
+    }
     if let Some(token) = g.cancel.take() {
         token.cancel();
     }
@@ -690,6 +873,7 @@ mod tests {
     fn a_snapshot_lists_only_what_is_switched_on() {
         let inner = Inner {
             prefs: prefs(&[OMNIGET_ID, "ollama"], &["claude"]),
+            readers: providers::all_with(&[]),
             ..Default::default()
         };
         let snap = build_snapshot(&inner, true, 0);
@@ -697,5 +881,38 @@ mod tests {
         assert_eq!(ids, [OMNIGET_ID, "ollama"]);
         assert_eq!(snap.rings[1].status, "pending");
         assert!(snap.rings[1].local && !snap.rings[1].beta);
+    }
+
+    #[test]
+    fn a_new_account_starts_like_its_cli_ring() {
+        use omniget_core::core::llm::cli_runtime::accounts::{CliAccount, CliKind};
+        let accounts = [CliAccount {
+            id: "acc-1".into(),
+            cli: CliKind::Claude,
+            config_dir: "/p/acc-1".into(),
+            label: "Max".into(),
+            disabled: false,
+            sandbox: Default::default(),
+        }];
+        let readers = providers::all_with(&accounts);
+        let mut g = Inner {
+            prefs: prefs(&["claude"], &["codex"]),
+            ..Default::default()
+        };
+        assert!(take_readers(&mut g, readers.clone()));
+        assert!(
+            g.prefs.is_on("claude:acc-1"),
+            "claude is on, so is the newcomer"
+        );
+        let k = known(&readers, &prefs(&[], &["claude"]));
+        assert!(k.contains(&("claude:acc-1".to_string(), false)));
+        assert!(k.contains(&("ollama".to_string(), true)));
+        // The account is removed in the app: its ring and reading go.
+        g.held.insert("claude:acc-1".into(), Held::default());
+        assert!(take_readers(&mut g, providers::all_with(&[])));
+        assert!(g.prefs.provider("claude:acc-1").is_none());
+        assert!(!g.held.contains_key("claude:acc-1"));
+        let snap = build_snapshot(&g, true, 0);
+        assert!(snap.rings.iter().all(|r| r.id != "claude:acc-1"));
     }
 }

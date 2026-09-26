@@ -165,8 +165,6 @@ test("default domains include all currently detectable platforms", async () => {
     "vimeo",
     "bilibili",
     "pinterest",
-    "hotmart",
-    "udemy",
     "bluesky",
     "telegram",
   ];

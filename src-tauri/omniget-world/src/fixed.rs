@@ -64,17 +64,6 @@ impl Fixed {
         Fixed(self.0.saturating_abs())
     }
 
-    #[inline]
-    pub const fn signum(self) -> i32 {
-        if self.0 > 0 {
-            1
-        } else if self.0 < 0 {
-            -1
-        } else {
-            0
-        }
-    }
-
     /// Fixed * fixed with the extra shift removed, in `i64` so the product of
     /// two large values does not wrap. Named `scale` and not `mul` because
     /// `Mul` is already implemented for `Fixed * i32`, which is a different
@@ -82,17 +71,6 @@ impl Fixed {
     #[inline]
     pub fn scale(self, other: Fixed) -> Fixed {
         Fixed(((self.0 as i64 * other.0 as i64) >> SHIFT) as i32)
-    }
-
-    #[inline]
-    pub fn clamp_to(self, lo: Fixed, hi: Fixed) -> Fixed {
-        if self.0 < lo.0 {
-            lo
-        } else if self.0 > hi.0 {
-            hi
-        } else {
-            self
-        }
     }
 
     /// Integer square root of `x`, used by the movement step. Pure integer

@@ -51,9 +51,11 @@
   import { showToast } from "$lib/stores/toast-store.svelte";
   import { rawTranslations, t, locale, isRtlLocale } from "$lib/i18n";
   import { trayStrings } from "$lib/tray-strings";
+  import { usageTrayStrings } from "$lib/usage-tray-strings";
   import { agentPrompts } from "$lib/agent-prompts";
   import { get } from "svelte/store";
   import { CORE_NAV_ITEMS, type NavItem } from "$lib/nav-config";
+  import { isBareWindow } from "$lib/bare-window";
   import type { Snippet } from "svelte";
   import type { Component } from "svelte";
 
@@ -90,6 +92,12 @@
     });
   });
 
+  // Same for the menu bar usage icon's native menu and tooltip (usage_tray).
+  $effect(() => {
+    const strings = usageTrayStrings($rawTranslations, $locale);
+    invoke("usage_tray_sync_strings", { strings }).catch(() => {});
+  });
+
   // Same push-based pattern for the prompts of the agents the backend seeds:
   // they are shown to the user, so they follow the interface language, while
   // the compiled-in English set in roster_store.rs stays the fallback
@@ -101,10 +109,10 @@
     });
   });
 
-  // The pet window is a bare 200x200 transparent canvas: no shell around it.
-  let isPetWindow = $derived(page.url.pathname === "/pet");
-  // Same for the limits strip: the window is exactly as big as what it draws.
-  let isLimitsStrip = $derived(page.url.pathname === "/limits-strip");
+  // The pet, the limits strip and the usage panel are windows exactly as big
+  // as what they draw: no shell, no boot work, no global dialogs. They never
+  // navigate away from their route, so this is read once.
+  const bareWindow = isBareWindow(page.url.pathname);
   let isCoreRoute = $derived(
     page.url.pathname === "/" ||
     page.url.pathname.startsWith("/downloads") ||
@@ -144,6 +152,7 @@
   }
 
   onMount(() => {
+    if (bareWindow) return;
     initDownloadListener();
     // If `get_settings` failed while the shell was booting, the sidebar has no
     // League entry and Settings spins forever. Retry a few times instead of
@@ -189,10 +198,17 @@
 
     let unlistenExternalUrl: (() => void) | null = null;
 
-    listen<Omit<ExternalUrlEvent, "id">>("external-url-event", (event) => {
+    listen<Omit<ExternalUrlEvent, "id">>("external-url", (event) => {
       handleExternalUrlEvent(event.payload);
     }).then((un) => {
       unlistenExternalUrl = un;
+      // Only now is it safe to flip Rust into emit mode: links that arrived
+      // while the webview was booting were parked in a queue and come back here.
+      invoke<Omit<ExternalUrlEvent, "id">[]>("register_external_frontend")
+        .then((events) => {
+          for (const event of events) handleExternalUrlEvent(event);
+        })
+        .catch(() => {});
     });
 
     return () => {
@@ -273,6 +289,7 @@
   }
 
   $effect(() => {
+    if (bareWindow) return;
     if (settings?.download.clipboard_detection) {
       onClipboardUrl((clipboardUrl) => {
         queueExternalPrefill({ action: "prefill", url: clipboardUrl, source: "clipboard" });
@@ -319,7 +336,7 @@
   }
 
   function onSidebarShortcut(e: KeyboardEvent) {
-    if (isPetWindow || isLimitsStrip || e.key.toLowerCase() !== "s" || e.altKey) return;
+    if (bareWindow || e.key.toLowerCase() !== "s" || e.altKey) return;
     const combo = isMac() ? e.ctrlKey && e.metaKey && !e.shiftKey : e.ctrlKey && e.shiftKey && !e.metaKey;
     if (!combo) return;
     e.preventDefault();
@@ -332,7 +349,7 @@
 
 <svelte:window onkeydown={onSidebarShortcut} />
 
-{#if isPetWindow || isLimitsStrip}
+{#if bareWindow}
   {@render children()}
 {:else}
 <div class="shell" data-reduce-motion={settings?.accessibility?.reduce_motion} data-reduce-transparency={settings?.accessibility?.reduce_transparency}>
@@ -381,6 +398,7 @@
 </div>
 {/if}
 
+{#if !bareWindow}
 <Toast />
 <McpAuthPrompt />
 <CommandPalette />
@@ -411,6 +429,7 @@
 
 {#if RecoveryDialog}
   <RecoveryDialog />
+{/if}
 {/if}
 
 <style>

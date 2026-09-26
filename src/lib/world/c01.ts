@@ -27,12 +27,6 @@ export const C01_DIRECTIONS: readonly Dir8[] = ['S', 'SW', 'W', 'NW', 'N', 'NE',
 export const V2_STATES = ['idle', 'walk', 'sit', 'talk', 'water', 'plant', 'harvest', 'carry', 'sleep', 'work'] as const;
 export type V2State = (typeof V2_STATES)[number];
 
-/**
- * The crate's animation ids (0..7: idle, walk, sit, sleep, work, talk, wave,
- * yawn) in V2 terms. Wave is a gesture of talk; yawn has no art and idles.
- */
-export const CRATE_ANIM_TO_V2: readonly V2State[] = ['idle', 'walk', 'sit', 'sleep', 'work', 'talk', 'talk', 'idle'];
-
 export interface ClipSpec {
   loop: boolean;
   durationSeconds: number;

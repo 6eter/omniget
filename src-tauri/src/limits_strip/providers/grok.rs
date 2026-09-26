@@ -114,7 +114,7 @@ pub fn parse_usage(v: &serde_json::Value) -> Vec<LimitWindow> {
 
 #[async_trait::async_trait]
 impl UsageProvider for Grok {
-    fn id(&self) -> &'static str {
+    fn id(&self) -> &str {
         "grok"
     }
     fn label(&self) -> &'static str {

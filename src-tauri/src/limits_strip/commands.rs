@@ -33,8 +33,20 @@ const DROP_QUIET: Duration = Duration::from_millis(450);
 /// The prefs with every known provider listed, newcomers at the end.
 pub fn load_adopted() -> StripPrefs {
     let mut p = prefs::load();
-    p.adopt(&engine::known());
+    p.adopt(&engine::known(&providers::cached(), &p));
     p
+}
+
+/// Re-sizes the collapsed strip after the ring count changed on its own (an
+/// account was added or removed). Left alone while the card is open: folding
+/// it places the window again anyway.
+pub fn reflow(app: &AppHandle) {
+    if EXPANDED.load(Ordering::Relaxed) {
+        return;
+    }
+    if let Some(window) = app.get_webview_window(WINDOW_LABEL) {
+        let _ = place(&window, &load_adopted(), false);
+    }
 }
 
 fn rings_of(p: &StripPrefs) -> usize {
@@ -66,19 +78,13 @@ fn place(window: &WebviewWindow, p: &StripPrefs, expanded: bool) -> Result<f64, 
     let area = area_of(window)?;
     let rings = rings_of(p);
     let along = p.along_of(p.edge);
-    let small = placement::window_rect(
-        p.edge,
-        along,
-        area,
-        placement::window_size(p.edge, rings, false),
-    );
+    let look = p.look();
+    let size = |expanded| {
+        placement::window_size_for(p.edge, rings, expanded, look.scale, look.show_percent)
+    };
+    let small = placement::window_rect(p.edge, along, area, size(false));
     let rect = if expanded {
-        placement::window_rect(
-            p.edge,
-            along,
-            area,
-            placement::window_size(p.edge, rings, true),
-        )
+        placement::window_rect(p.edge, along, area, size(true))
     } else {
         small
     };
@@ -204,10 +210,11 @@ async fn describe(app: &AppHandle, p: &StripPrefs) -> serde_json::Value {
         "beta": false,
         "detected": true,
     })];
-    for r in providers::all() {
+    for r in providers::cached() {
         list.push(json!({
             "id": r.id(),
             "label": r.label(),
+            "account": r.account(),
             "local": r.local(),
             "beta": r.beta(),
             // Offline and shallow: does the tool's folder exist on this OS?
@@ -234,7 +241,7 @@ pub async fn limits_strip_set_prefs(
     prefs: StripPrefs,
 ) -> Result<serde_json::Value, String> {
     let mut p = prefs;
-    p.adopt(&engine::known());
+    p.adopt(&engine::known(&providers::cached(), &p));
     p.thresholds = p.sane_thresholds();
     let previous = load_adopted();
     prefs::save(&p)?;

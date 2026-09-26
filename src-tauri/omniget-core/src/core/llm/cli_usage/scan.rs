@@ -151,11 +151,31 @@ pub fn scan(roots: &[PathBuf], state: &mut ScanState) -> Vec<CliUsageEntry> {
 
 /// Full sweep: entries, rate-limit samples and statistics.
 pub fn scan_roots(roots: &[ScanRoot], state: &mut ScanState) -> ScanOutcome {
+    scan_roots_since(roots, state, None)
+}
+
+/// [`scan_roots`] limited to the files written at or after `modified_since`.
+/// A log last touched before that moment cannot hold a newer entry, and the
+/// history grows forever (gigabytes for a daily Claude Code user), so a
+/// report over the last days has no reason to parse years of it.
+pub fn scan_roots_since(
+    roots: &[ScanRoot],
+    state: &mut ScanState,
+    modified_since: Option<std::time::SystemTime>,
+) -> ScanOutcome {
     let started = std::time::Instant::now();
     let mut jobs: Vec<Job> = Vec::new();
     for root in roots {
         for (path, project) in walk_jsonl(&root.path) {
-            let size = std::fs::metadata(&path).map(|m| m.len()).unwrap_or(0);
+            let Ok(meta) = std::fs::metadata(&path) else {
+                continue;
+            };
+            if let (Some(since), Ok(modified)) = (modified_since, meta.modified()) {
+                if modified < since {
+                    continue;
+                }
+            }
+            let size = meta.len();
             let mut from = state.offset(&path);
             if from > size {
                 from = 0; // rotated or rewritten
@@ -172,10 +192,12 @@ pub fn scan_roots(roots: &[ScanRoot], state: &mut ScanState) -> ScanOutcome {
     }
     let files_seen = jobs.len() as u32;
     let todo: Vec<Job> = jobs.into_iter().filter(|j| j.size > j.from).collect();
+    // Half the cores at most: this runs while the user works, and a scan that
+    // takes every core makes the whole machine (and the app) stutter.
     let threads = std::thread::available_parallelism()
-        .map(|n| n.get())
+        .map(|n| (n.get() / 2).max(1))
         .unwrap_or(1)
-        .clamp(1, 8)
+        .clamp(1, 4)
         .min(todo.len().max(1));
     let chunk = todo.len().div_ceil(threads.max(1)).max(1);
     let mut results: Vec<FileResult> = Vec::with_capacity(todo.len());
@@ -620,5 +642,36 @@ mod tests {
         assert_eq!(out.limits[0].0, "work");
         assert_eq!(out.stats.partial_lines, 1);
         std::fs::remove_dir_all(&dir).ok();
+    }
+
+    #[test]
+    fn logs_untouched_since_the_cutoff_are_not_read() {
+        let dir = tmpdir("since");
+        let old = dir.join("old.jsonl");
+        let new = dir.join("new.jsonl");
+        std::fs::write(
+            &old,
+            format!("{}\n", line("2026-03-01T12:00:00.000Z", "r-old", 5)),
+        )
+        .unwrap();
+        std::fs::write(
+            &new,
+            format!("{}\n", line("2026-03-04T12:00:00.000Z", "r-new", 5)),
+        )
+        .unwrap();
+        let cutoff = std::time::SystemTime::now() - std::time::Duration::from_secs(3_600);
+        std::fs::File::options()
+            .write(true)
+            .open(&old)
+            .unwrap()
+            .set_modified(cutoff - std::time::Duration::from_secs(86_400))
+            .unwrap();
+        let roots = [ScanRoot::new(CliKind::Claude, "me", &dir)];
+        let recent = scan_roots_since(&roots, &mut ScanState::default(), Some(cutoff));
+        assert_eq!(recent.stats.files_seen, 1);
+        assert_eq!(recent.entries.len(), 1);
+        let all = scan_roots(&roots, &mut ScanState::default());
+        assert_eq!(all.entries.len(), 2);
+        let _ = std::fs::remove_dir_all(&dir);
     }
 }

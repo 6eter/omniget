@@ -25,7 +25,7 @@ pub fn parse_models(v: &serde_json::Value) -> Vec<LocalModel> {
 
 #[async_trait::async_trait]
 impl UsageProvider for LmStudio {
-    fn id(&self) -> &'static str {
+    fn id(&self) -> &str {
         "lmstudio"
     }
     fn label(&self) -> &'static str {

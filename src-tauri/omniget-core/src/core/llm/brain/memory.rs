@@ -20,7 +20,6 @@
 //! against this trait.
 
 use std::collections::BTreeMap;
-use std::path::PathBuf;
 use std::sync::Mutex;
 
 use async_trait::async_trait;
@@ -235,15 +234,6 @@ pub fn schema_statements() -> Vec<String> {
         }
     }
     out
-}
-
-/// `<app_data>/world/memory.sqlite`. `None` when the platform has no data
-/// directory, in which case the brain stays in memory for the session.
-pub fn memory_db_path() -> Option<PathBuf> {
-    if let Ok(dir) = std::env::var("OMNIGET_DATA_DIR") {
-        return Some(PathBuf::from(dir).join("world").join("memory.sqlite"));
-    }
-    dirs::data_dir().map(|d| d.join("omniget").join("world").join("memory.sqlite"))
 }
 
 /// Encode an embedding the way the `embedding` BLOB column stores it:

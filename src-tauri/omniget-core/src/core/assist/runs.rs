@@ -967,16 +967,6 @@ impl Registry {
         Ok(())
     }
 
-    pub fn set_resume_kind(&self, run_id: &str, resume: ResumeKind) -> Result<(), String> {
-        self.db.with(|c| {
-            c.execute(
-                "UPDATE runs_runs SET resume_kind=?2, updated_ms=?3 WHERE id=?1",
-                params![run_id, resume.as_str(), super::now_ms()],
-            )
-            .map(|_| ())
-        })
-    }
-
     /// Records the process a run launched: launch id (ours, unique) + pid.
     /// A pid alone never proves ownership; the launch id ties it to us.
     pub fn set_process(

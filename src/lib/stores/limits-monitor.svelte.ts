@@ -1,10 +1,12 @@
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 export type Edge = 'top' | 'right' | 'bottom' | 'left';
-export type Prefs = { enabled: boolean; edge: Edge; along: Record<string, number>; providers: { id: string; enabled: boolean; muted: boolean }[]; notify_thresholds: boolean; thresholds: number[]; notify_reset: boolean };
-export type ProviderInfo = { id: string; label: string; local: boolean; beta: boolean; detected: boolean };
+export type StripSize = 's' | 'm' | 'l';
+export type Prefs = { enabled: boolean; edge: Edge; along: Record<string, number>; providers: { id: string; enabled: boolean; muted: boolean }[]; notify_thresholds: boolean; thresholds: number[]; notify_reset: boolean; notify_pace: boolean; size: StripSize; show_percent: boolean; show_pace: boolean; contrast: boolean };
+export type AccountTag = { label: string | null; email: string | null };
+export type ProviderInfo = { id: string; label: string; local: boolean; beta: boolean; detected: boolean; account?: AccountTag | null };
 type Described = { prefs: Prefs; open: boolean; providers: ProviderInfo[] };
-export type MonitorRing = { id: string; label: string; status: string; read_at: number | null; reading: { windows: { id: string; label: string; used: number | null; resets_at: number | null }[] } | null };
+export type MonitorRing = { id: string; label: string; account?: AccountTag | null; status: string; read_at: number | null; reading: { windows: { id: string; label: string; used: number | null; resets_at: number | null }[] } | null };
 let prefs = $state<Prefs | null>(null);
 let providers = $state<ProviderInfo[]>([]);
 let rings = $state<MonitorRing[]>([]);

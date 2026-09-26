@@ -102,10 +102,6 @@ pub fn model_path() -> Option<PathBuf> {
     model_dir().map(|d| d.join(MODEL.file))
 }
 
-pub fn vocab_path() -> Option<PathBuf> {
-    model_dir().map(|d| d.join(VOCAB.file))
-}
-
 fn asset_path(a: &Asset) -> Option<PathBuf> {
     model_dir().map(|d| d.join(a.file))
 }

@@ -83,15 +83,6 @@ pub fn assist_memory_history(id: String) -> Result<Vec<MemoryView>, String> {
         .collect())
 }
 
-/// The compact profile a bot of this scope set would see (for "what does it
-/// get at the start of a turn?").
-#[tauri::command]
-pub fn assist_memory_profile(bot_id: String) -> Result<String, String> {
-    let db = db::global()?;
-    let ctx = omniget_core::core::assist::ctx::direct(&bot_id, None);
-    Ok(memory::profile(&db, &ctx, now_ms())?.text)
-}
-
 #[derive(Debug, Clone, Deserialize)]
 pub struct CreateMemory {
     pub scope: String,

@@ -17,11 +17,9 @@
   const TILES: Record<string, { glyph: string; from: string; to: string }> = {
     home: { glyph: "house", from: "#5AA9FF", to: "#1E6FE8" },
     downloads: { glyph: "tray-arrow-down", from: "#FFB340", to: "#F28500" },
-    chat: { glyph: "chats-circle", from: "#4CD964", to: "#2AA845" },
     llm: { glyph: "sparkle", from: "#C77DFF", to: "#7B3FE4" },
     help: { glyph: "book-open-text", from: "var(--accent)", to: "var(--accent)" },
     world: { glyph: "globe-hemisphere-west", from: "#67D27E", to: "#2F9E52" },
-    superpowers: { glyph: "lightning", from: "#F06CB8", to: "#C42F86" },
     settings: { glyph: "gear-six", from: "#A3A3A8", to: "#6F6F75" },
     about: { glyph: "info", from: "#5AA9FF", to: "#1E6FE8" },
     league: { glyph: "sword", from: "#E8B84A", to: "#B8860B" },

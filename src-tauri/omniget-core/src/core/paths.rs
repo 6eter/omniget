@@ -10,12 +10,10 @@ pub fn app_data_dir() -> Option<std::path::PathBuf> {
     if old_path.exists() {
         let _ = std::fs::create_dir_all(&new_path);
 
-        for dir_name in &["bin", "plugins"] {
-            let src = old_path.join(dir_name);
-            let dst = new_path.join(dir_name);
-            if src.exists() && !dst.exists() {
-                let _ = copy_dir_recursive(&src, &dst);
-            }
+        let src = old_path.join("bin");
+        let dst = new_path.join("bin");
+        if src.exists() && !dst.exists() {
+            let _ = copy_dir_recursive(&src, &dst);
         }
 
         if let Ok(entries) = std::fs::read_dir(&old_path) {

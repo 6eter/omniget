@@ -1,7 +1,6 @@
 const MEDIA_CONTENT_TYPES = new Set([
   "audio",
   "clip",
-  "course",
   "image",
   "playlist",
   "post",
@@ -44,7 +43,6 @@ export function detectSupportedMediaUrl(rawUrl) {
 function detectPlatform(url) {
   const host = url.hostname.toLowerCase();
 
-  if (matchesHost(host, "hotmart.com")) return "hotmart";
   if (matchesHost(host, "youtube.com") || matchesHost(host, "youtube-nocookie.com") || host === "youtu.be") return "youtube";
   if (matchesHost(host, "instagram.com") || matchesHost(host, "ddinstagram.com")) return "instagram";
   if (matchesHost(host, "tiktok.com")) return "tiktok";
@@ -55,7 +53,6 @@ function detectPlatform(url) {
   if (host === "bsky.app" || host.endsWith(".bsky.app")) return "bluesky";
   if (host === "t.me" || matchesHost(host, "telegram.me") || matchesHost(host, "telegram.org")) return "telegram";
   if (matchesHost(host, "vimeo.com")) return "vimeo";
-  if (matchesHost(host, "udemy.com")) return "udemy";
   if (matchesHost(host, "bilibili.com") || host === "b23.tv") return "bilibili";
 
   return null;
@@ -76,8 +73,6 @@ function detectContentType(platform, url) {
       return parseReddit(url, segments);
     case "twitch":
       return parseTwitch(url, segments);
-    case "hotmart":
-      return parseHotmart(segments);
     case "pinterest":
       return parsePinterest(segments);
     case "bluesky":
@@ -86,8 +81,6 @@ function detectContentType(platform, url) {
       return parseTelegram(segments);
     case "vimeo":
       return parseVimeo(segments);
-    case "udemy":
-      return parseUdemy(segments);
     case "bilibili":
       return parseBilibili(segments);
     default:
@@ -221,10 +214,6 @@ function parseTwitch(url, segments) {
   return "unknown";
 }
 
-function parseHotmart(segments) {
-  return segments.some((segment) => ["club", "lesson", "course"].includes(segment)) ? "course" : "unknown";
-}
-
 function parsePinterest(segments) {
   if (segments[0] === "pin" && segments[1]) {
     return "image";
@@ -255,10 +244,6 @@ function parseTelegram(segments) {
 
 function parseVimeo(segments) {
   return segments[0] && /^\d+$/.test(segments[0]) ? "video" : "unknown";
-}
-
-function parseUdemy(segments) {
-  return segments[0] === "course" && segments[1] ? "course" : "unknown";
 }
 
 function parseBilibili(segments) {

@@ -111,14 +111,6 @@ impl JevJudge {
         self
     }
 
-    pub fn with_model(mut self, model: impl Into<String>) -> Self {
-        let model: String = model.into();
-        if !model.trim().is_empty() {
-            self.model = model.trim().to_string();
-        }
-        self
-    }
-
     /// The state shared by one batch of questions.
     fn state(goal: &GoalContext, batch: &[Candidate]) -> Value {
         let mut candidates = Map::new();

@@ -69,22 +69,6 @@ pub async fn assist_learning_propose(candidate: NewCandidate) -> Result<Value, S
 }
 
 #[tauri::command]
-pub async fn assist_learning_revise(
-    candidate_id: String,
-    overlay: String,
-    reason: String,
-    observations: Vec<String>,
-) -> Result<Value, String> {
-    to_value(learning::revise(
-        &*db::global()?,
-        &candidate_id,
-        &overlay,
-        &reason,
-        &observations,
-    )?)
-}
-
-#[tauri::command]
 pub async fn assist_learning_candidate(candidate_id: String) -> Result<Value, String> {
     let db = db::global()?;
     Ok(json!({
@@ -102,15 +86,6 @@ pub async fn assist_learning_add_case(case: eval::NewCase) -> Result<Value, Stri
 #[tauri::command]
 pub async fn assist_learning_delete_case(case_id: String) -> Result<(), String> {
     eval::delete_case(&*db::global()?, &case_id)
-}
-
-#[tauri::command]
-pub async fn assist_learning_record_fixture(
-    case_id: String,
-    variant: String,
-    output: String,
-) -> Result<(), String> {
-    eval::record_fixture(&*db::global()?, &case_id, &variant, &output)
 }
 
 /// Live outputs: one model call per case and variant, reserved on the bot's

@@ -495,7 +495,6 @@
     "empty": "No results",
     "navigate": "navigate",
     "select": "select",
-    "close": "close",
     "group_nav": "Navigate",
     "group_action": "Actions",
     "action_paste": "Incolla URL dagli appunti"
@@ -523,13 +522,7 @@
     "adv_title": "Comando yt-dlp",
     "success_title": "Aggiunto ai Download",
     "success_first": "Il tuo primo download!",
-    "success_open": "Apri Download",
-    "batch_hint": "Più link? Incollali tutti insieme, uno per riga."
-  },
-  "tools": {
-    "common": {
-      "copied": "Copied"
-    }
+    "success_open": "Apri Download"
   },
   "downloads": {
     "phase_downloading": "Download in corso",
@@ -570,7 +563,6 @@
       "invalid": "Impossibile eseguire il comando: {{error}}",
       "engine_custom": "personale"
     },
-    "title": "Download",
     "empty": "Nessun download in corso",
     "status": {
       "queued": "In coda",
@@ -596,8 +588,6 @@
     "pause_all": "Pausa tutti",
     "resume_all": "Riprendi tutti",
     "reorder_hint": "trascina per riordinare",
-    "history_toggle": "Mostra/nascondi cronologia",
-    "history_toggle_hint": "Vedi i download passati (Ctrl+H)",
     "history_view_link": "Vedi cronologia download",
     "history_loading": "Caricamento cronologia…",
     "history_empty": "Nessun download completato finora.",
@@ -670,7 +660,6 @@
       "paused_all": "Tutti in pausa",
       "eta": "Circa {{eta}} rimanenti",
       "open": "Vedi download",
-      "indeterminate": "Download in corso, dimensione totale sconosciuta",
       "complete": "Download completati",
       "paused": "{{count}} in pausa",
       "failed": "{{count}} non riusciti",
@@ -679,20 +668,12 @@
     }
   },
   "toast": {
-    "download_preparing": "Preparazione download...",
     "download_complete": "Fatto! {{name}} e nella tua cartella",
     "clipboard_url_detected": "Link rilevato! Incolla per scaricare",
     "clipboard_empty": "Gli appunti sono vuoti",
     "auto_download_started": "Download automatico avviato",
     "external_url_ready": "URL ricevuto e pronto per il download",
     "external_url_queued": "Download aggiunto dall'estensione Chrome",
-    "hotkey_queued": "Download avviato dagli appunti",
-    "hotkey_already_queued": "Questo link è già in coda",
-    "hotkey_not_a_url": "Copia prima un link: negli appunti non c'è nessun indirizzo",
-    "hotkey_unsupported": "Nessun downloader gestisce questo link. Incollalo nella schermata iniziale per vedere le opzioni.",
-    "hotkey_clipboard_error": "Non è stato possibile leggere gli appunti. Copia di nuovo il link e usa la scorciatoia.",
-    "channel_new": "{{channel}}: {{count}} nuovo/i video",
-    "channel_new_auto": "{{channel}}: download di {{count}} nuovo/i video",
     "file_copied_to_clipboard": "File copiato negli appunti",
     "generic_download_complete": "{{name}} — download completato!"
   },
@@ -774,10 +755,7 @@
       "section_clipboard_hotkeys": "Clipboard & hotkeys",
       "section_clipboard_hotkeys_desc": "Paste detection and global shortcuts.",
       "section_per_platform": "Per-platform options",
-      "section_per_platform_desc": "YouTube, courses, and Bilibili-specific settings.",
-      "download_attachments": "Scarica allegati",
-      "download_attachments_desc": "Salva gli allegati del corso insieme alle lezioni scaricate.",
-      "download_descriptions": "Salva descrizioni",
+      "section_per_platform_desc": "YouTube and Bilibili settings.",
       "embed_metadata": "Incorpora metadati",
       "embed_metadata_desc": "Scrivi titolo e artista nei file scaricati",
       "embed_thumbnail": "Incorpora miniatura come copertina",
@@ -792,13 +770,11 @@
       "organize_by_platform_desc": "Salva i file in sottocartelle con il nome della piattaforma",
       "download_subtitles": "Scarica sottotitoli",
       "download_subtitles_desc": "Scarica i sottotitoli disponibili insieme ai video (YouTube)",
-      "what_to_also_save": "What to also save",
       "youtube_specific": "YouTube-specific",
       "include_auto_subtitles": "Includi sottotitoli auto-generati",
       "include_auto_subtitles_desc": "Scarica anche i sottotitoli generati automaticamente da YouTube quando non ne esistono di manuali (qualità variabile)",
       "caption_locale": "Lingua dei sottotitoli",
       "caption_locale_desc": "Lingua in cui scaricare i sottotitoli (se disponibile). Altrimenti usa quello che la fonte fornisce.",
-      "caption_locale_auto": "Lingua dell'app",
       "keep_vtt": "Mantieni i file .vtt originali",
       "keep_vtt_desc": "Conserva il WebVTT grezzo accanto al SRT convertito. Utile per player o script che richiedono il formato originale.",
       "bilibili_section": "Bilibili",
@@ -852,8 +828,6 @@
       "split_by_chapters_desc": "Quando il video ha marcatori di capitolo, salva ciascun capitolo come file separato",
       "live_from_start": "Registra le dirette dall'inizio",
       "live_from_start_desc": "Quando scarichi una diretta in corso, catturala dall'inizio invece che dal momento attuale",
-      "presets": "Preset rapidi",
-      "presets_desc": "Configurazione con un clic. Tocca una scheda per applicare.",
       "preset_fast": "Veloce",
       "preset_fast_desc": "480p · senza metadati · senza sottotitoli",
       "preset_quality": "Qualità",
@@ -872,7 +846,7 @@
       "music_hotkey_enabled_desc": "Download clipboard URL as audio with a keyboard shortcut (uses Music Format below)",
       "music_hotkey_binding": "Music hotkey shortcut",
       "music_audio_format": "Music download format",
-      "music_audio_format_desc": "Audio format used by the music hotkey and the Music plugin downloader",
+      "music_audio_format_desc": "Audio format used by the music hotkey",
       "copy_to_clipboard_on_hotkey": "Copia file negli appunti dopo download da scorciatoia",
       "copy_to_clipboard_on_hotkey_desc": "Copia automaticamente il file scaricato negli appunti per incollare facilmente",
       "filename_template": "Modello nome file",
@@ -958,12 +932,10 @@
       "status_missing": "Missing",
       "source_managed": "Managed",
       "download_managed": "Get Managed",
-      "not_found": "non trovato",
       "install": "Installa",
       "update": "Aggiorna",
       "install_success": "{{name}} {{version}} installato",
       "update_success": "{{name}} aggiornato a {{version}}",
-      "variant_aria": "Variante",
       "more_options": "Altre opzioni",
       "pick_custom_file": "Seleziona file dal disco…",
       "show_folder": "Mostra cartella",
@@ -975,7 +947,6 @@
       "rollback_done": "Tornato a {{version}}",
       "rollback_failed": "Ripristino non riuscito: {{msg}}",
       "pick_dialog_title": "Seleziona file per {{name}}",
-      "filter_pdfium": "Libreria PDFium",
       "filter_all_files": "Tutti i file",
       "set_file_failed": "Impostazione file fallita: {{msg}}",
       "open_folder_failed": "Apertura cartella fallita: {{msg}}",
@@ -1019,24 +990,7 @@
       "username": "Nome utente",
       "password": "Password"
     },
-    "ytdlp_flags": {
-      "title": "Flag di yt-dlp",
-      "embed_subs": "Incorpora sottotitoli",
-      "write_thumbnail": "Salva miniatura",
-      "write_description": "Salva descrizione",
-      "write_comments": "Salva commenti",
-      "restrict_filenames": "Nomi ASCII",
-      "no_overwrites": "Non sovrascrivere",
-      "prefer_free_formats": "Formati liberi",
-      "force_ipv4": "Forza IPv4",
-      "geo_bypass": "Aggira geoblocco",
-      "limit_rate": "Limita velocità",
-      "sleep_interval": "Intervallo di attesa",
-      "limit_rate_ph": "es. 1M",
-      "sleep_interval_ph": "es. 5"
-    },
     "advanced": {
-      "title": "Avanzate",
       "max_concurrent_downloads": "Download simultanei",
       "max_concurrent_downloads_desc": "Numero massimo di download simultanei",
       "max_concurrent_segments": "Segmenti simultanei",
@@ -1071,9 +1025,7 @@
       "cookies_from_browser_placeholder": "ex.: firefox, chrome, edge",
       "user_agent": "User-Agent personalizzato (avanzato)",
       "user_agent_desc": "Invia un User-Agent personalizzato ai download. Lascia vuoto per usare quello predefinito.",
-      "user_agent_placeholder": "User-Agent predefinito del browser",
-      "twitter_manual_cookie": "Cookie manuale",
-      "twitter_manual_cookie_desc": "Se un download fallisce, puoi incollare qui un header Cookie manuale e riprovare. Non è limitato a Twitter/X. Esempio: sessionid=...; csrftoken=...; auth_token=..."
+      "user_agent_placeholder": "User-Agent predefinito del browser"
     },
     "group_general": "General",
     "group_media": "Media",
@@ -1265,32 +1217,17 @@
       "cleared_toast": "Cookies moved to trash",
       "add_account_label": "Aggiungi un altro account",
       "add_account_success": "Account '{{slug}}' aggiunto — {{count}} cookies",
-      "account_primary_tag": "predefinito",
       "bilibili": {
         "login_qr_title": "Accedi a Bilibili con il QR Code",
         "login_qr_subtitle": "Apri l'app Bilibili e scansiona il QR Code qui sotto.",
         "login_qr_pending": "In attesa della scansione...",
         "login_qr_scanned": "Scansionato. Conferma sul telefono.",
         "login_qr_expired": "QR Code scaduto. Generane uno nuovo.",
-        "login_qr_cancelled": "Accesso annullato.",
         "login_qr_regenerate": "Genera nuovo codice",
         "login_qr_success": "Connesso come {{uname}}",
-        "login_sms_title": "Accedi via SMS",
-        "login_sms_country": "Codice paese",
-        "login_sms_phone": "Telefono",
-        "login_sms_send_code": "Invia codice",
-        "login_sms_resend_in": "Reinvia tra {{seconds}}s",
-        "login_sms_code": "Codice di verifica",
-        "login_sms_submit": "Accedi",
-        "login_sms_captcha_required": "Risolvi prima il captcha",
-        "login_sms_captcha_solve": "Apri captcha",
-        "login_sms_sent": "SMS inviato. Inserisci il codice ricevuto.",
         "login_close": "Chiudi",
         "login_cancel": "Annulla",
         "login_error_generic": "Accesso fallito. Riprova.",
-        "add_account_qr_btn": "Accedi con QR Code",
-        "add_account_sms_btn": "Accedi via SMS",
-        "add_account_manual_btn": "Incolla cookie manualmente",
         "import_watch_later": "Importa 'Guarda dopo'",
         "import_history": "Importa cronologia",
         "import_no_account": "Accedi prima a Bilibili",
@@ -1318,7 +1255,6 @@
     "media_changed": "Questo link è cambiato dall'ultimo download: {{summary}}",
     "rule_applied": "Regola «{{name}}» applicata",
     "preflight_skips": "Saltati {{skipped}} su {{total}}: non supportati o ripetuti.",
-    "batch_file_open": "Carica da file",
     "batch_file_title": "Seleziona un file .txt con URL",
     "batch_file_empty": "Nessun URL valido trovato nel file",
     "mode_auto": "Auto",
@@ -1381,7 +1317,6 @@
       "clip": "Clip",
       "short": "Short",
       "playlist": "Playlist",
-      "course": "Corso",
       "file": "File",
       "unknown": "Media"
     },
@@ -1394,8 +1329,6 @@
     "fmt_speed": "Vel.",
     "cookie_account": "Account",
     "cookie_account_cookies": "cookies",
-    "mode_normal": "Normale",
-    "mode_advanced": "Avanzato",
     "adv": {
       "url_label": "URL",
       "url_placeholder": "https://...",
@@ -1489,7 +1422,6 @@
       "overview": "Overview",
       "terms": "termini",
       "project": "progetto",
-      "roadmap": "roadmap",
       "changelog": "changelog",
       "debug": "debug info"
     },
@@ -1529,13 +1461,6 @@
     "feature_themes": "11 temi: Dark, Light, Catppuccin (4 varianti), One Dark Pro, Dracula, NyxVamp (3 varianti)",
     "feature_i18n": "disponibile in inglese, portoghese, cinese, giapponese, italiano e francese",
     "feature_tech": "realizzato con Tauri + Rust. veloce e leggero",
-    "roadmap_intro": "cosa è previsto per le prossime versioni di OmniGet.",
-    "roadmap_platforms_title": "integrazioni",
-    "roadmap_features_title": "funzionalità",
-    "roadmap_community_title": "hai un'idea?",
-    "roadmap_community_text": "accettiamo idee e suggerimenti! è un ottimo modo per richiedere una nuova piattaforma o funzionalità.",
-    "roadmap_community_discord": "scrivici su Discord:",
-    "roadmap_community_issue": "oppure apri una issue nel repository:",
     "tagline": "Scarica qualsiasi cosa, da qualsiasi luogo.",
     "credit": "Fatto con amore da tonho.wtf"
   },
@@ -1545,7 +1470,7 @@
   },
   "onboarding": {
     "welcome_title": "Benvenuto su OmniGet!",
-    "welcome_desc": "Ti aiuto a scaricare qualsiasi video o corso da Internet. Semplice, veloce e gratuito.",
+    "welcome_desc": "Ti aiuto a scaricare qualsiasi video da Internet. Semplice, veloce e gratuito.",
     "next": "Avanti",
     "skip": "Salta",
     "back": "Indietro",
@@ -1569,7 +1494,7 @@
     "agents_desc": "OmniGet now has a team of AI agents and a house where they live. Both are in the sidebar.",
     "agents_llm": "Chat, attach a folder and let an agent read, edit and run your code. It asks before it writes.",
     "agents_world": "The house where your agents walk around, work at the bench when a tool runs, and receive visitors.",
-    "more_later": "Plugins for courses and Telegram, the global hotkey and Discord presence live in Settings whenever you want them.",
+    "more_later": "The global hotkey, the browser extension and Discord presence live in Settings whenever you want them.",
     "profile": {
       "title": "Pick a nickname",
       "desc": "It stays on this computer and shows up when you share something. You can skip this.",
@@ -1580,26 +1505,18 @@
     }
   },
   "hints": {
-    "omnibox": "Incolla qui l'URL del video o del media che vuoi scaricare.",
     "hotkey": "Scorciatoia globale: scarica automaticamente l'URL presente negli appunti.",
     "clipboard": "Rileva automaticamente gli URL quando copi un link e compila la omnibox."
   },
   "common": {
     "cancel": "Annulla",
     "clear": "Clear",
-    "retry": "Riprova",
     "close": "Chiudi",
     "hint": "Suggerimento",
     "error": "Errore",
     "loading": "Loading…",
     "unknown_error": "Errore sconosciuto",
-    "ytdlp_missing": "yt-dlp non è installato. Installalo nelle Impostazioni per abilitare i download.",
-    "go_to_settings": "Vai alle Impostazioni",
-    "cookie_error_message": "Il rilevamento automatico dei cookie funziona solo con Firefox. Chrome, Edge e altri browser Chromium bloccano l'accesso. Installa Firefox e accedi ai tuoi account, oppure esporta un file cookies.txt e configuralo in Impostazioni > Download > File cookie.",
-    "cookie_file_label": "File cookie (cookies.txt)",
-    "cookie_file_choose": "Scegli file",
-    "cookie_file_hint": "Esporta i cookie dal browser usando un'estensione e seleziona il file qui.",
-    "dismiss": "Dismiss"
+    "cookie_error_message": "Il rilevamento automatico dei cookie funziona solo con Firefox. Chrome, Edge e altri browser Chromium bloccano l'accesso. Installa Firefox e accedi ai tuoi account, oppure esporta un file cookies.txt e configuralo in Impostazioni > Download > File cookie."
   },
   "platforms": {
     "bilibili": {
@@ -1647,22 +1564,6 @@
         "64k": "64 kbps",
         "unknown": "Sconosciuto"
       },
-      "badge": {
-        "charging_exclusive": "Solo sostenitori",
-        "preview": "Anteprima",
-        "paid_locked": "A pagamento",
-        "partial_preview": "Demo",
-        "pgc": "Serie",
-        "collab": "Collab",
-        "expired": "Scaduto"
-      },
-      "phase": {
-        "preview": "Lettura qualità",
-        "connecting": "Connessione CDN",
-        "downloading": "Download",
-        "muxing": "Unione",
-        "done": "Fatto"
-      },
       "preview": {
         "loading": "Lettura qualità disponibili...",
         "auto": "Auto",
@@ -1671,12 +1572,6 @@
         "audio": "Audio",
         "no_account_hint": "Accedi a Bilibili per sbloccare 4K, HDR, Hi-Res lossless e Dolby.",
         "premium_hint": "Alcune qualità richiedono l'abbonamento 大会员 (premium) su Bilibili."
-      },
-      "notice": {
-        "session_expired_title": "Sessione scaduta",
-        "session_expired_body": "La tua sessione Bilibili è scaduta. Accedi di nuovo per continuare a scaricare in qualità premium.",
-        "session_expired_action": "Accedi di nuovo",
-        "session_expired_dismiss": "Più tardi"
       }
     }
   },
@@ -1729,7 +1624,6 @@
     "filter_network": "Rete",
     "filter_auth": "Autenticazione",
     "filter_system": "Sistema",
-    "filter_convert": "Conversione",
     "filter_errors": "Solo errori",
     "copy_report": "Copia rapporto",
     "report_copied": "Rapporto diagnostico copiato negli appunti",
@@ -1739,7 +1633,6 @@
     "open_panel_desc": "Opens the live activity log panel in About → Debug."
   },
   "p2p": {
-    "send_file": "Invia file",
     "send_title": "Invia file tramite P2P",
     "send_description": "Invia un file a un altro utente OmniGet. Verrà generato un codice di condivisione — il destinatario lo incolla nella omnibox per scaricarlo.",
     "select_file": "Seleziona file",
@@ -1760,22 +1653,6 @@
     "accept_transfer": "Accetta e scarica",
     "reject_transfer": "Rifiuta",
     "searching_hint": "Connessione al server relay..."
-  },
-  "mascot": {
-    "idle": "Incolla un link o cerca qualcosa!|Cosa scarichiamo oggi?|Pronto quando vuoi!",
-    "detecting": "Hmm, fammi controllare...|Analizzo il link...|Un attimo...",
-    "detected": "Trovato! Pronti a scaricare?|Eccolo! Si parte?|Tutto pronto!",
-    "preparing": "Sto preparando tutto...|Quasi pronto...|Preparo il download...",
-    "search": "Guarda cosa ho trovato!|Dai un'occhiata!|Guarda qui!",
-    "error": "Oops, qualcosa è andato storto. Riproviamo?|Non ha funzionato. Riproviamo?|Hmm, qualcosa si è rotto...",
-    "complete": "Fatto!|Download completato!|Ecco fatto!",
-    "amazed": "Wow, your first download! 🎉|There it is — your first one!|Saved! Welcome aboard!",
-    "downloading": "Download in corso...|Ci sto lavorando!|Scaricando i tuoi file...",
-    "stalled": "Hmm, ci sta mettendo un po'...|Aspetta, sto ancora scaricando...|La connessione sembra lenta...",
-    "queue": "In attesa...|Pazienza, quasi ci siamo...|Il tuo turno sta arrivando!"
-  },
-  "torrent": {
-    "open_file": "Apri .torrent"
   },
   "omnidisc": {
     "error": {
@@ -1890,18 +1767,14 @@
     },
     "title": "World",
     "subtitle": "La tua casa su questo computer e una città che condividi con altre persone.",
-    "start": "Start",
-    "stop": "Stop",
     "loading": "Starting the renderer…",
     "bench_running": "Benchmark running…",
     "error": "Renderer error:",
     "stats": {
-      "backend": "Backend",
       "tier": "Tier",
       "fps": "FPS",
       "cpu": "CPU",
-      "draws": "Draw calls",
-      "sprites": "Sprites"
+      "draws": "Draw calls"
     },
     "settings": {
       "title": "World",
@@ -1949,8 +1822,7 @@
       "recentre": "Recentre",
       "pause": "Pause",
       "resume": "Resume",
-      "open_house": "Open the house",
-      "phase9": "Visits arrive in a later version."
+      "open_house": "Open the house"
     },
     "slot": {
       "title": "Slot",
@@ -2008,7 +1880,6 @@
       "hint": "La tua casa lì ha un indirizzo, gli abitanti continuano a vivere anche con l'app chiusa e tutti vedono le stesse strade.",
       "in": "A {{city}}",
       "inside": "dentro",
-      "outside": "fuori",
       "address": "Il tuo indirizzo",
       "go_home": "Torna a casa",
       "claim": "Prendi un lotto",
@@ -2044,7 +1915,6 @@
       "edit_mode": "Modifica: clicca un oggetto per selezionarlo, una casella libera per spostarlo",
       "edit_placing": "Posizionamento di {{asset}}: clicca una casella libera, Esc per smettere",
       "edit_selected": "Clicca una casella libera per spostarlo, R per ruotare, Delete per rimuovere",
-      "edit_catalogue": "Catalogo",
       "edit_undo": "Annulla",
       "edit_redo": "Ripeti",
       "edit_remove": "Rimuovi",
@@ -2229,7 +2099,6 @@
       "calls": "calls",
       "agents": "Agents",
       "no_agents": "No agent has spoken yet.",
-      "wire": "Wire probe",
       "diagnostics": "Diagnostics",
       "throughput": "Throughput",
       "first_token": "First token",
@@ -2286,12 +2155,10 @@
       "band_critical": "almost out"
     },
     "title": "LLM",
-    "subtitle": "Your agents, their models and what they are allowed to touch.",
     "tab": {
       "chat": "Chat",
       "roster": "Roster",
       "models": "Models & Routing",
-      "observatory": "Observatory",
       "mcp": "MCP",
       "skills": "Skills",
       "accounts": "Accounts",
@@ -2300,8 +2167,6 @@
       "jobs": "Jobs",
       "loops": "Loops"
     },
-    "soon_title": "Coming soon",
-    "soon_body": "This tab is part of a later phase of the LLM section.",
     "demo_banner": "Demo data: the LLM backend is not wired yet.",
     "rail": {
       "title": "Agents",
@@ -2329,7 +2194,6 @@
       "cancelled": "Turn cancelled.",
       "error": "Turn failed",
       "switch_model": "Switch model",
-      "new": "New chat",
       "no_agent": "Pick an agent on the left.",
       "tool_ask": "The agent wants to run a tool",
       "allow": "Allow",
@@ -2366,7 +2230,6 @@
       "new": "New agent",
       "name": "Name",
       "role": "Role",
-      "system_prompt": "System prompt",
       "model_policy": "Model",
       "fixed": "Fixed",
       "route": "Route",
@@ -2403,8 +2266,7 @@
       "title": "Models & Routing",
       "providers": "Providers",
       "no_providers": "No API key saved yet.",
-      "add_key_hint": "Keys live in Tools → AI keys.",
-      "list": "Models",
+      "add_key_hint": "Keys live in LLM → Models & Routing.",
       "load": "Load models",
       "loading": "Loading…",
       "count": "{{count}} models",
@@ -2417,7 +2279,6 @@
       "rule_local_desc": "Tries Ollama or llama-server before anything paid.",
       "rule_quality": "Quality first",
       "rule_quality_desc": "Keeps the head of the chain unless it fails.",
-      "rule_hint": "The rule is a default for new agents; each agent can override it.",
       "openrouter_started": "Finish the sign-in in your browser.",
       "openrouter_ok": "OpenRouter key saved.",
       "openrouter_failed": "OpenRouter sign-in failed: {{error}}",
@@ -2432,31 +2293,7 @@
       "turn_failed": "The turn could not start."
     },
     "local": {
-      "title": "Local models",
-      "servers": "Servers on this machine",
-      "running": "Running",
-      "notRunning": "Not running",
-      "install": "Install",
-      "download": "Download",
-      "start": "Start",
-      "stop": "Stop",
-      "bridgeTitle": "OpenAI-compatible bridge",
-      "bridgeHint": "Lets any app that speaks OpenAI use your agents at omniget/<agent>. Off by default: whoever holds the bridge token spends your tokens.",
       "explanation": "Local model management is not available here yet. Configure an existing local provider in Models & Routing."
-    },
-    "error": {
-      "ERR_LLM_NO_AGENT": "That agent no longer exists.",
-      "ERR_LLM_NO_TURN": "That turn already finished.",
-      "ERR_LLM_NO_ASK": "That tool question was already answered.",
-      "ERR_LLM_ROSTER_DUP": "An agent with this id already exists.",
-      "ERR_LLM_ROSTER_MISSING": "Agent not found.",
-      "ERR_LLM_ROSTER_ID": "The id must use only lowercase letters, digits, - and _.",
-      "ERR_LLM_ROSTER_TEMPLATE": "Unknown template.",
-      "ERR_LLM_LOCAL_BINARY": "Could not install llama-server.",
-      "ERR_LLM_LOCAL_MODEL": "Model not available.",
-      "ERR_LLM_LOCAL_SPAWN": "Could not start llama-server.",
-      "ERR_LLM_LOCAL_HASH": "The downloaded file failed its checksum.",
-      "ERR_LLM_BRIDGE_OFF": "The OpenAI-compatible bridge is off."
     },
     "skills": {
       "title": "Skills",
@@ -2510,17 +2347,6 @@
       "err_path": "The path pointed outside the skills folder.",
       "err_io": "The skills folder could not be read or written.",
       "err_generic": "The skill operation failed.",
-      "err": {
-        "ERR_SKILL_PARSE": "This SKILL.md could not be read: it needs a `---` frontmatter block at the top.",
-        "ERR_SKILL_NAME": "The skill name is invalid: use lowercase letters, digits and hyphens, up to 64 characters.",
-        "ERR_SKILL_DESCRIPTION": "The skill has no description. Add a `description` line to its frontmatter.",
-        "ERR_SKILL_IO": "The skill could not be read or written on disk.",
-        "ERR_SKILL_NOT_FOUND": "No skill by that name is installed.",
-        "ERR_SKILL_ZIP": "This zip was refused: one of its files points outside the destination folder.",
-        "ERR_SKILL_GIT": "The clone failed. Check that git is installed and that the address is right.",
-        "ERR_SKILL_TOO_BIG": "This skill is over the size limit (2000 files or 32 MB).",
-        "ERR_SKILL_PATH": "That path points outside the skill folder."
-      },
       "catalog": {
         "unlicensed": "This catalogue declares no licence. Check the terms with its authors before using it."
       },
@@ -2579,8 +2405,6 @@
       "save": "Salva",
       "cancel": "Annulla",
       "copy": "Copia",
-      "show": "Mostra",
-      "hide": "Nascondi",
       "grants_for": "Cosa può essere eseguito su {{server}}",
       "grants_hint": "Uno strumento senza permesso non viene proprio offerto al modello. «Chiedi» ferma il turno e aspetta te.",
       "tool": "Strumento",
@@ -2640,8 +2464,6 @@
       "bridge_off": "il bridge locale è disattivato in Impostazioni → Estensione del browser; l'endpoint MCP ne ha bisogno",
       "endpoint": "Indirizzo endpoint",
       "selftest": "Testa",
-      "token": "Token bearer",
-      "token_hint": "Lo stesso token usato dall'estensione del browser. Rigeneralo in Impostazioni → Estensione del browser.",
       "connect": "Collega un client",
       "connect_hint": "Copia lo snippet per il tuo agente. Claude Code: esegui il comando. Gli altri: incollalo nel file di configurazione.",
       "exposed": "{{count}} strumenti esposti",
@@ -2657,7 +2479,8 @@
         "unknown_agent": "Quell'agente non è più nell'elenco.",
         "generic": "Il server MCP non è riuscito."
       },
-      "import_queue": "Altri {{count}} server di quella configurazione in attesa di revisione."
+      "import_queue": "Altri {{count}} server di quella configurazione in attesa di revisione.",
+      "copied": "Copied"
     },
     "accounts": {
       "title": "Accounts & quota",
@@ -2716,7 +2539,6 @@
       "heatmap_more": "more",
       "heatmap_peak": "peak",
       "top_tools": "Top tools",
-      "top_prompts": "Most expensive prompts",
       "sessions_title": "Sessions",
       "turns": "turns",
       "session_live": "live",
@@ -2863,7 +2685,6 @@
       "unknown": "Unavailable"
     },
     "jobs": {
-      "title": "Jobs",
       "lede": "Agent runs that work in the background while you do something else.",
       "new_title": "New job",
       "agent": "Agent",
@@ -2931,7 +2752,6 @@
       "no_matches": "No tasks in this filter."
     },
     "loops": {
-      "title": "Loops",
       "lede": "Run the same prompt round after round until the work checks out.",
       "new_title": "New Loop",
       "agent": "Agent",
@@ -2945,7 +2765,6 @@
       "max_rounds": "Max rounds",
       "max_minutes": "Max minutes",
       "check_command": "Check command",
-      "stop_hint": "The loop stops when the check command exits 0, or when rounds or minutes run out; with none set it stops after 10 rounds.",
       "start": "Start loop",
       "list_title": "Loops",
       "empty": "No loops yet. Start one above.",
@@ -2977,6 +2796,20 @@
       "edge_bottom": "Bottom",
       "edge_left": "Left",
       "drag_hint": "You can also drag the strip: it snaps to the nearest edge.",
+      "appearance": "Aspetto",
+      "size": "Dimensione",
+      "size_s": "Piccola",
+      "size_m": "Media",
+      "size_l": "Grande",
+      "show_percent": "Mostra percentuale",
+      "show_percent_hint": "La quota usata, sotto ogni anello.",
+      "show_pace": "Mostra ritmo",
+      "show_pace_hint": "Un segno su ogni anello dove sarebbe l'uso a ritmo costante, e se sei in anticipo.",
+      "contrast": "Contrasto elevato",
+      "contrast_hint": "Sfondo pieno, tratti e testo più marcati.",
+      "notifications": "Notifiche",
+      "notify_pace": "Avvisa se il ritmo esaurirà il limite",
+      "notify_pace_hint": "Una volta per finestra, quando al ritmo attuale si esaurirebbe prima del reset.",
       "providers": "What it may read",
       "privacy": "Each reader only opens the login that tool already keeps on this computer, read-only, and asks that provider's own server. Tokens are never logged, stored or shown. Each provider is asked at most every 5 minutes, and never while the strip is closed.",
       "beta": "beta",
@@ -3026,17 +2859,19 @@
           "needs_auth": "Sign in again in the tool itself.",
           "rate_limited": "The provider asked us to wait.",
           "error": "Could not read."
+        },
+        "near_limit": "vicino al limite",
+        "accounts": "Account",
+        "pace": {
+          "on": "in linea col ritmo",
+          "under": "{{delta}}% sotto il ritmo",
+          "ahead": "{{delta}}% sopra il ritmo",
+          "ahead_out": "{{delta}}% sopra il ritmo · finisce tra {{time}}"
         }
       }
     },
     "chat": {
       "details": "Agent details"
-    },
-    "nav": {
-      "work": "Work",
-      "configure": "Configure",
-      "monitor": "Monitor",
-      "experimental": "Experimental"
     },
     "arena": {
       "explanation": "Compare the same task across models. This feature is not available yet; use Chat to work with a configured agent."
@@ -3105,7 +2940,6 @@
     }
   },
   "omni": {
-    "avatar_label": "Omni, the assistant mascot",
     "sidebar_profile": "Your profile"
   },
   "pet": {
@@ -3411,7 +3245,6 @@
       "skill_bound": "La skill di selezione film è installata e collegata a questo bot."
     },
     "bots": {
-      "nav": "Crea bot",
       "advanced": "Dettagli avanzati",
       "back": "Agenti",
       "cancel": "Annulla",
@@ -4215,7 +4048,6 @@
       "unblock_unknown": "Continua senza saperlo",
       "budget_title": "Budget",
       "budget_details": "Dettagli del budget",
-      "budget_edit_hint": "Per aumentare il budget, crea una nuova missione con un limite più alto oppure annulla e ricrea questa.",
       "pool_in_flight": "Chiamate in corso",
       "pool_reserved": "Riservato",
       "context_title": "Correggi il contesto",
@@ -4231,7 +4063,6 @@
       "exit_code": "Codice di uscita",
       "artifact": "File",
       "confidence": "Affidabilità",
-      "verified": "Verificata di nuovo.",
       "export": "Esporta diagnostica",
       "exported": "Diagnostica salvata in {{path}}",
       "picker_failed": "La finestra di salvataggio non è disponibile qui.",
@@ -4344,7 +4175,6 @@
       "tokens_now": "Spesi {{spent}} su {{limit}}",
       "minutes": "Nuovo limite di tempo (minuti di lavoro)",
       "minutes_now": "Lavorati {{spent}} di {{limit}} minuti",
-      "none": "nessun limite",
       "why_minutes": "Il limite di tempo l'ha fermata: dalle più minuti. Lascia vuoto un campo per mantenerne il valore.",
       "keep_blank": "Lascia vuoto un campo per mantenerne il valore.",
       "submit": "Aumenta i limiti",
@@ -4470,5 +4300,55 @@
     "open_settings": "Apri impostazioni cookie",
     "done": "Ho effettuato l'accesso",
     "deny": "Rifiuta"
+  },
+  "usage_tray": {
+    "menu": {
+      "accounts": "Accounts shown",
+      "no_accounts": "No Claude Code or Codex login found",
+      "icon_shows": "Icon shows",
+      "shows_session": "Session (5 h)",
+      "shows_weekly": "Weekly",
+      "shows_busiest": "Most used account",
+      "percent_text": "Show percentage",
+      "colored": "Loop in colour",
+      "thresholds": "Alert thresholds",
+      "threshold_item": "Orange at {{warn}}%, red at {{critical}}%",
+      "open_claude": "Open Claude Code in this account",
+      "add_account": "Add account…",
+      "open_app": "Open OmniGet",
+      "refresh": "Refresh now",
+      "hide": "Hide this icon",
+      "tooltip": "OmniGet usage",
+      "toggle": "Usage icon in the menu bar",
+      "default_login": "Terminal login",
+      "session": "session",
+      "weekly": "weekly"
+    },
+    "panel": {
+      "title": "Usage",
+      "empty_title": "Which accounts should the icon watch?",
+      "empty_body": "Nothing is read until you pick an account. OmniGet only asks each tool's own server, with the login the tool already keeps.",
+      "no_logins": "No Claude Code or Codex login found. Add one below.",
+      "session": "Session",
+      "weekly": "Weekly",
+      "resets_at": "resets {{when}}",
+      "runs_out": "at this pace, limit at {{when}}",
+      "lasts": "lasts until the reset",
+      "spent_today": "{{amount}} today",
+      "updated": "updated {{when}}",
+      "pending": "reading…",
+      "needs_auth": "login expired: open the tool to sign in again",
+      "rate_limited": "the server asked to wait",
+      "error": "could not read",
+      "refresh": "Refresh",
+      "open_app": "Open OmniGet",
+      "add_account": "Add account",
+      "open_claude": "Open Claude Code",
+      "choose": "Accounts",
+      "now": "now",
+      "in_min": "in {{count}} min",
+      "in_hours": "in {{hours}}h{{minutes}}",
+      "in_days": "in {{count}} days"
+    }
   }
 }

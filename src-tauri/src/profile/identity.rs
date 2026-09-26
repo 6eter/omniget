@@ -1,14 +1,15 @@
 //! The local identity: one ed25519 seed, kept in the secret store, never handed
 //! to the frontend.
 //!
-//! The seed is the same 32 bytes `omnidisc-mls` turns into an MLS signer, so a
+//! The seed is the same 32 bytes OmniDisc turned into its MLS signer, so a
 //! machine that already ran OmniDisc keeps the key it published to its
 //! instances: [`load_or_create_seed`] adopts an existing `device-key` before it
-//! generates anything. Signing goes through `omnidisc_mls::ed25519_dalek` on
-//! purpose — one copy of the crate, one signature format.
+//! generates anything.
 
 use base64::Engine;
-use omnidisc_mls::ed25519_dalek::{Signature, Signer, SigningKey, Verifier, VerifyingKey};
+use data_encoding::BASE32_NOPAD;
+use ed25519_dalek::{Signature, Signer, SigningKey, Verifier, VerifyingKey};
+use sha2::{Digest, Sha256};
 
 use crate::secrets::{self, PROFILE};
 
@@ -147,9 +148,18 @@ pub fn verify(public_key: &[u8; 32], msg: &[u8], sig: &[u8; 64]) -> bool {
 }
 
 /// Same spelling the OmniDisc device list already shows, so one person reading
-/// both screens sees one identity.
+/// both screens sees one identity: base32 of SHA-256(pubkey)[..20], in groups
+/// of four, e.g. `EYES-OGGZ-JXJN-6ENS-3VW3-KVPN-NHDO-SJ3V`. Do not change the
+/// algorithm; the string is how people compare identities out of band.
 pub fn fingerprint(public_key: &[u8; 32]) -> String {
-    omnidisc_mls::fingerprint(public_key)
+    let digest = Sha256::digest(public_key);
+    let encoded = BASE32_NOPAD.encode(&digest[..20]);
+    encoded
+        .as_bytes()
+        .chunks(4)
+        .map(|c| std::str::from_utf8(c).unwrap_or("????"))
+        .collect::<Vec<_>>()
+        .join("-")
 }
 
 pub fn encode_public_key(public_key: &[u8; 32]) -> String {
@@ -184,14 +194,22 @@ mod tests {
         assert!(!verify(&public_key(&seed), msg, &broken));
     }
 
-    /// The seed is the MLS seed: the key the profile shows has to be the key
-    /// the MLS client publishes, or the migration is a lie.
+    /// Golden values: the key and fingerprint a seed maps to must never drift,
+    /// since the key is already published to OmniDisc instances and the
+    /// fingerprint is what people compare out of band.
     #[test]
-    fn the_public_key_matches_the_mls_client_for_the_same_seed() {
+    fn the_public_key_and_fingerprint_are_stable_for_a_seed() {
         let seed = [11u8; 32];
-        let client = omnidisc_mls::MlsClient::new("0", "od-test", &seed).expect("mls client");
-        assert_eq!(public_key(&seed), client.public_key());
-        assert_eq!(fingerprint(&public_key(&seed)), client.fingerprint());
+        let expected_key: [u8; 32] = [
+            0x66, 0xbe, 0x7e, 0x33, 0x2c, 0x7a, 0x45, 0x33, 0x32, 0xbd, 0x9d, 0x0a, 0x7f, 0x7d,
+            0xb0, 0x55, 0xf5, 0xc5, 0xef, 0x1a, 0x06, 0xad, 0xa6, 0x6d, 0x98, 0xb3, 0x9f, 0xb6,
+            0x81, 0x0c, 0x47, 0x3a,
+        ];
+        assert_eq!(public_key(&seed), expected_key);
+        assert_eq!(
+            fingerprint(&expected_key),
+            "7X3S-UCEP-DD3T-THUM-KK6O-ISCE-CUA7-OWNF"
+        );
     }
 
     #[test]

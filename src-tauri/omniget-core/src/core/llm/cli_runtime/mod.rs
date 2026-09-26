@@ -100,13 +100,6 @@ impl CliCapacity {
         self.per_account.read().ok()?.get(account_id).cloned()
     }
 
-    /// Capacity of one account, for [`CapacitySource`]. An account we have
-    /// never heard from is available with an unknown window: the router only
-    /// rejects on evidence.
-    pub fn capacity_of(&self, account_id: &str, disabled: bool) -> Capacity {
-        self.capacity_of_cli(account_id, disabled, None)
-    }
-
     /// Same, knowing which CLI the account drives. A Codex account is flagged
     /// `code_specialist`, which is how the router prefers it for a
     /// `TaskKind::Code` turn without ever looking at an account itself.

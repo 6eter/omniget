@@ -117,12 +117,3 @@ pub async fn download_to(
     report(progress, id, "done", done, total, None);
     Ok(done)
 }
-
-pub fn sanitize_name(name: &str) -> String {
-    let s = sanitize_filename::sanitize(name.trim());
-    if s.is_empty() {
-        "arquivo".to_string()
-    } else {
-        s
-    }
-}

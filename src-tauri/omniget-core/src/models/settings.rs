@@ -358,7 +358,6 @@ pub struct DownloadSettings {
     pub always_ask_path: bool,
     pub video_quality: String,
     pub skip_existing: bool,
-    pub download_attachments: bool,
     pub download_descriptions: bool,
     #[serde(default = "default_true")]
     pub embed_metadata: bool,
@@ -763,7 +762,6 @@ impl Default for AppSettings {
                 always_ask_path: false,
                 video_quality: "720p".into(),
                 skip_existing: true,
-                download_attachments: true,
                 download_descriptions: true,
                 embed_metadata: true,
                 embed_thumbnail: true,

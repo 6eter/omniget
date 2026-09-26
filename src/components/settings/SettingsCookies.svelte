@@ -6,11 +6,11 @@
   import { t } from "$lib/i18n";
   import { showToast } from "$lib/stores/toast-store.svelte";
   import { getSettings, updateSettings } from "$lib/stores/settings-store.svelte";
-  import CookieBucketCard from "$lib/components/cookies/CookieBucketCard.svelte";
-  import CookieImportMenu from "$lib/components/cookies/CookieImportMenu.svelte";
-  import CookieContentModal from "$lib/components/cookies/CookieContentModal.svelte";
-  import CookiePasteModal from "$lib/components/cookies/CookiePasteModal.svelte";
-  import BilibiliQrLogin from "$lib/components/cookies/BilibiliQrLogin.svelte";
+  import CookieBucketCard from "$components/cookies/CookieBucketCard.svelte";
+  import CookieImportMenu from "$components/cookies/CookieImportMenu.svelte";
+  import CookieContentModal from "$components/cookies/CookieContentModal.svelte";
+  import CookiePasteModal from "$components/cookies/CookiePasteModal.svelte";
+  import BilibiliQrLogin from "$components/cookies/BilibiliQrLogin.svelte";
 
   type Account = {
     slug: string;

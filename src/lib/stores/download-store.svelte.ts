@@ -232,22 +232,6 @@ export function getCounts(): DownloadCounts {
   return { active, queued, badge: active + queued, paused, finished };
 }
 
-export function getActiveCount(): number {
-  return getCounts().active;
-}
-
-export function getQueuedCount(): number {
-  return getCounts().queued;
-}
-
-export function getBadgeCount(): number {
-  return getCounts().badge;
-}
-
-export function getPausedCount(): number {
-  return getCounts().paused;
-}
-
 export type DownloadAggregate = {
   batchId: number;
   outcome: "idle" | "working" | "complete" | "stopped";

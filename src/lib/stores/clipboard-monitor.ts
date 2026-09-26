@@ -44,7 +44,3 @@ export function stopClipboardMonitor() {
     intervalId = null;
   }
 }
-
-export function resetLastDetected() {
-  lastDetectedUrl = "";
-}

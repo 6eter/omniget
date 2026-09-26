@@ -6,7 +6,7 @@ use tokio_util::sync::CancellationToken;
 
 use super::api::{ApiClient, BilibiliError, Result};
 use super::parser::{ContentMetadata, EpisodeItem, ParsedContent};
-use super::preview::{self, AudioStream, MediaContainer, PreviewInfo, VideoStream};
+use super::preview::{self, MediaContainer, PreviewInfo, VideoStream};
 use super::url_kind::UrlKind;
 
 pub mod fetch;
@@ -439,6 +439,3 @@ fn scale_progress(local_pct: f64, stream_index: u32, total_streams: u32) -> f64 
     let scaled = base + (local_pct / 100.0) / denom;
     (scaled * 100.0).clamp(0.0, 95.0)
 }
-
-#[allow(dead_code)]
-fn unused_audio_stream(_: &AudioStream) {}

@@ -142,10 +142,6 @@ impl KeepVerdict {
         keep_call: false,
         keep_result: false,
     };
-
-    pub fn is_keep(&self) -> bool {
-        self.keep_call && self.keep_result
-    }
 }
 
 /// One frozen decision. `fingerprint` guards against a result that changed

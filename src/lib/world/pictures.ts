@@ -12,7 +12,6 @@
 
 /** The catalogue asset of a standing picture frame. */
 export const PICTURE_ASSET = 'picture/frame';
-export const PICTURE_REMOVED = 'picture/removed';
 /** Frame ids on the dynamic page. */
 export const FRAME_PLACEHOLDER = 'pic/placeholder';
 export const FRAME_LOADING = 'pic/loading';

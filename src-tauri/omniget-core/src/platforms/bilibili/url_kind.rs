@@ -103,10 +103,6 @@ pub fn detect(url: &str) -> Result<UrlKind> {
     detect_internal(url, None)
 }
 
-pub fn detect_with_query(url: &str, query: Option<&str>) -> Result<UrlKind> {
-    detect_internal(url, query)
-}
-
 fn detect_internal(url: &str, query_override: Option<&str>) -> Result<UrlKind> {
     if url == "omniget://bilibili/watch-later" {
         return Ok(UrlKind::WatchLater);
@@ -341,18 +337,6 @@ pub fn av_to_bv(avid: u64) -> String {
         let _ = &mut x;
     }
     String::from_utf8(chars.to_vec()).unwrap_or_default()
-}
-
-pub fn parse_video_id(input: &str) -> (Option<String>, Option<u64>) {
-    if let Some(rest) = input.strip_prefix("av") {
-        if let Ok(n) = rest.parse::<u64>() {
-            return (None, Some(n));
-        }
-    }
-    if input.starts_with("BV") {
-        return (Some(input.to_string()), None);
-    }
-    (None, None)
 }
 
 pub fn extract_festival_bvid(html: &str) -> Option<String> {

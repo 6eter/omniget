@@ -5,8 +5,11 @@
   // strip can be dragged to another edge), nothing polls.
   import { onMount } from "svelte";
   import { t } from "$lib/i18n";
-  import { acquireLimitsMonitor, getLimitsMonitor, saveLimitsPrefs, type Edge, type ProviderInfo } from "$lib/stores/limits-monitor.svelte";
+  import { acquireLimitsMonitor, getLimitsMonitor, saveLimitsPrefs, type Edge, type Prefs, type ProviderInfo, type StripSize } from "$lib/stores/limits-monitor.svelte";
   const EDGES: Edge[] = ["top", "right", "bottom", "left"];
+  const SIZES: StripSize[] = ["s", "m", "l"];
+  /** The on/off looks of the strip, in the order they are listed. */
+  const LOOKS = ["show_percent", "show_pace", "contrast"] as const;
   let monitor = $derived(getLimitsMonitor());
   let prefs = $derived(monitor.prefs);
   let infos = $derived(monitor.providers);
@@ -21,6 +24,14 @@
 
   function setEdge(edge: Edge) {
     if (prefs && prefs.edge !== edge) void save({ ...prefs, edge });
+  }
+
+  function setSize(size: StripSize) {
+    if (prefs && prefs.size !== size) void save({ ...prefs, size });
+  }
+
+  function flip(key: (typeof LOOKS)[number] | "notify_pace") {
+    if (prefs) void save({ ...prefs, [key]: !prefs[key] } as Prefs);
   }
 
   function toggleProvider(id: string) {
@@ -80,6 +91,68 @@
     </div>
     <p class="field-hint">{$t("llm.limits.drag_hint")}</p>
 
+    <h3 class="limits-sub">{$t("llm.limits.appearance")}</h3>
+    <div class="limits-row">
+      <span class="limits-name">{$t("llm.limits.size")}</span>
+      <div class="segmented" role="radiogroup" aria-label={$t("llm.limits.size") as string}>
+        {#each SIZES as size (size)}
+          <button
+            type="button"
+            role="radio"
+            class="segment"
+            class:active={prefs.size === size}
+            aria-checked={prefs.size === size}
+            aria-label={$t(`llm.limits.size_${size}`) as string}
+            title={$t(`llm.limits.size_${size}`) as string}
+            disabled={busy}
+            onclick={() => setSize(size)}
+          >
+            {size.toUpperCase()}
+          </button>
+        {/each}
+      </div>
+    </div>
+    {#each LOOKS as key (key)}
+      <div class="limits-row">
+        <span class="limits-text">
+          <span class="limits-name">{$t(`llm.limits.${key}`)}</span>
+          <span class="limits-reads">{$t(`llm.limits.${key}_hint`)}</span>
+        </span>
+        <button
+          type="button"
+          role="switch"
+          class="switch"
+          class:on={prefs[key]}
+          aria-checked={prefs[key]}
+          aria-label={$t(`llm.limits.${key}`) as string}
+          disabled={busy}
+          onclick={() => flip(key)}
+        >
+          <span class="knob"></span>
+        </button>
+      </div>
+    {/each}
+
+    <h3 class="limits-sub">{$t("llm.limits.notifications")}</h3>
+    <div class="limits-row">
+      <span class="limits-text">
+        <span class="limits-name">{$t("llm.limits.notify_pace")}</span>
+        <span class="limits-reads">{$t("llm.limits.notify_pace_hint")}</span>
+      </span>
+      <button
+        type="button"
+        role="switch"
+        class="switch"
+        class:on={prefs.notify_pace}
+        aria-checked={prefs.notify_pace}
+        aria-label={$t("llm.limits.notify_pace") as string}
+        disabled={busy}
+        onclick={() => flip("notify_pace")}
+      >
+        <span class="knob"></span>
+      </button>
+    </div>
+
     <h3 class="limits-sub">{$t("llm.limits.providers")}</h3>
     <p class="field-hint">{$t("llm.limits.privacy")}</p>
     <ul class="limits-list">
@@ -91,11 +164,12 @@
             <span class="limits-text">
               <span class="limits-name">
                 {meta?.label ?? p.id}
+                {#if meta?.account?.label || meta?.account?.email}<span class="limits-dim">{[meta.account.label, meta.account.email].filter(Boolean).join(" · ")}</span>{/if}
                 {#if meta?.local}<span class="tag">{$t("llm.limits.local")}</span>{/if}
                 {#if meta?.beta}<span class="tag beta" title={$t("llm.limits.beta_hint") as string}>{$t("llm.limits.beta")}</span>{/if}
                 {#if meta && !meta.detected}<span class="limits-dim">{$t("llm.limits.not_found")}</span>{/if}
               </span>
-              <span class="limits-reads">{$t(`llm.limits.reads.${p.id}`)}</span>
+              <span class="limits-reads">{$t(`llm.limits.reads.${p.id.split(":")[0]}`)}</span>
             </span>
           </label>
         </li>

@@ -11,7 +11,7 @@ name: World bench
 #   §1.2  frame, primeiro frame e RSS extra do tier 0.
 #
 # O portao e `scripts/world-bench.mjs`: qualquer metrica mais de 10% pior que
-# `docs/bench/world-baseline.json` reprova. O baseline e atualizado **so pelo
+# `scripts/bench/world-baseline.json` reprova. O baseline e atualizado **so pelo
 # orquestrador** ao fechar a fase — nenhum job escreve nele.
 
 on:
@@ -30,7 +30,7 @@ on:
       - "src-tauri/src/commands/world_bench.rs"
       - "static/world/**"
       - "scripts/world-bench.mjs"
-      - "docs/bench/world-baseline.json"
+      - "scripts/bench/world-baseline.json"
       - ".github/workflows/world-bench.yml"
 
 concurrency:

@@ -422,10 +422,6 @@ export function criterionExecutable(c: Pick<Criterion, "kind" | "origin">): bool
   return c.origin === "user" || c.origin === "preset";
 }
 
-export function acceptanceNeedsHuman(c: Pick<Criterion, "kind" | "acceptance">): boolean {
-  return c.kind === "human" || c.kind === "rubric" || c.acceptance === "human";
-}
-
 export interface VerdictRow extends VerdictCriterion {
   tone: Tone;
   statusKey: string;
@@ -976,7 +972,6 @@ export function candidateTone(state: CandidateState): Tone {
 
 // ── Pack import helpers (tested) ───────────────────────────────────────
 
-export type PackKind = "skill" | "agent" | "rule" | "context" | "command" | "hook" | "script";
 export type PlanAction =
   | "new" | "update" | "unchanged" | "conflict_local_changes" | "conflict_name" | "deferred" | "unsupported" | "refused";
 
@@ -1086,9 +1081,6 @@ export function acceptCriterion(id: string, criterionId: string, accept: boolean
 }
 export function unblockTask(id: string, taskId: string, confirmed: boolean | null, note?: string | null): Promise<unknown> {
   return invoke("assist_mission_unblock_task", { id, taskId, confirmed, note: note?.trim() ? note.trim() : null });
-}
-export function allowReplay(id: string): Promise<unknown> {
-  return invoke("assist_mission_allow_replay", { id });
 }
 /** Starts a re-check in the background; the result arrives as `assist://mission` events. */
 export function verifyMission(id: string): Promise<{ mission: Mission; started: boolean; already_running: boolean }> {

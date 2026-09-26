@@ -38,7 +38,7 @@ test("falls back to English when locale messages are missing", () => {
   assert.equal(content.title, "This page URL cannot be sent to OmniGet");
   assert.equal(
     content.detail,
-    "Try again from a direct video, reel, post, playlist, or course page."
+    "Try again from a direct video, reel, post or playlist page."
   );
 });
 

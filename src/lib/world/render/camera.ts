@@ -106,25 +106,6 @@ export function visibleChunks(cam: Camera, marginTiles = 2): ChunkId[] {
   return out;
 }
 
-/** Screen rect (device px) covered by a chunk's diamond, at z = 0. */
-export function chunkScreenRect(
-  cam: Camera,
-  id: ChunkId,
-): { x: number; y: number; w: number; h: number } {
-  const { cx, cy } = parseChunkId(id);
-  const ox = cx * CHUNK_TILES;
-  const oy = cy * CHUNK_TILES;
-  const top = worldToScreen(cam, ox, oy);
-  const right = worldToScreen(cam, ox + CHUNK_TILES, oy);
-  const left = worldToScreen(cam, ox, oy + CHUNK_TILES);
-  return {
-    x: left.sx,
-    y: top.sy,
-    w: right.sx - left.sx,
-    h: worldToScreen(cam, ox + CHUNK_TILES, oy + CHUNK_TILES).sy - top.sy,
-  };
-}
-
 export function clampZoom(zoom: number): number {
   return Math.min(4, Math.max(0.25, zoom));
 }

@@ -66,60 +66,6 @@ async fn run_ffmpeg(
     Ok(())
 }
 
-#[cfg(not(target_os = "android"))]
-#[tauri::command]
-pub async fn detect_shot_changes(
-    input: String,
-    threshold: Option<f64>,
-) -> Result<Vec<f64>, String> {
-    let input_path = ensure_input(&input)?;
-    let ffmpeg = omniget_core::core::dependencies::find_tool("ffmpeg")
-        .await
-        .ok_or_else(|| "ffmpeg unavailable".to_string())?;
-    let thr = threshold.unwrap_or(0.4).clamp(0.1, 0.9);
-    let output = omniget_core::core::process::command(&ffmpeg)
-        .arg("-i")
-        .arg(input_path.to_string_lossy().to_string())
-        .arg("-filter:v")
-        .arg(format!("select='gt(scene,{})',showinfo", thr))
-        .arg("-an")
-        .arg("-f")
-        .arg("null")
-        .arg("-")
-        .output()
-        .await
-        .map_err(|e| format!("ffmpeg failed: {}", e))?;
-    let stderr = String::from_utf8_lossy(&output.stderr);
-    Ok(ffmpeg_ops::parse_scene_times(&stderr))
-}
-
-#[cfg(not(target_os = "android"))]
-#[tauri::command]
-pub async fn waveform_peaks(input: String, buckets: Option<usize>) -> Result<Vec<f32>, String> {
-    let input_path = ensure_input(&input)?;
-    let ffmpeg = omniget_core::core::dependencies::find_tool("ffmpeg")
-        .await
-        .ok_or_else(|| "ffmpeg unavailable".to_string())?;
-    let n = buckets.unwrap_or(2000).clamp(100, 20000);
-    let output = omniget_core::core::process::command(&ffmpeg)
-        .arg("-i")
-        .arg(input_path.to_string_lossy().to_string())
-        .arg("-ac")
-        .arg("1")
-        .arg("-ar")
-        .arg("2000")
-        .arg("-f")
-        .arg("s16le")
-        .arg("-")
-        .output()
-        .await
-        .map_err(|e| format!("ffmpeg failed: {}", e))?;
-    if !output.status.success() {
-        return Err("ffmpeg audio extraction failed".to_string());
-    }
-    Ok(ffmpeg_ops::pcm_s16le_peaks(&output.stdout, n))
-}
-
 /// Quanto silencio o Smart Speed removeria, sem escrever arquivo nenhum.
 ///
 /// Preview antes de aplicar: o usuario ve o ganho de duracao e decide, em vez

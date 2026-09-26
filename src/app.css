@@ -2,7 +2,6 @@
 @import './lib/style/primitives.css';
 @import './lib/style/settings.css';
 @import './lib/style/macos-shell.css';
-@import './lib/style/notes.css';
 
 /* Lao script only (unicode-range), so Latin text keeps the chosen UI font. */
 @font-face {

@@ -19,14 +19,14 @@
   import PlatformIcon from "$components/icons/PlatformIcon.svelte";
   import QueueKindBadge from "$components/download/QueueKindBadge.svelte";
   import Mascot from "$components/mascot/Mascot.svelte";
-  import RootCauseHint from "$components/downloads/RootCauseHint.svelte";
+  import RootCauseHint from "$components/download/RootCauseHint.svelte";
   import DownloadSpeedGraph from "$components/download/DownloadSpeedGraph.svelte";
   import DownloadLog from "$components/download/DownloadLog.svelte";
   import DownloadPoster from "$components/download/DownloadPoster.svelte";
   import DownloadPhases from "$components/download/DownloadPhases.svelte";
   import DownloadCommand from "$components/download/DownloadCommand.svelte";
   import ReencodeDialog from "$components/dialog/ReencodeDialog.svelte";
-  import VideoOpsOverlay from "$components/downloads/VideoOpsOverlay.svelte";
+  import VideoOpsOverlay from "$components/download/VideoOpsOverlay.svelte";
   import { getSettings, updateSettings } from "$lib/stores/settings-store.svelte";
   import { locale as i18nLocale } from "$lib/i18n";
   import { get } from "svelte/store";

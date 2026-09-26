@@ -644,7 +644,7 @@ async fn mcp_post(
     }
 
     if !crate::mcp::enabled() {
-        return (StatusCode::FORBIDDEN, Json(serde_json::json!({ "error": "MCP server is disabled in OmniGet → Tools → MCP server" }))).into_response();
+        return (StatusCode::FORBIDDEN, Json(serde_json::json!({ "error": "MCP server is disabled in OmniGet → LLM → MCP → Your endpoint" }))).into_response();
     }
     let msg: serde_json::Value = match serde_json::from_slice(&body) {
         Ok(v) => v,

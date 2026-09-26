@@ -6,18 +6,12 @@
   "permissions": [
     "core:default",
     "shell:default",
-    "store:default",
     "dialog:default",
     "notification:default",
-    "fs:default",
     "clipboard-manager:allow-read-text",
     "clipboard-manager:allow-write-text",
     "updater:default",
     "process:allow-restart",
-    "core:window:allow-start-dragging",
-    "core:window:allow-set-badge-count",
-    "core:window:allow-set-progress-bar",
-    "core:window:allow-set-overlay-icon",
-    "autostart:default"
+    "core:window:allow-start-dragging"
   ]
 }

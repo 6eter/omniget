@@ -729,17 +729,6 @@ impl WorldManager {
         changed
     }
 
-    /// Let a resident stay although the roster does not know it (`true`), or
-    /// hand it back to the roster sync (`false`).
-    pub fn set_guest(&self, name: &str, guest: bool) {
-        let mut g = self.lock();
-        if guest {
-            g.guests.insert(name.to_string());
-        } else {
-            g.guests.remove(name);
-        }
-    }
-
     /// A house saved before every agent had a post of its own has one
     /// workbench. Where the map now defaults a slot to a workbench and the save
     /// still holds the old default, the workbench takes its place — as long as

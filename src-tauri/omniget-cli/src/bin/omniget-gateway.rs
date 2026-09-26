@@ -950,7 +950,9 @@ mod tests {
                 }};Json(result).into_response()
             }))
             .route("/mcp/artifacts/{id}",get(||async{
-                let stream=futures::stream::unfold(0u8,|i|async move{if i>=2{return None}if i==1{tokio::time::sleep(Duration::from_millis(1300)).await;}Some((Ok::<_,std::io::Error>(vec![b'x';65536]),i+1))});
+                let stream=futures::stream::unfold(0u8,|i|async move{
+                    if i>=2{return None}
+                    if i==1{tokio::time::sleep(Duration::from_millis(1300)).await;}Some((Ok::<_,std::io::Error>(vec![b'x';65536]),i+1))});
                 Response::builder().header("content-length",131072).header("etag",format!("\"{}\"","b".repeat(64))).body(Body::from_stream(stream)).unwrap()
             })).with_state(fixture.clone());
         let listener = tokio::net::TcpListener::bind("127.0.0.1:0").await.unwrap();

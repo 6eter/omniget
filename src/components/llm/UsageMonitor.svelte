@@ -25,7 +25,7 @@
       {/if}
       {#if monitor.error}<p role="alert">{monitor.error}</p>{/if}
       {#each monitor.rings as ring (ring.id)}
-        <div class="source"><strong>{ring.label}</strong><span>{ring.status === 'ok' ? '' : $t(`llm.limits.strip.status.${ring.status}`)}</span>
+        <div class="source"><strong>{ring.label}{#if ring.account?.label || ring.account?.email} · {ring.account.label ?? ring.account.email}{/if}</strong><span>{ring.status === 'ok' ? '' : $t(`llm.limits.strip.status.${ring.status}`)}</span>
           {#each ring.reading?.windows ?? [] as window (window.id)}<p>{window.label}: {window.used === null ? $t('llm.workspace.unknown') : `${Math.round(window.used * 100)}%`}</p>{/each}
           <small>{$t('llm.workspace.updated')}: {ring.read_at ? new Date(ring.read_at).toLocaleString() : $t('llm.workspace.unknown')}</small>
         </div>

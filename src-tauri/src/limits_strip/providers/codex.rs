@@ -1,7 +1,8 @@
 //! Codex.
 //!
 //! Credential (read only): `$CODEX_HOME/auth.json`, default `~/.codex/auth.json`
-//! on every OS (`%USERPROFILE%\.codex` on Windows). Keys `tokens.access_token`
+//! on every OS (`%USERPROFILE%\.codex` on Windows). An account saved in the
+//! app reads `<its CODEX_HOME>/auth.json` and its own `sessions/`. Keys `tokens.access_token`
 //! and `tokens.account_id`. A keychain-only or API-key-only login carries no
 //! ChatGPT plan limits and reads as absent here.
 //!
@@ -24,7 +25,26 @@ use std::path::{Path, PathBuf};
 const ENDPOINT: &str = "https://chatgpt.com/backend-api/wham/usage";
 const TAIL_BYTES: u64 = 256 * 1024;
 
-pub struct Codex;
+/// One Codex login. The default profile has `home: None`.
+pub struct Codex {
+    id: String,
+    home: Option<PathBuf>,
+    tag: crate::limits_strip::AccountTag,
+}
+
+impl Codex {
+    pub fn new(p: super::Profile) -> Self {
+        Self {
+            id: p.id,
+            home: p.dir,
+            tag: p.tag,
+        }
+    }
+
+    fn home(&self) -> Option<PathBuf> {
+        self.home.clone().or_else(codex_home)
+    }
+}
 
 pub fn codex_home() -> Option<PathBuf> {
     if let Some(v) = std::env::var_os("CODEX_HOME") {
@@ -195,8 +215,8 @@ fn read_tail(path: &Path) -> Option<String> {
     Some(String::from_utf8_lossy(&buf).into_owned())
 }
 
-fn from_rollout() -> Option<Reading> {
-    let root = codex_home()?.join("sessions");
+fn from_rollout(home: Option<PathBuf>) -> Option<Reading> {
+    let root = home?.join("sessions");
     let now = now_ms();
     let (windows, plan, ts) = parse_rollout_tail(&read_tail(&newest_rollout(&root)?)?, now)?;
     let age_min = ((now - ts).max(0)) / 60_000;
@@ -221,30 +241,33 @@ pub fn parse_credential(v: &serde_json::Value) -> Option<Credential> {
     (!account.is_empty()).then_some(Credential { access, account })
 }
 
-fn credential() -> Option<Credential> {
-    parse_credential(&crate::limits_strip::read_json(
-        &codex_home()?.join("auth.json"),
-    )?)
+fn credential(home: Option<&Path>) -> Option<Credential> {
+    parse_credential(&crate::limits_strip::read_json(&home?.join("auth.json"))?)
 }
 
 #[async_trait::async_trait]
 impl UsageProvider for Codex {
-    fn id(&self) -> &'static str {
-        "codex"
+    fn id(&self) -> &str {
+        &self.id
     }
     fn label(&self) -> &'static str {
         "Codex"
     }
 
+    fn account(&self) -> Option<&crate::limits_strip::AccountTag> {
+        Some(&self.tag)
+    }
+
     async fn detect(&self) -> bool {
-        codex_home()
+        self.home()
             .map(|h| h.join("auth.json").is_file() || h.join("sessions").is_dir())
             .unwrap_or(false)
     }
 
     async fn read(&self) -> Result<Reading, ReadError> {
-        let Some(cred) = credential() else {
-            return tokio::task::spawn_blocking(from_rollout)
+        let home = self.home();
+        let Some(cred) = credential(home.as_deref()) else {
+            return tokio::task::spawn_blocking(move || from_rollout(home))
                 .await
                 .ok()
                 .flatten()
@@ -278,7 +301,7 @@ impl UsageProvider for Codex {
                     ..Default::default()
                 })
             }
-            Err(e) => match tokio::task::spawn_blocking(from_rollout).await {
+            Err(e) => match tokio::task::spawn_blocking(move || from_rollout(home)).await {
                 Ok(Some(r)) => Ok(r),
                 _ => Err(e),
             },

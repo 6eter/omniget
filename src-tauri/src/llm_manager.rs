@@ -49,7 +49,7 @@ use omniget_core::core::llm::providers::{
 };
 use omniget_core::core::llm::providers::{Provider, WireCapture};
 use omniget_core::core::llm::roster_store::{self, RosterStore};
-use omniget_core::core::llm::router::{self, Capacity, CapacityError, CapacitySource, Router};
+use omniget_core::core::llm::router::{self, Capacity, CapacitySource, Router};
 use omniget_core::core::llm::runtime::{AgentRuntime, CompositeRuntime, NativeRuntime};
 use omniget_core::core::llm::types::{
     Message, ModelRef, ProviderId, Role, ToolSpec, TurnEvent, Usage,
@@ -98,10 +98,6 @@ impl McpToolExecutor {
         if slot.is_none() {
             *slot = Some(app);
         }
-    }
-
-    pub fn has_app(&self) -> bool {
-        self.app.lock().unwrap_or_else(|e| e.into_inner()).is_some()
     }
 }
 
@@ -982,11 +978,6 @@ impl LlmManager {
         self.inner().broker.register_mcp(server, specs, executor)
     }
 
-    /// Drops one MCP server's tools (disabled or removed in the UI).
-    pub fn unregister_mcp_tools(&self, server: &str) -> usize {
-        self.inner().broker.unregister_mcp(server)
-    }
-
     /// Source 3: the installed skills, one provider-safe tool per installed
     /// version (`skill__<name>_<hash8>`, see `assist::bots::skills`). Called
     /// at boot and after every install, update, removal or repair; the
@@ -1014,10 +1005,6 @@ impl LlmManager {
     /// first command and by the bridge.
     pub fn attach_app(&self, app: &tauri::AppHandle) {
         self.inner().executor.set_app(app.clone());
-    }
-
-    pub fn tools_ready(&self) -> bool {
-        self.inner().executor.has_app()
     }
 
     // Providers -------------------------------------------------------
@@ -1217,22 +1204,6 @@ impl LlmManager {
             });
         }
         inner.telemetry.set_chain(chain_keys);
-    }
-
-    /// Marks a candidate as failed, so the router cools it down and the
-    /// capacity snapshot carries the reason into the next pick.
-    pub fn note_capacity_error(&self, agent: &AgentDef, code: &str) {
-        let inner = self.inner();
-        for candidate in chain_of(agent) {
-            let key = router::candidate_key(&candidate);
-            if let Some(mut current) = inner.capacity.get(&key) {
-                current.last_error = Some(CapacityError {
-                    code: code.to_string(),
-                    seconds_ago: 0,
-                });
-                inner.capacity.set(key, current);
-            }
-        }
     }
 
     /// Runs a turn through the Coordinator: tool loop, budget, reroute and

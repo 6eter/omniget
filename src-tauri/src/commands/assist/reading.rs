@@ -50,12 +50,6 @@ pub async fn assist_reading_list_all() -> Result<Value, String> {
 }
 
 #[tauri::command]
-pub async fn assist_reading_journey(journey_id: String) -> Result<Value, String> {
-    let db = db::global()?;
-    reading::journey_detail(&db, &user(), &journey_id, rules::now())
-}
-
-#[tauri::command]
 pub async fn assist_reading_start_journey(
     bot_id: String,
     journey: NewJourney,
@@ -156,28 +150,9 @@ pub async fn assist_reading_forget_reaction(event_id: String) -> Result<(), Stri
 }
 
 #[tauri::command]
-pub async fn assist_reading_get_prefs(bot_id: String) -> Result<Value, String> {
-    let db = db::global()?;
-    to_value(reading::get_prefs(&db, &user(), &bot_id)?)
-}
-
-#[tauri::command]
 pub async fn assist_reading_set_prefs(bot_id: String, patch: PrefsPatch) -> Result<Value, String> {
     let db = db::global()?;
     to_value(reading::set_prefs(&db, &user(), &bot_id, patch)?)
-}
-
-/// Current access status of one film, recomputed from the evidence now.
-#[tauri::command]
-pub async fn assist_reading_assess(bot_id: String, movie_id: String) -> Result<Value, String> {
-    let db = db::global()?;
-    let prefs = reading::get_prefs(&db, &user(), &bot_id)?;
-    to_value(reading::assess(&db, &movie_id, &prefs, rules::now())?)
-}
-
-#[tauri::command]
-pub async fn assist_reading_skill_status() -> Result<Value, String> {
-    to_value(skill::status()?)
 }
 
 /// Installs the embedded curation skill through the app's skill installer

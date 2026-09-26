@@ -1,12 +1,10 @@
-use std::collections::HashMap;
 use std::path::{Path, PathBuf};
-use std::sync::{Arc, OnceLock};
 
 use std::time::Duration;
 
 use anyhow::anyhow;
 use futures::StreamExt;
-use tokio::sync::{mpsc, Semaphore};
+use tokio::sync::mpsc;
 use tokio_util::sync::CancellationToken;
 
 use crate::core::http_fetcher::sidecar_path_for;
@@ -21,7 +19,6 @@ const MAX_RETRIES: u32 = 3;
 const CHUNK_SIZE: u64 = 10 * 1024 * 1024;
 const CHUNK_THRESHOLD: u64 = 10 * 1024 * 1024;
 const MAX_PARALLEL: usize = 12;
-const MAX_PER_HOST: usize = 16;
 /// Worker mode splits a file into Range segments only above this size (aria2's
 /// default `min-split-size`), and with at most `WORKER_MAX_SEGMENTS` of them.
 const WORKER_CHUNK_THRESHOLD: u64 = 20 * 1024 * 1024;
@@ -83,21 +80,6 @@ fn parse_retry_after(raw: &str, now: chrono::DateTime<chrono::Utc>) -> Option<u6
     }
     let date = chrono::DateTime::parse_from_rfc2822(raw).ok()?;
     Some(date.signed_duration_since(now).num_seconds().max(0) as u64)
-}
-fn host_semaphores() -> &'static tokio::sync::Mutex<HashMap<String, Arc<Semaphore>>> {
-    static MAP: OnceLock<tokio::sync::Mutex<HashMap<String, Arc<Semaphore>>>> = OnceLock::new();
-    MAP.get_or_init(|| tokio::sync::Mutex::new(HashMap::new()))
-}
-
-pub async fn get_host_semaphore(url: &str) -> Arc<Semaphore> {
-    let host = url::Url::parse(url)
-        .ok()
-        .and_then(|u| u.host_str().map(|h| h.to_string()))
-        .unwrap_or_default();
-    let mut map = host_semaphores().lock().await;
-    map.entry(host)
-        .or_insert_with(|| Arc::new(Semaphore::new(MAX_PER_HOST)))
-        .clone()
 }
 
 struct ProbeResult {

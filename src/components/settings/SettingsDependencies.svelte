@@ -9,7 +9,7 @@
   let { deps = [], installingDep = null, onInstallDep, onRefresh }: {
     deps?: DependencyStatus[];
     installingDep?: string | null;
-    onInstallDep: (name: string, variant: string | null) => void;
+    onInstallDep: (name: string) => void;
     onRefresh?: () => void | Promise<void>;
   } = $props();
 
@@ -147,7 +147,7 @@
                 path={dep.path}
                 outdated={dep.outdated}
                 busy={installingDep === dep.name}
-                onInstall={(variant) => onInstallDep(dep.name, variant)}
+                onInstall={() => onInstallDep(dep.name)}
                 onAfterCustomFile={onRefresh}
               />
             {/each}

@@ -42,24 +42,3 @@ export function isUrl(value: string): boolean {
     value.endsWith(".torrent")
   );
 }
-
-export function showInspectorForState(state: OmniState): boolean {
-  return (
-    state.kind === "detected" ||
-    state.kind === "preparing" ||
-    state.kind === "error"
-  );
-}
-
-export function showOmniboxForState(state: OmniState): boolean {
-  return (
-    state.kind === "idle" ||
-    state.kind === "detecting" ||
-    state.kind === "detected" ||
-    state.kind === "unsupported" ||
-    state.kind === "batch" ||
-    state.kind === "searching" ||
-    state.kind === "search-results" ||
-    state.kind === "search-empty"
-  );
-}

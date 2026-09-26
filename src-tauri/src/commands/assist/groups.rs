@@ -7,13 +7,12 @@
 //! `assist://group` as `{ room_id, kind }` so the open room reloads.
 
 use std::collections::HashMap;
-use std::path::PathBuf;
 use std::sync::Arc;
 
 use omniget_core::core::assist::{
     ctx::Scope,
     db, external_config as xc,
-    groups::{self, store, tasks, worktree, RoomDraft},
+    groups::{self, store, tasks, RoomDraft},
 };
 use serde_json::{json, Value};
 use tauri::{AppHandle, Emitter, Manager, State};
@@ -291,36 +290,4 @@ pub async fn assist_conversation_context(conversation_id: String) -> Result<Valu
         "kind": kind,
         "path": path.map(|p| p.to_string_lossy().to_string()),
     }))
-}
-
-/// A separate worktree of the conversation's project, only on an explicit
-/// request, marked as the app's. With `bind`, the conversation moves to it.
-#[tauri::command]
-pub async fn assist_worktree_create(
-    conversation_id: String,
-    bind: Option<bool>,
-) -> Result<Value, String> {
-    let conv = crate::llm_manager::sanitize_id(&conversation_id);
-    let (_, repo) = groups::context_of(&conv);
-    let repo = repo.ok_or_else(|| format!("{}: pick a project folder first", groups::ERR_GROUP))?;
-    let base: PathBuf = omniget_core::core::llm::roster_store::llm_dir()
-        .ok_or_else(|| format!("{}: no app data folder", groups::ERR_GROUP))?
-        .join("worktrees");
-    let wt = worktree::create(&*db::global()?, &repo, &base, Some(&conv))?;
-    if bind.unwrap_or(false) {
-        groups::set_context(&conv, Some(wt.path.clone()))?;
-    }
-    to_value(wt)
-}
-
-#[tauri::command]
-pub async fn assist_worktree_list() -> Result<Value, String> {
-    to_value(worktree::list(&*db::global()?)?)
-}
-
-/// Removes a worktree the app created; any other folder is refused.
-#[tauri::command]
-pub async fn assist_worktree_remove(path: String) -> Result<Value, String> {
-    worktree::remove(&*db::global()?, std::path::Path::new(&path))?;
-    Ok(json!({ "ok": true }))
 }

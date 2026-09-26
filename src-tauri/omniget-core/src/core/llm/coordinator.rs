@@ -351,11 +351,6 @@ impl Coordinator {
         self
     }
 
-    pub fn with_params(mut self, params: GenParams) -> Self {
-        self.params = params;
-        self
-    }
-
     /// Adds a per-turn hook; hooks run in the order they were added.
     pub fn add_augment(&self, augment: Arc<dyn TurnAugment>) {
         self.augments

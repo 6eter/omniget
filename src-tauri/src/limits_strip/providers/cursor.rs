@@ -106,7 +106,7 @@ pub fn parse_usage(v: &serde_json::Value) -> (Vec<LimitWindow>, Option<String>) 
 
 #[async_trait::async_trait]
 impl UsageProvider for Cursor {
-    fn id(&self) -> &'static str {
+    fn id(&self) -> &str {
         "cursor"
     }
     fn label(&self) -> &'static str {

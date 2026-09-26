@@ -439,17 +439,6 @@ fn make_canonical(dir: &Path, extracted: &str) -> anyhow::Result<PathBuf> {
     Ok(canonical)
 }
 
-/// Baixa (conferindo o sha256), extrai e deixa a lib pronta para o `init()`.
-pub async fn ensure_runtime(
-    variant: Option<String>,
-    progress: &crate::core::tools::ProgressFn,
-) -> anyhow::Result<PathBuf> {
-    if let Some(p) = resolve_path() {
-        return Ok(p);
-    }
-    install_runtime(variant, progress).await
-}
-
 /// Instala mesmo que já exista — é o "atualizar" da tela de Modelos.
 pub async fn install_runtime(
     variant: Option<String>,
@@ -508,41 +497,6 @@ pub async fn install_runtime(
     strip_quarantine(&out).await;
     crate::core::tools::report(progress, "onnxruntime", "done", 1, Some(1), None);
     Ok(out)
-}
-
-/// Instala a partir de um arquivo que o usuário já tem no disco.
-pub fn install_from_path(source: &Path) -> anyhow::Result<PathBuf> {
-    if !source.is_file() {
-        return Err(anyhow!("{} não é um arquivo", source.display()));
-    }
-    let name = source
-        .file_name()
-        .and_then(|s| s.to_str())
-        .unwrap_or_default();
-    if !is_runtime_lib(name) {
-        return Err(anyhow!(
-            "{} não parece a biblioteca do ONNX Runtime deste sistema (esperava algo como {})",
-            name,
-            lib_filename()
-        ));
-    }
-    let dir = target_dir().ok_or_else(|| anyhow!("não achei o diretório de dados do app"))?;
-    std::fs::create_dir_all(&dir).with_context(|| format!("criando {}", dir.display()))?;
-    let bytes = std::fs::read(source).with_context(|| format!("lendo {}", source.display()))?;
-    let dest = write_atomic(&dir, lib_filename(), &bytes)?;
-    if let Some(marker) = version_marker_path() {
-        let _ = std::fs::write(&marker, format!("local ({name})"));
-    }
-    Ok(dest)
-}
-
-/// Apaga a lib gerida (a apontada por env var não é nossa para mexer).
-pub fn remove_managed() -> anyhow::Result<()> {
-    let dir = target_dir().ok_or_else(|| anyhow!("não achei o diretório de dados do app"))?;
-    if dir.is_dir() {
-        std::fs::remove_dir_all(&dir).with_context(|| format!("apagando {}", dir.display()))?;
-    }
-    Ok(())
 }
 
 #[cfg(target_os = "macos")]
