@@ -24,6 +24,16 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 </p>
 
 <p align="center">
+  <a href="https://getomniget.com"><img src="assets/readme/getomniget-download.webp" alt="Луп указывает на браузер с открытым getomniget.com, большой оранжевой кнопкой загрузки и значками Windows, macOS и Linux" width="900" /></a>
+</p>
+
+<h2 align="center"><a href="https://getomniget.com">getomniget.com</a></h2>
+
+<p align="center">
+  <b>Самый простой способ скачать OmniGet.</b> Откройте сайт, нажмите «Скачать» и установите. Искать что-то здесь, на GitHub, не нужно.
+</p>
+
+<p align="center">
   <sub>Русский перевод начал <a href="https://github.com/xJaroslav69">@xJaroslav69</a> (<a href="https://github.com/tonhowtf/omniget/pull/130">PR #130</a>). Спасибо.</sub>
 </p>
 

@@ -9,6 +9,10 @@ OmniGet
   · [Русский](https://github.com/tonhowtf/omniget/blob/main/README.ru.md)
   · [简体中文](https://github.com/tonhowtf/omniget/blob/main/README_zh_CN.md)
 
+## [getomniget.com](https://getomniget.com)
+
+  The easiest way to download OmniGet. Open the site, click download and install. No need to find your way around GitHub.
+
   Paste a link from almost any site and get the file. Or ask Claude to do it for you.
 
   A free, open source video downloader for Windows, macOS and Linux: YouTube, Instagram, TikTok, X, Reddit, Twitch, torrents and the sites yt-dlp supports.

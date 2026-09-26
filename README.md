@@ -24,6 +24,16 @@ or export a GIF/WebP to assets/readme/hero.webp and use an <img>.
 </p>
 
 <p align="center">
+  <a href="https://getomniget.com"><img src="assets/readme/getomniget-download.webp" alt="Loop points at a browser open on getomniget.com, with a big orange download button and icons for Windows, macOS and Linux" width="900" /></a>
+</p>
+
+<h2 align="center"><a href="https://getomniget.com">getomniget.com</a></h2>
+
+<p align="center">
+  <b>The easiest way to download OmniGet.</b> Open the site, click download and install. No need to find your way around GitHub.
+</p>
+
+<p align="center">
   <b>Paste a link from almost any site and get the file. Or ask Claude to do it for you.</b>
 </p>
 
