@@ -3493,6 +3493,8 @@ export type TranslationKeys =
   | 'settings.download.youtube_sponsorblock'
   | 'settings.download.youtube_sponsorblock_desc'
   | 'settings.drill_back'
+  | 'settings.general.exit_on_close'
+  | 'settings.general.exit_on_close_desc'
   | 'settings.general.hints_restored'
   | 'settings.general.reset_hints'
   | 'settings.general.reset_hints_desc'
